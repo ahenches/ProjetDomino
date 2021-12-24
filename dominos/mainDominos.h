@@ -1,17 +1,10 @@
 #ifndef MAINDOMINOS_H
 #define MAINDOMINOS_H
 
-#include <SDL/SDL.h>
-#include<SDL/SDL_ttf.h>
-
 typedef enum ORIENTATION
 {
-	HAUT, DROITE, BAS, GAUCHE, RIEN
+	HORIZONTALE, VERTICALE, RIEN
 }ORIENTATION;
-
-typedef enum BOOL{
-	FAUX, VRAI
-} BOOL;
 
 
 typedef struct DOMINO
@@ -21,24 +14,15 @@ typedef struct DOMINO
 	ORIENTATION orientation;
 }DOMINO;
 
-typedef struct POINT
-{
-	int x;
-	int y;
-}POINT;
 
-
-
+void main_dominos();
 void affiche_domino();
-void init_fenetre(int largeur, int hauteur);
-void ferme_fenetre();
-void _teste_arret();
-void actualise();
 void initialise_plateau();
 void affiche_plateau();
-POINT attendre_clic();
-void ferme_fenetre();
-
-
-
+void genere_pioche();
+int determine_nb_dominos_main(int totJoueur);
+void distribue_premiers_dominos(int totJoueur);
+DOMINO prend_domino_pour_distribue();
+void affiche_mains(int totJoueur);
+void affiche_pioche();
 #endif

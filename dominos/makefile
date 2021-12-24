@@ -1,5 +1,5 @@
 #changer le nom des deux lignes suivantes si nécessaire
-SOURCES = main.c mainDominos.c
+SOURCES = main.c mainDominos.c libGraphique.c
 OUTPUT = resultat
 LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer
 OPT = -Wall -g
@@ -15,12 +15,12 @@ all: $(OUTPUT)
 clean: 
 	rm $(OUTPUT) *.o ./*.o
 
-$(OUTPUT): ./mainDominos.o $(OBJ)
+$(OUTPUT): ./libGraphique.o $(OBJ)
 	@gcc $^  -o $(OUTPUT)  $(SDL_CFLAGS) $(SDL_LDFLAGS) $(LIB)
 
 
-./mainDominos.o: ./mainDominos.c
-	@gcc   -c ./mainDominos.c -o ./mainDominos.o 
+./libGraphique.o: ./libGraphique.c
+	@gcc   -c ./libGraphique.c -o ./libGraphique.o 
 
 
 %.o: %.c
