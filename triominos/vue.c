@@ -8,19 +8,20 @@ void affiche_plateau_triminos()
 	
 	rempli_ecran(beige);
 	
-	p1.x = 80; p1.y = 80; 
-	p2.x = p1.x + LARG_PLATEAU_LARGE ; p2.y = p1.y + LARG_PLATEAU_LARGE; 
-	draw_fill_rectangle(p1,p2,gris);
+	p1.x = BORDURE; p1.y = 10; 
+	p2.x = p1.x + LARGEUR_MAIN ; p2.y = p1.y + HAUTEUR_MAIN;
+	dessine_rectangle_plein(p1,p2, noir);
 	
-	for (i = 0; i < 8 ; i++)
-	{
-		p1.y = 90 + i * (LARG_CARRE_PLATEAU_LARGE + BORDURE_PLATEAU_LARGE);
-		p2.y =(90 + LARG_CARRE_PLATEAU_LARGE)+ i*(LARG_CARRE_PLATEAU_LARGE + BORDURE_PLATEAU_LARGE);
-		for (j = 0 ; j < 8 ; j++)
-		{
-			p1.x = 90 + j * (LARG_CARRE_PLATEAU_LARGE + BORDURE_PLATEAU_LARGE);
-			p2.x =(90+LARG_CARRE_PLATEAU_LARGE)+j*(LARG_CARRE_PLATEAU_LARGE +BORDURE_PLATEAU_LARGE);
-			draw_fill_rectangle(p1,p2,orange);			
-		}		
-	}	
+	p1.x = p2.x + 10; 
+	p2.x = p1.x + LARGEUR_PIOCHE ; 
+	dessine_rectangle_plein(p1,p2, gris);
 	
+	p1.x = BORDURE; p1.y = 20 + HAUTEUR_MAIN; 
+	p2.x = p1.x + LARGEUR_PLATEAU ; p2.y= p1.y + HAUTEUR_PLATEAU;
+	
+	dessine_rectangle_plein(p1, p2, blanc);
+	
+	actualise_affichage();
+	
+	
+}

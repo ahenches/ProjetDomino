@@ -1,6 +1,6 @@
 #changer le nom des deux lignes suivantes si nécessaire
-SOURCE = main.c
-OUTPUT = resultat
+SOURCE = main.c triominos/vue.c
+OUTPUT = a.out
 LIB = -lm -lSDL -lSDL_ttf
 OPT = -Wall
 

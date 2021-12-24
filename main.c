@@ -5,6 +5,7 @@
 int main() {
 	
 	ouvre_fenetre(1300,900);
+	affiche_plateau_triminos();
 	attend_clic();
 	
 	return 0;

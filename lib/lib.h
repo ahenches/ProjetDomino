@@ -68,7 +68,7 @@ void dessine_rectangle(POINT coin, int largeur, int hauteur, COULEUR couleur) ;
 // utilise l'algorithme de Bresenham
 void dessine_ligne(POINT p1, POINT p2, COULEUR);
 
-void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
+void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur);
 
 //dessine un disque (cercle plein) de couleur voulue en donnant rayon et centre
 //void dessiner_disque(POINT centre, int rayon, COULEUR couleur);

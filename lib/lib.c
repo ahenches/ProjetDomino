@@ -35,6 +35,15 @@ int HAUTEUR = -1 ;                         // hauteur de l'écran en pixels
 char *NOM_POLICE = "../lib/verdana.ttf" ;
 #define octets_par_pixel ecran->format->BytesPerPixel
 #define largeur_ecran (ecran->pitch / 4)
+int dans_ecran(int x, int y)
+	{
+	if (x<0) return 0;
+	if (x>=LARGEUR) return 0;
+	if (y<0) return 0;
+	if (y>=HAUTEUR) return 0;
+	return 1;
+	}
+#define ajout_pix(x,y,couleur)  if (dans_ecran((x),(y))) *((COULEUR *)ecran->pixels + (HAUTEUR-(y)-1) * LARGEUR + (x)) = (couleur)
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -200,7 +209,7 @@ void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
 	if (p1.x < p2.x) {xmin=p1.x; xmax=p2.x;} else{xmin=p2.x; xmax=p1.x;}
 	if (p1.y < p2.y) {ymin=p1.y; ymax=p2.y;} else{ymin=p2.y; ymax=p1.y;}
 	
-	for (i=xmin;i<=xmax;i++) for (j=ymin;j<=ymax;j++) add_pix(i,j,couleur);
+	for (i=xmin;i<=xmax;i++) for (j=ymin;j<=ymax;j++) ajout_pix(i,j,couleur);
 }
 //dessine un disque (cercle plein) de couleur voulue en donnant rayon et centre
 /*void dessiner_disque(POINT centre, int rayon, COULEUR couleur)
@@ -404,7 +413,7 @@ void rempli_ecran(COULEUR couleur)
 {
 	int i,j;
 	for (i=0;i<LARGEUR;i++)
-		for (j=0;j<HAUTEUR;j++) *((COULEUR *)SDL_screen->pixels + (HAUTEUR-j-1) * HAUTEUR + i) = couleur;
+		for (j=0;j<HAUTEUR;j++) *((COULEUR *)ecran->pixels + (HAUTEUR-j-1) * HAUTEUR + i) = couleur;
 }
 
 /*
