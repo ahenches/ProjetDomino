@@ -14,10 +14,14 @@ typedef struct {int premier, second, dernier;} TRIOMINO;
 typedef struct {
     TRIOMINO triomino ;
     char pointe ; // peut prendre comme valeur : p, s, ou d (premier, second, dernier)
-   
 } EMPLACEMENT ;
+typedef struct {
+    int l ;
+    int c ;
+} CASE ;
 
 void affiche_plateau_triminos();
-void affiche_triomino(int l, int c, EMPLACEMENT emp);
+void affiche_triomino(CASE caseP, EMPLACEMENT emp);
+void affiche_emplacement_possible(CASE caseP);
 
 

@@ -314,7 +314,7 @@ POINT attend_clic() {
     while (lastevent.type != SDL_MOUSEBUTTONDOWN) ;
     POINT p ;
     p.x = lastevent.button.x ;
-    p.y = lastevent.button.y ;
+    p.y = HAUTEUR - lastevent.button.y ;
 	printf("%cClic en %4d %4d \n",13,p.x,p.y);
     return p;
 }

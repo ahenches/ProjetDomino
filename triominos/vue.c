@@ -31,7 +31,7 @@ void affiche_plateau_triminos()
 	//test_texte();
 	p1.x = 20; p1.y = 820;
 	p2.x = 1280; p2.y = 820;
-	for (i=0 ; i< 14; i++)
+	/*for (i=0 ; i< 14; i++)
 	{
 		dessine_ligne(p1,p2,gris);
 		p1.y -=50;
@@ -45,18 +45,18 @@ void affiche_plateau_triminos()
 		dessine_ligne(p1,p2,gris);
 		p1.x +=30;
 		p2.x +=30;
-	}
+	}*/
 	actualise_affichage();	
 }
 
 
 
-void affiche_triomino(int l, int c, EMPLACEMENT emp)
+void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 {
 	POINT pointe, pGauche, pDroit;
-	if (l%2 == 0 && c%2== 0) //triangle avec pointe vers le haut
+	if (caseP.l%2 == 0 && caseP.c%2== 0) //triangle avec pointe vers le haut
 	{
-		pointe.x = 20 + (LARGEUR_TUILE/2 * c); pointe.y = 820 - (HAUTEUR_TUILE * l);
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseP.c); pointe.y = 820 - (HAUTEUR_TUILE * caseP.l);
 		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y - HAUTEUR_TUILE;
 		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y - HAUTEUR_TUILE;
 		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
@@ -66,7 +66,7 @@ void affiche_triomino(int l, int c, EMPLACEMENT emp)
 	}
 	else //triangle avec pointe vers le bas 
 	{
-		pointe.x = 20 + (LARGEUR_TUILE/2 * c); pointe.y = 820 - (HAUTEUR_TUILE * (l+1));
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseP.c); pointe.y = 820 - (HAUTEUR_TUILE * (caseP.l+1));
 		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y + HAUTEUR_TUILE;
 		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y + HAUTEUR_TUILE;
 		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
@@ -77,7 +77,46 @@ void affiche_triomino(int l, int c, EMPLACEMENT emp)
 	actualise_affichage();
 }
 
-void affich_emplacement_possible()
+void affiche_emplacement_possible(CASE caseP)
 {
+	POINT pointe, pGauche, pDroit;
 	
+	if (caseP.l%2 == 0 && caseP.c%2== 0) //triangle avec pointe vers le haut
+	{
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseP.c); pointe.y = 820 - (HAUTEUR_TUILE * caseP.l);
+		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y - HAUTEUR_TUILE;
+		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y - HAUTEUR_TUILE;
+		dessine_triangle_plein(pointe,pGauche,pDroit,orange);
+	}
+	else //triangle avec pointe vers le bas 
+	{
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseP.c); pointe.y = 820 - (HAUTEUR_TUILE * (caseP.l+1));
+		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y + HAUTEUR_TUILE;
+		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y + HAUTEUR_TUILE;
+		dessine_triangle_plein(pointe,pGauche,pDroit,orange);
+	}	
+	
+	actualise_affichage();
 }
+
+
+void affiche_main(TRIOMINO[] mainJoueur) // main joueur contient au max 15 tuiles
+{
+	POINT pointe, pGauche, pDroit;
+	pointe.x = BORDURE + 10 + LARGEUR_TUILE/2; pointe.y = BORDURE + HAUTEUR_TUILE;
+	pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y - HAUTEUR_TUILE;
+	pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pGauche.y;
+
+	for (int i = 0; i<15 ; i++)
+	{
+		if (mainJoueur[i] != 0)
+		{
+			pointe.x = ; pointe.y = ;
+			pGauche.x = ; pGauche.y = ;
+			pDroit.x = ; pDroit.y = ;
+			dessine_triangle_plein(pointe,pGauche,pDroit,beige);
+			dessine_triangle(pointe,pGauche,pDroit,noir);	
+		}
+	}
+}
+
