@@ -104,7 +104,7 @@ void change_pixel(POINT pix, COULEUR couleur) {
     }
 }
 
-
+/*
 // dessine un rectangle de couleur de largeur et hauteur données
 // coin est le coin haut, gauche
 void dessine_rectangle(POINT coin, int largeur, int hauteur, COULEUR couleur) {
@@ -117,87 +117,68 @@ void dessine_rectangle(POINT coin, int largeur, int hauteur, COULEUR couleur) {
         }
     }
 }
+*/
+
+void dessine_rectangle(POINT p1, POINT p2, COULEUR color)
+{
+	int xmin, xmax;
+	int ymin, ymax;
+	int i,j;
+	 
+	if (p1.x < p2.x) {xmin=p1.x; xmax=p2.x;} else{xmin=p2.x; xmax=p1.x;}
+	if (p1.y < p2.y) {ymin=p1.y; ymax=p2.y;} else{ymin=p2.y; ymax=p1.y;}
+	
+	for (i=xmin;i<=xmax;i++) ajout_pix(i,ymin,color);
+	for (i=xmin;i<=xmax;i++) ajout_pix(i,ymax,color);
+	
+	for (j=ymin;j<=ymax;j++) ajout_pix(xmin,j,color);
+	for (j=ymin;j<=ymax;j++) ajout_pix(xmax,j,color);
+}
+
 
 // trace une ligne du POINT p1 au point p2 dela couleur donnée
 // utilise l'algorithme de Bresenham
 void dessine_ligne(POINT p1, POINT p2, COULEUR couleur)
 {
-    // signes deplacement x et y
-    int dx, dy ;
-
-    if (p1.x < p2.x)
-        dx = 1 ;
-    else if (p1.x > p2.x)
-        dx = -1 ;
-    else
-        dx = 0 ;
-
-    if (p1.y < p2.y)
-        dy = 1 ;
-    else if (p1.y > p2.y)
-        dy = -1 ;
-    else
-        dy = 0 ;
-
-    // valeur absolue pente
-    float pente_abs ; 
-
-    float erreur = 0;
-    POINT p ; // point courant
-
-    //lignes horizontales et certicales : plus rapide
-    if (dy == 0) 
-    {
-        p.y = p1.y ;
-        for(p.x = p1.x ; p.x != p2.x ; p.x += dx)
-            change_pixel(p,couleur);
-    }
-    else if (dx == 0)
-    {  
-        p.x = p1.x ;
-        for(p.y = p1.y ; p.y != p2.y ; p.y += dy)
-            change_pixel(p,couleur);
-    }
-    else
-    {
-
-        pente_abs  = (p2.y - p1.y)/((float)(p2.x - p1.x)) ;
-        if (pente_abs < 0)
-            pente_abs = - pente_abs ;
-
-        if (pente_abs <=1 )
-        {
-            {
-                p.y = p1.y ; 
-                for(p.x = p1.x ; p.x != p2.x ; p.x += dx)
-                {
-                    change_pixel(p, couleur);
-                    erreur += pente_abs ;
-                    if (erreur > 0.5)
-                    {
-                        erreur -= 1 ;
-                        p.y += dy ;
-                    }
-                }
-            }
-        }
-        else 
-        {
-            pente_abs = 1/pente_abs ;
-            p.x = p1.x ; 
-            for(p.y = p1.y ; p.y != p2.y ; p.y += dy)
-            {
-                change_pixel(p, couleur);
-                erreur += pente_abs ;
-                if (erreur > 0.5)
-                {
-                    erreur -= 1 ;
-                    p.x += dx ;
-                }
-            }
-        }
-    }
-    change_pixel(p2,couleur);
+   int xmin, xmax;
+	int ymin, ymax;
+	int i,j;
+	float a,b,ii,jj;
+	
+	if (p1.x < p2.x) {xmin=p1.x; xmax=p2.x;} else{xmin=p2.x; xmax=p1.x;}
+	if (p1.y < p2.y) {ymin=p1.y; ymax=p2.y;} else{ymin=p2.y; ymax=p1.y;}
+	
+	if (xmin==xmax) for (j=ymin;j<=ymax;j++) ajout_pix(xmin,j,couleur);
+	if (ymin==ymax) for (i=xmin;i<=xmax;i++) ajout_pix(i,ymin,couleur);
+	
+	
+	// La variation la plus grande est en x
+	if ((xmax-xmin >= ymax-ymin) && (ymax-ymin>0))
+	{
+		a = (float)(p1.y-p2.y) / ((float)(p1.x-p2.x));
+		b = p1.y - a*p1.x;
+		for (i=xmin;i<=xmax;i++)
+		{
+			jj = a*i+b;
+			j = jj;
+			if (((jj-j) > 0.5) && (j < HAUTEUR-1)) j++;
+			ajout_pix(i,j,couleur);
+		}
+	}
+	
+	// La variation la plus grande est en y
+	if ((ymax-ymin > xmax-xmin) && (xmax-xmin>0))
+	{
+		a = (float)(p1.y-p2.y) / ((float)(p1.x-p2.x));
+		b = p1.y - a*p1.x;
+		for (j=ymin;j<=ymax;j++)
+		{
+			ii = (j-b)/a;
+			i = ii;
+			if (((ii-i) > 0.5) && (i < LARGEUR-1)) i++;
+			ajout_pix(i,j,couleur);
+		}
+	}
 }
 
 void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
@@ -230,6 +211,70 @@ void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
 }
 
 */
+
+
+
+void dessine_triangle(POINT p1, POINT p2, POINT p3, COULEUR couleur)
+	{
+	dessine_ligne(p1,p2,couleur);
+	dessine_ligne(p2,p3,couleur);
+	dessine_ligne(p3,p1,couleur);
+	}
+
+	// 4.11 Dessine un triangle rempli
+	// Fonction annexe qui calcule le min de 3 valeurs
+int min3(int a, int b, int c)
+	{
+	if ( (a<b) && (a<c) ) return a;
+	if ( (b<a) && (b<c) ) return b;
+	return c;
+	}
+
+	// Fonction annexe qui calcule le max de 3 valeurs
+int max3(int a, int b, int c)
+	{
+	if ( (a>b) && (a>c) ) return a;
+	if ( (b>a) && (b>c) ) return b;
+	return c;
+	}
+
+void dessine_triangle_plein(POINT p1, POINT p2, POINT p3, COULEUR couleur)
+	{
+	float a12, b12, a23, b23, a31, b31;
+	float s1, s2, s3;
+	// La droite passant par les point pi et pj
+	// a pour équation : y = aij x  +  bij
+	a12 = (p1.y-p2.y)/(float)(p1.x-p2.x);   b12 = p1.y - a12*p1.x;
+	a23 = (p2.y-p3.y)/(float)(p2.x-p3.x);   b23 = p2.y - a23*p2.x;
+	a31 = (p3.y-p1.y)/(float)(p3.x-p1.x);   b31 = p3.y - a31*p3.x;
+	// Le signe de sk détermine de quel coté pk est de la droite [pi,pj]
+	s3 = p3.y - (a12*p3.x + b12);
+	s1 = p1.y - (a23*p1.x + b23);
+	s2 = p2.y - (a31*p2.x + b31);
+	
+	int minx, maxx, miny, maxy;
+	minx = min3(p1.x,p2.x,p3.x); maxx = max3(p1.x,p2.x,p3.x);
+	miny = min3(p1.y,p2.y,p3.y); maxy = max3(p1.y,p2.y,p3.y);
+	
+	int i,j; 
+	int ok;
+	for (i=minx;i<maxx;i++)
+		for (j=miny;j<maxy;j++)
+			{
+			ok = 1;
+			// On vérifie que le point (i,j) est du bon coté
+			// des 3 droites du triangle
+			if (s3 * (j - (a12*i + b12)) < 0) ok = 0;
+			if (s1 * (j - (a23*i + b23)) < 0) ok = 0;
+			if (s2 * (j - (a31*i + b31)) < 0) ok = 0;
+			if (ok) ajout_pix(i,j,couleur);
+			}
+	}
+
+
+
+
+
 
 
 
@@ -270,7 +315,7 @@ POINT attend_clic() {
     POINT p ;
     p.x = lastevent.button.x ;
     p.y = lastevent.button.y ;
-
+	printf("%cClic en %4d %4d \n",13,p.x,p.y);
     return p;
 }
 /*
@@ -409,12 +454,69 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
     }
 }
 
+/*
+void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C)
+{
+	//#ifdef SDL_TTF_OK
+	    int i;
+	    SDL_Color color;
+	    SDL_Surface *texte = NULL;
+	    SDL_Rect position;
+	    static int premiere_fois = 1;
+	    static TTF_Font *police[256];
+	    TTF_Font *pol;
+	    
+	    // Initialisation de la police (n'est fait qu'une seule fois pour les tailles < 256)
+	    if (premiere_fois)  { TTF_Init(); for (i=0;i<256;i++) police[i] = NULL; premiere_fois = 0;}
+	    if (taille>=256) pol = TTF_OpenFont(NOM_POLICE, taille);
+		    else {
+			 if (police[taille]==NULL) police[taille] = TTF_OpenFont(NOM_POLICE, taille);
+		         pol = police[taille];
+			 }
+	    SDL_GetRGB(C,ecran->format,&(color.r),&(color.g),&(color.b));
+
+	    if (pol) texte = TTF_RenderText_Blended(pol, a_ecrire, color); else texte = NULL;
+	    if (texte)  {
+		    	position.x = p.x;
+		    	position.y = HAUTEUR - p.y;
+		    	SDL_BlitSurface(texte, NULL, ecran, &position); 
+			SDL_FreeSurface(texte);
+		    	}
+		    else printf("%s\n",a_ecrire);
+
+	//#else 
+		taille = 0; p.x = p.y = 0; C = 0;
+		printf("%s\n",a_ecrire);
+	//#endif
+}
+*/
+
+void test_texte()
+{
+	TTF_Init();
+	TTF_Font* font = NULL;
+	font = TTF_OpenFont("times.ttf", 12);
+/*
+	if(font != 0){
+		SDL_Color noir = {0, 0, 0}; //attention ce n'est pas un Uint32
+		SDL_Surface* texte = TTF_RenderText_Blended(font, "coucou", noir) ;
+		//affichage
+		SDL_FreeSurface(texte); //On oublie toujours pas
+		TTF_CloseFont(font);
+	}
+*/
+	TTF_Quit();
+}
+
 void rempli_ecran(COULEUR couleur)
 {
 	int i,j;
 	for (i=0;i<LARGEUR;i++)
-		for (j=0;j<HAUTEUR;j++) *((COULEUR *)ecran->pixels + (HAUTEUR-j-1) * HAUTEUR + i) = couleur;
+		for (j=0;j<HAUTEUR;j++) *((COULEUR *)ecran->pixels + (HAUTEUR-j-1) * LARGEUR + i) = couleur;
 }
+
+
+
 
 /*
 //renvoie un point qui contient la taille en pixels que prendrait ce texte si on l'affichait

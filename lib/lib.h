@@ -62,13 +62,20 @@ void change_pixel(POINT pix, COULEUR couleur) ;
 
 // dessine un rectangle de couleur de largeur et hauteur données
 // coin est le coin haut, gauche
-void dessine_rectangle(POINT coin, int largeur, int hauteur, COULEUR couleur) ;
+//void dessine_rectangle(POINT coin, int largeur, int hauteur, COULEUR couleur) ;
 
+
+void dessine_rectangle(POINT p1, POINT p2, COULEUR color);
 // trace une ligne du POINT p1 au point p2 dela couleur donnée
 // utilise l'algorithme de Bresenham
 void dessine_ligne(POINT p1, POINT p2, COULEUR);
 
 void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur);
+
+
+void dessine_triangle(POINT p1, POINT p2, POINT p3, COULEUR couleur);
+void dessine_triangle_plein(POINT p1, POINT p2, POINT p3, COULEUR couleur);
+
 
 //dessine un disque (cercle plein) de couleur voulue en donnant rayon et centre
 //void dessiner_disque(POINT centre, int rayon, COULEUR couleur);
@@ -125,6 +132,10 @@ POINT attend_clic() ;
 
 //affiche du texte de taille de police donnée ; coin est le coin haut gauche du texte
 void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur);
+
+void test_texte();
+
+//void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C);
 
 //renvoie un point qui contient la taille en pixels que prendrait ce texte si on l'affichait
 //(largeur,hauteur) à la taille de police donnée

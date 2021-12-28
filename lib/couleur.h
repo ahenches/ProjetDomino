@@ -17,6 +17,7 @@
 #define vertclair  0x008000
 #define vertolive  0x808000
 #define violet     0x800080
+#define bleuclair  0xEAF2F8
 
 // 140 couleurs en anglais
 #define aliceblue            0xF0F8FF
