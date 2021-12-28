@@ -23,6 +23,7 @@
 //1. Déclaration des types "maison"
 typedef Uint32 COULEUR;
 typedef struct {int x,y;} POINT;
+typedef int BOOL;
 typedef struct {
     int touches[SDLK_LAST] ;
     int sourisx ;
@@ -31,6 +32,13 @@ typedef struct {
     int boutond ;
 } Trace_evts ;
 
+
+#define TRUE 1
+#define True 1
+#define true 1
+#define FALSE 0
+#define False 0
+#define false 0
 ////////////////////////////////////////////////////////////////////////////////
 // Déclaration des fonctions
 ////////////////////////////////////////////////////////////////////////////////
