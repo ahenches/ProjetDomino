@@ -31,8 +31,10 @@ Trace_evts trace_evts ;                    // idem
 POINT dernier_clic = {-1,-1};
 int LARGEUR = -1 ;                         // largeur de l'écran en pixels
 int HAUTEUR = -1 ;                         // hauteur de l'écran en pixels
-//char *NOM_POLICE = "../lib/verdana.ttf" ;
 char *NOM_POLICE = "../lib/verdana.ttf" ;
+//char *NOM_POLICE = "../lib/verdana.ttf" ;
+
+
 #define octets_par_pixel ecran->format->BytesPerPixel
 #define largeur_ecran (ecran->pitch / 4)
 int dans_ecran(int x, int y)
@@ -51,6 +53,15 @@ int dans_ecran(int x, int y)
 
 // ouvrir une fenêtre de taille largeur (x), hauteur (y)
 void ouvre_fenetre(int largeur, int hauteur){
+    
+    //~ FILE *f=fopen(NOM_POLICE,"r");
+    //~ if(!f)
+        //~ {
+        //~ fprintf(stderr,"Erreur: le chemin '%s' ne permet pas de trouver le dossier 'lib' et la police 'verdana.ttf'\n",NOM_POLICE);
+        //~ exit(1);
+        //~ }
+    //~ fclose(f);
+    
     SDL_Init(SDL_INIT_VIDEO); 
     ecran = SDL_SetVideoMode(largeur, hauteur, 32, SDL_HWSURFACE|SDL_DOUBLEBUF ); 
 
@@ -61,7 +72,7 @@ void ouvre_fenetre(int largeur, int hauteur){
 
     // pour permettre les répétitions de touche si elles restent enfoncées
     SDL_EnableKeyRepeat(5, 5);
-
+	
     //initialisation du hasard
     srand(time(NULL));
 }
@@ -433,7 +444,7 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
     {
         TTF_Init();
         int i;
-        for(i=1;i<256;i++)
+        for(i=0;i<256;i++)
             polices[i] = TTF_OpenFont(NOM_POLICE, i);
 
         ttf_deja_init = 1;
@@ -457,25 +468,25 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
 /*
 void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C)
 {
-	//#ifdef SDL_TTF_OK
 	    int i;
 	    SDL_Color color;
 	    SDL_Surface *texte = NULL;
 	    SDL_Rect position;
 	    static int premiere_fois = 1;
-	    static TTF_Font *police[256];
+	    static TTF_Font *__police[256];
 	    TTF_Font *pol;
 	    
 	    // Initialisation de la police (n'est fait qu'une seule fois pour les tailles < 256)
-	    if (premiere_fois)  { TTF_Init(); for (i=0;i<256;i++) police[i] = NULL; premiere_fois = 0;}
+	    if (premiere_fois)  { TTF_Init(); for (i=0;i<256;i++) __police[i] = NULL; premiere_fois = 0;}
 	    if (taille>=256) pol = TTF_OpenFont(NOM_POLICE, taille);
 		    else {
-			 if (police[taille]==NULL) police[taille] = TTF_OpenFont(NOM_POLICE, taille);
-		         pol = police[taille];
+			 if (__police[taille]==NULL) __police[taille] = TTF_OpenFont(NOM_POLICE, taille);
+		         pol = __police[taille];
 			 }
 	    SDL_GetRGB(C,ecran->format,&(color.r),&(color.g),&(color.b));
+	    
 
-	    if (pol) texte = TTF_RenderText_Blended(pol, a_ecrire, color); else texte = NULL;
+	    if (pol) texte = TTF_RenderText_Blended(pol, "Main", color); else texte = NULL;printf("%s \n",texte);
 	    if (texte)  {
 		    	position.x = p.x;
 		    	position.y = HAUTEUR - p.y;
@@ -484,28 +495,56 @@ void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C)
 		    	}
 		    else printf("%s\n",a_ecrire);
 
-	//#else 
 		taille = 0; p.x = p.y = 0; C = 0;
-		printf("%s\n",a_ecrire);
-	//#endif
+		printf("%s marche pas\n",a_ecrire);
+	
 }
 */
 
 void test_texte()
 {
-	TTF_Init();
+	
+	static int ttf_deja_init = 0 ; //appel seulement la premiere fois
 	TTF_Font* font = NULL;
-	font = TTF_OpenFont("times.ttf", 12);
-/*
-	if(font != 0){
-		SDL_Color noir = {0, 0, 0}; //attention ce n'est pas un Uint32
-		SDL_Surface* texte = TTF_RenderText_Blended(font, "coucou", noir) ;
-		//affichage
-		SDL_FreeSurface(texte); //On oublie toujours pas
-		TTF_CloseFont(font);
-	}
-*/
-	TTF_Quit();
+	
+    if (!ttf_deja_init)
+    {
+        TTF_Init();
+		font = TTF_OpenFont("verdana.ttf", 12);
+        ttf_deja_init = 1;
+    }
+
+	
+	TTF_Font *police =NULL;
+	if((police = TTF_OpenFont("verdana.ttf",14)) == NULL)
+{
+    printf("Impossible d'ouvrir andlso.ttf\n");
+    exit(EXIT_FAILURE);
+}
+	SDL_Color couleur = {150,150,150};//Couleur du texte = Blanc
+    SDL_Rect Position;
+    Position.x=50;Position.y=50;
+    SDL_Surface *texte;
+ 
+    //Ouverture de la police en taille 14
+    //police=TTF_OpenFont("verdana.ttf",14);
+	
+	texte=TTF_RenderText_Blended(police,"testext",couleur);
+	SDL_BlitSurface(texte,NULL,ecran,&Position);
+    SDL_Flip(ecran);
+	
+	
+	//~ //if(font != 0){
+		//~ SDL_Color noire = {0, 0, 0}; //attention ce n'est pas un Uint32
+		//~ SDL_Surface* texte = TTF_RenderText_Blended(font, "coucou", noire) ;
+		//~ //affichage
+		//~ SDL_FreeSurface(texte); //On oublie toujours pas
+		//~ TTF_CloseFont(font);
+	//~ //}
+	//~ //else 
+	//~ printf("Ca marche pas \n");
+
+	//~ TTF_Quit();
 }
 
 void rempli_ecran(COULEUR couleur)

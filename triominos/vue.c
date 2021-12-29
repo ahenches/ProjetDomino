@@ -29,27 +29,30 @@ void affiche_plateau_triminos()
 	
 	
 	//actualise_affichage();
-	//p1.x = BORDURE + 10; p1.y = HAUTEUR_MAIN; 
-	//affiche_texte("Main", 12, p1, noir);
+	p1.x = BORDURE + 10; p1.y = HAUTEUR_MAIN; 
+	char texte[25] = "Main";
+	//affiche_texte(texte, 12, p1, noir);
 	
 	//test_texte();
-	/*p1.x = 20; p1.y = 820;
-	p2.x = 1280; p2.y = 820;
-	for (i=0 ; i< 14; i++)
-	{
-		dessine_ligne(p1,p2,gris);
-		p1.y -=50;
-		p2.y -=50;
-	}
 	
-	p1.x = 20; p1.y = 820;
-	p2.x = 20; p2.y = 120;
-	for (i=0 ; i< 42; i++)
-	{
-		dessine_ligne(p1,p2,gris);
-		p1.x +=30;
-		p2.x +=30;
-	}*/
+	// permet d afficher le quadrillage dans le plateau 
+	//~ p1.x = 20; p1.y = 820;
+	//~ p2.x = 1280; p2.y = 820;
+	//~ for (i=0 ; i< 14; i++)
+	//~ {
+		//~ dessine_ligne(p1,p2,gris);
+		//~ p1.y -=50;
+		//~ p2.y -=50;
+	//~ }
+	
+	//~ p1.x = 20; p1.y = 820;
+	//~ p2.x = 20; p2.y = 120;
+	//~ for (i=0 ; i< 42; i++)
+	//~ {
+		//~ dessine_ligne(p1,p2,gris);
+		//~ p1.x +=30;
+		//~ p2.x +=30;
+	//~ }
 	actualise_affichage();	
 }
 
