@@ -22,6 +22,8 @@ typedef struct {
 
 void affiche_plateau_triminos();
 void affiche_triomino(CASE caseP, EMPLACEMENT emp);
-void affiche_emplacement_possible(CASE caseP);
-
+void affiche_emplacement_possible_triominos(CASE caseP);
+void efface_main_triominos();
+void actualise_pioche_triominos(int nbPioche);
+void affiche_main_triominos(TRIOMINO mainJoueur []);
 
