@@ -23,6 +23,7 @@
 //1. Déclaration des types "maison"
 typedef Uint32 COULEUR;
 typedef struct {int x,y;} POINT;
+typedef int BOOL;
 typedef struct {
     int touches[SDLK_LAST] ;
     int sourisx ;
@@ -31,6 +32,13 @@ typedef struct {
     int boutond ;
 } Trace_evts ;
 
+
+#define TRUE 1
+#define True 1
+#define true 1
+#define FALSE 0
+#define False 0
+#define false 0
 ////////////////////////////////////////////////////////////////////////////////
 // Déclaration des fonctions
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,9 +141,10 @@ POINT attend_clic() ;
 //affiche du texte de taille de police donnée ; coin est le coin haut gauche du texte
 void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur);
 
+//void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C);
+
 void test_texte();
 
-//void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C);
 
 //renvoie un point qui contient la taille en pixels que prendrait ce texte si on l'affichait
 //(largeur,hauteur) à la taille de police donnée
