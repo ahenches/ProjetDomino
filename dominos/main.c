@@ -5,8 +5,7 @@
 
 #define RESH_FENETRE 600
 #define RESV_FENETRE 626
-const unsigned int  lignes =  4;
-const unsigned int  colonnes = 10;
+
 
 /******************************************************************************/
 /* 									MAIN                                      */
