@@ -12,16 +12,29 @@ typedef struct emplacement
     char pointe ;
 } EMPLACEMENT;
 
-typedef struct main_joueur
+typedef struct main_triominos
 {
     TRIOMINO tab[25];
     int taille;
-} MAIN_JOUEUR;
+} MAIN_TRIOMINOS;
 
 typedef struct {
     int l ;
     int c ;
 } CASE ;
+
+// typedef struct nb_joueur
+// {
+//     int nbJouHum ;
+//     int nbJouOrdi ;
+// } NB_JOUEUR ;
+
+typedef struct joueur
+{
+    char* pseudo;
+    MAIN_TRIOMINOS mainJoueur;
+    BOOL estHumain ;
+} JOUEUR ;
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
