@@ -1,6 +1,7 @@
 #define TAILLE_PIOCHE_INITIALE 56
 #define HAUTEUR_PLATEAU_MAX 14
 #define LARGEUR_PLATEAU_MAX 48
+#define MAX_TAILLE_PSEUDO 48
 
 typedef struct triomino
 {
@@ -33,18 +34,12 @@ typedef struct {
     int c ;
 } CASE ;
 
-// typedef struct nb_joueur
-// {
-//     int nbJouHum ;
-//     int nbJouOrdi ;
-// } NB_JOUEUR ;
-
-typedef struct joueur
+typedef struct joueur_triominos
 {
-    char* pseudo;
+    char pseudo[MAX_TAILLE_PSEUDO];
     MAIN_TRIOMINOS mainJoueur;
     BOOL estHumain ;
-} JOUEUR ;
+} JOUEUR_TRIOMINOS;
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
