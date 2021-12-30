@@ -1,0 +1,3 @@
+https://forums.commentcamarche.net/forum/affich-34239222-tableau-a-double-dimension
+https://openclassrooms.com/fr/courses/19980-apprenez-a-programmer-en-c/7672681-manipulez-du-texte-avec-les-chaines-de-caracteres
+https://www.it-swarm-fr.com/fr/c/stocker-une-chaine-dans-un-tableau-en-c/1043520425/

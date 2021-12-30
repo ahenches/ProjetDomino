@@ -14,8 +14,19 @@ typedef struct DOMINO
 	ORIENTATION orientation;
 }DOMINO;
 
+typedef struct NB_JOUEURS
+{
+	int nbJoueurHumain; // Nombre de joueur humain
+	int nbJoueurIA; // Nombre de joueur IA
+}NB_JOUEURS;
 
-void main_dominos();
+
+typedef enum BOOL{
+	FAUX, VRAI
+} BOOL;
+
+
+void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[]);
 void affiche_domino();
 void initialise_plateau();
 void affiche_plateau();
@@ -25,4 +36,5 @@ void distribue_premiers_dominos(int totJoueur);
 DOMINO prend_domino_pour_distribue();
 void affiche_mains(int totJoueur);
 void affiche_pioche();
+void affiche_pseudos(char* tabPseudo[]);
 #endif

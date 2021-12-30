@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "mainDominos.h"
-#include "libGraphique.h"
+#include "../lib/lib.h"
 
 #define TAILLE_TAB_DOMINOS 28 // 28 dominos en longueur ou largeur
 
@@ -14,7 +14,7 @@ DOMINO mainJoueurs[4][7];
 //                                  Fonctions Dominos                                   //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(NB_JOUEURS joueurs)
+void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
 { 
     POINT coin;
     int totJoueur;
@@ -32,8 +32,19 @@ void main_dominos(NB_JOUEURS joueurs)
     distribue_premiers_dominos(totJoueur);
     affiche_mains(totJoueur);
     affiche_pioche();
+    affiche_pseudos(tabPseudo);
 }
+void affiche_pseudos(char* tabPseudo[])
+{
+    int i;
+    int j;
 
+    for(i=0;i<4;i++)
+    {
+       printf("%s\n",tabPseudo[i]);
+    }
+
+}
 
 void initialise_plateau()
 {
@@ -197,4 +208,8 @@ void affiche_pioche()
      printf("\n---------------------------------\n");
 
 }
+/*
+void definit_premier_joueur(, mainJoueurs[])
+{
 
+}*/
