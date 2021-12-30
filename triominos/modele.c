@@ -1,20 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <time.h>
+
+
 #include "../lib/lib.h"
 #include "controleur.h"
 #include "modele.h"
 #include "vue.h"
 
 
-#define TAILLE_PIOCHE_INITIALE 56
+
+
+
 // avant main fonction de tests
 void affiche_triomino_modele(TRIOMINO t)
 {
   printf("%d  %d  %d\n", t.min, t.sec, t.der);
 }
-void affiche_main_joueur(MAIN_JOUEUR mj)
+
+void affiche_main_joueur(MAIN_TRIOMINOS mj)
 {
-  printf("affiche_main_joueur\n\n");
+  printf("affiche_main_joueur\n\nTAILLE_main_joueur : %d \n", mj.taille);
+  for(int i = 0; i<mj.taille; i++){
+    affiche_triomino_modele(mj.tab[i]);
+  }
+}
+
+void affiche_pioche(PIOCHE_TRIOMINOS mj)
+{
+  printf("affiche_pioche\n\nTAILLE_pioche : %d \n", mj.taille);
   for(int i = 0; i<mj.taille; i++){
     affiche_triomino_modele(mj.tab[i]);
   }
@@ -23,92 +38,61 @@ void affiche_main_joueur(MAIN_JOUEUR mj)
 int main_second()
 {
     //declarations
-    // int nbPersonne;
-    // int nbTrio;
-    int taillePioche;
 
-    MAIN_JOUEUR mainJoueur; // TRIOMINO * init_main_joueur();
-    TRIOMINO *tabPioche;
+    JOUEUR_TRIOMINOS joueurs[15];
+    int tailleJoueurs;
+    MAIN_TRIOMINOS mainJoueur; // TRIOMINO * init_main_joueur();
+    PIOCHE_TRIOMINOS jeuPioche;
     EMPLACEMENT **tabEmplacement;
 
-
-
-    // initialise_plateau
+    // initialisation
     tabEmplacement = initialise_plateau();
-    tabPioche = initialise_pioche();
-    taillePioche = TAILLE_PIOCHE_INITIALE;
-
-    // for(int i=0; i < TAILLE_PIOCHE_INITIALE; i++)
-    // {
-    //   affiche_triomino_modele(tabPioche[i]);
-    // }
-
-
-
+    jeuPioche = initialise_pioche();
+    jeuPioche.taille = TAILLE_PIOCHE_INITIALE;
     mainJoueur.taille = 0;
 
-    pioche(mainJoueur, tabPioche, taillePioche);
+    for (int i=0;i<3;i++){
+      scanf("%s", joueurs[i].pseudo);
+      joueurs[i].mainJoueur.taille = 0;
+      joueurs[i].estHumain = 1;
+    }
+    NB_JOUEUR nb_joueur = {3, 7};
+    affiche_pioche(jeuPioche);
+    distribution(nb_joueur, joueurs, &jeuPioche);
+    // affiche_pioche(jeuPioche);
 
-    // TRIO TRIOMINOS[4][9];
+
+    // affiche_pioche(jeuPioche);
+    // affiche_main_joueur(mainJoueur);
     //
-    // // Nombre de joueurs
-    // printf("Entrez le nombre de joueurs: ");
-    // scanf("%d", &nbPersonne);
+    // pioche(&mainJoueur, &jeuPioche);
     //
-    // if ( (nbPersonne==3) || (nbPersonne==4) )
-    //     nbTrio = 7;
-    // else if(nbPersonne==2)
-    //     nbTrio = 9 ;
-    // //Mains des joueurs
-    // TRIOMINOS[nbPersonne][nbTrio];
-    //
-    //
-    // // créer la pioche
-    // for(int j=0 ; j<nb; j++)
-    // {
-    //   for (int i=0 ; i<nbTrio ; i++)
-    //   {
-    //       printf("MIN du triomino n%d: ",i+1);
-    //       scanf("%d", &TRIOMINOS[j][i].min);
-    //       printf("SEC du triomino n%d: ",i+1);
-    //       scanf("%d", &TRIOMINOS[j][i].sec);
-    //       printf("DER du triomino n%d: ",i+1);
-    //       scanf("%d", &TRIOMINOS[j][i].der);
-    //   }
-    // }
-    // PIOCHE
-    // printf("La liste des TRIOMINOS: \n");
-    // printf("-------------------------- \n");
-    // for(int j=0 ; j<nb ; j++)
-    // {
-    //     for (int i=0 ; i<nbTrio ; i++)
-    //     {
-    //         printf("%d/ MIN: %d SEC: %d DER: %d\n",i+1,TRIOMINOS[j][i].min,TRIOMINOS[j][i].sec,TRIOMINOS[j][i].der);
-    //     }
-    //     printf("-------------------------- \n");
-    // }
+    // affiche_pioche(jeuPioche);
+    // affiche_main_joueur(mainJoueur);
+
+
     return 0 ;
 
 }
 
-EMPLACEMENT ** initialise_plateau() 
+EMPLACEMENT ** initialise_plateau()
 {
   EMPLACEMENT **plateau;
   int i;
 
-  plateau = (EMPLACEMENT **) (malloc(52*sizeof(EMPLACEMENT *)));
-  for (i = 0; i < 52; i++)
-    plateau[i] = malloc(sizeof(EMPLACEMENT) * 52);
+  plateau = (EMPLACEMENT **)(malloc(HAUTEUR_PLATEAU_MAX*sizeof(EMPLACEMENT *)));
+  for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++)
+    plateau[i] = malloc(sizeof(EMPLACEMENT) * LARGEUR_PLATEAU_MAX);
   return plateau;
 }
 
-TRIOMINO * initialise_pioche()
+PIOCHE_TRIOMINOS initialise_pioche()
 {
-  TRIOMINO *pioche;
+  PIOCHE_TRIOMINOS pioche_triominos;
   int indicePioche;
   // TRIOMINO t;
 
-  pioche = malloc(sizeof(TRIOMINO) * TAILLE_PIOCHE_INITIALE);
+  // pioche = malloc(sizeof(TRIOMINO) * TAILLE_PIOCHE_INITIALE);
 
   indicePioche = 0;
   for (int i=0 ; i<6 ; i++)
@@ -118,15 +102,51 @@ TRIOMINO * initialise_pioche()
       for (int k=j ; k<6 ; k++)
       {
         TRIOMINO t = {i, j, k};
-        pioche[indicePioche] = t;
+        pioche_triominos.tab[indicePioche] = t;
         indicePioche++;
       }
     }
   }
-  return pioche;
+  return pioche_triominos;
 }
 
-void pioche(MAIN_JOUEUR main, TRIOMINO *pioche, int taillePioche)
+void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS **joueurs)
 {
-  // je vais le faire
+  for(int i = 0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi);i++)
+  {
+    *joueurs[nb_joueur.nbJouHum+i].pseudo = ordi
+    *joueurs[nb_joueur.nbJouHum+i].mainJoueur.taille = 0;
+    *joueurs[nb_joueur.nbJouHum+i].estHumain = 0;
+  }
+}
+
+void pioche(MAIN_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
+{
+  if (pioche->taille > 0)
+  {
+    srand ( time(NULL) );
+    int random_number = rand() % pioche->taille;
+    TRIOMINO triomino = pioche->tab[random_number];
+    // affiche_triomino_modele(triomino);
+    printf("ATTENTION :%d\n",main->taille);
+    main->tab[main->taille] = triomino;
+    main->taille ++;
+    pioche->tab[random_number] = pioche->tab[pioche->taille-1];
+    pioche->taille --;
+  }
+}
+
+void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
+  PIOCHE_TRIOMINOS *pioche_initiale)
+{
+  int nb_de_triomino_distribue = 3;
+  for(int i = 0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi);i++)
+  {
+
+    for(int j = 0; j<nb_de_triomino_distribue;j++)
+    {
+      pioche(&joueurs[i].mainJoueur, pioche_initiale);
+    }
+    affiche_pioche(*pioche_initiale);
+  }
 }
