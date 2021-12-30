@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./modele.h"
+#include "./vue.h"
+#include "./controleur.h"
 
 #define TAILLE_PIOCHE_INITIALE 56
 // avant main fonction de tests
@@ -87,7 +89,7 @@ int main()
 
 }
 
-EMPLACEMENT ** initialise_plateau()
+EMPLACEMENT ** initialise_plateau() 
 {
   EMPLACEMENT **plateau;
   int i;

@@ -1,4 +1,6 @@
 #include "vue.h"
+#include "modele.h"
+#include "controleur.h"
 #include "../lib/lib.h"
 
 

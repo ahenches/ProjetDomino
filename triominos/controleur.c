@@ -9,9 +9,9 @@ int main_triominos()
 {
 	TRIOMINO trio1;
 	POINT clic;
-	trio1.premier = 1; trio1.second = 2; trio1.dernier = 3;
+	trio1.lin = 1; trio1.sec = 2; trio1.der = 3;
 	EMPLACEMENT emp;
-	emp.triomino = trio1;
+	emp.trio = trio1;
 	emp.pointe = 's';
 	
 	CASE case1;

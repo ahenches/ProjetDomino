@@ -1,25 +1,5 @@
 // Bochra et Arnaud
 
-typedef struct triomino
-{
-    int min ;
-    int sec ;
-    int der ;
-
-} TRIOMINO;
-
-typedef struct emplacement
-{
-    TRIOMINO trio ;
-    char pointe ;
-} EMPLACEMENT;
-
-typedef struct main_joueur
-{
-    TRIOMINO tab[25];
-    int taille;
-} MAIN_JOUEUR;
-
 EMPLACEMENT ** initialise_plateau();
 TRIOMINO * initialise_pioche();
 // VOID distribution(nb_joueurs, tabJoueur);
