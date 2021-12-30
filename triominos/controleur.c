@@ -32,7 +32,7 @@ int main_triominos()
 	//test affichage plateau
 	//~ affiche_triomino(case1,emp);
 	//~ case1.l = 7;
-	affiche_triomino(case1,emp);
+	//~ affiche_triomino(case1,emp);
 	
 	//~ case1.l = 6; case1.c = 19;
 	//~ affiche_triomino(case1,emp);
@@ -43,7 +43,9 @@ int main_triominos()
 	//~ case1.l = 6; case1.c = 18;
 	//~ affiche_triomino(case1,emp);
 	
-	//~ affiche_main_triominos(mainJ1);
+	affiche_main_triominos(mainJ1);
+	actualise_affichage();
+	
 	
 	//~ actualise_affichage();
 	//~ attend_clic();
@@ -74,15 +76,36 @@ int main_triominos()
 		//~ case1 = transforme_point_en_case_triominos(attend_clic());
 		//~ printf("l : %d  c : %d  \n",case1.l, case1.c);
 	//~ }
-	CASE temp;
-	for (int k=0; k < 5 ; k++)
-	{
-		clic= attend_clic();
-		temp = transforme_point_en_case_triominos(clic);
-		affiche_selection_emplacement_triominos(temp);		
-		actualise_affichage();
-	}
 	
+	// test de affiche emplacement selectionne
+	//~ CASE temp;
+	//~ for (int k=0; k < 5 ; k++)
+	//~ {
+		//~ clic= attend_clic();
+		//~ temp = transforme_point_en_case_triominos(clic);
+		//~ affiche_selection_emplacement_triominos(temp);		
+		//~ actualise_affichage();
+	//~ }
+	//~ efface_selection_main_triominos(3);
+	//~ attend_clic();
+	//~ actualise_affichage();
+	
+	//~ affiche_selection_main_triominos(0);
+	//~ attend_clic();
+	//~ actualise_affichage();
+	
+	//~ affiche_selection_main_triominos(1);
+	//~ attend_clic();
+	//~ actualise_affichage();
+	
+	//~ efface_selection_main_triominos(0);
+	//~ attend_clic();
+	//~ actualise_affichage();
+	
+	//~ efface_selection_main_triominos(1);
+	//~ attend_clic();
+	
+	actualise_affichage();
 	attend_clic();
 	
 	return 0;
@@ -117,7 +140,21 @@ BOOL clic_dans_plateau_triominos(POINT clic)
 CASE transforme_point_en_case_triominos(POINT clic)
 {
 	CASE caseClic;
+	
 	caseClic.l = (HAUTEUR_PLATEAU - (clic.y - (BORDURE + HAUTEUR_MAIN))) / HAUTEUR_TUILE;
 	caseClic.c = (clic.x -BORDURE) / (LARGEUR_TUILE / 2);
+	
 	return caseClic;
+}
+
+//precondition le clic doit etre dans la main
+TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_JOUEUR mainJoueurCourant)
+{
+	TRIOMINO trioSelectionne;
+	int indice;
+	
+	indice = (clic.x - BORDURE) / (LARGEUR_TUILE + 10); 
+	trioSelectionne = mainJoueurCourant.tab[indice];
+	
+	return trioSelectionne;
 }

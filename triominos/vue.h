@@ -18,7 +18,7 @@ void actualise_pioche_triominos(int nbPioche);
 void efface_main_triominos();
 void affiche_main_triominos(MAIN_JOUEUR mainJoueur);
 //void affiche_joueurs_triominos(char TabPseudo[][]);
-void actualise_score_triominos(int tabScore[]);
+//void actualise_score_triominos(int tabScore[]);
 //void affiche_joueur_main_triominos(int nbJoueurs, char pseudoJoueur[]);
 void affiche_selection_main_triominos(int trioSelect);
 void efface_selection_main_triominos(int trioDeselect);
