@@ -134,29 +134,16 @@ void distribue_premiers_dominos(int totJoueur)
 
     nbDominosMain = determine_nb_dominos_main(totJoueur);
 
-    if (totJoueur == 2)
+    
+    for (i = 0; i < totJoueur; i++)
     {
-        for (i = 0; i < totJoueur; i++)
+        for (j = 0; j < nbDominosMain; j++)
         {
-            for (j = 0; j < nbDominosMain; j++)
-            {
-                domChoisi = prend_domino_pour_distribue();
-                mainJoueurs[i][j] = domChoisi;
-            }
+            domChoisi = prend_domino_pour_distribue();
+            mainJoueurs[i][j] = domChoisi;
         }
+    }
         
-    }
-    else if (totJoueur >= 3)
-    {
-       for (i = 0; i < totJoueur; i++)
-        {
-            for (j = 0; j < nbDominosMain; j++)
-            {
-                domChoisi = prend_domino_pour_distribue();
-                mainJoueurs[i][j] = domChoisi;
-            }
-        }
-    }
 }
 
 // Cette fonction choisi aleatoirement un domino dans la pioche[] et le supprime de la pioche
