@@ -1,6 +1,7 @@
 #ifndef MAINDOMINOS_H
 #define MAINDOMINOS_H
 
+
 typedef enum ORIENTATION
 {
 	HORIZONTALE, VERTICALE, RIEN
@@ -30,7 +31,11 @@ void genere_pioche();
 int determine_nb_dominos_main(int totJoueur);
 void distribue_premiers_dominos(int totJoueur);
 DOMINO prend_domino_pour_distribue();
-void affiche_mains(int totJoueur);
+void affiche_mains(int totJoueur, char* tabPseudo[]);
 void affiche_pioche();
 void affiche_pseudos(char* tabPseudo[], int totJoueur);
+int compte_double_pioche();
+int est_double(DOMINO domino);
+void definit_premier_joueur(char* tabPseudo[], int nbDominosMain);
+
 #endif
