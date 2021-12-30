@@ -5,7 +5,7 @@
 
 #define RESH_FENETRE 600
 #define RESV_FENETRE 626
-
+#define TOT_JOUEURS 4
 
 /******************************************************************************/
 /* 									MAIN                                      */
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     ouvre_fenetre(RESH_FENETRE,RESV_FENETRE);
 
     NB_JOUEURS joueurs;
-    char *tabPseudo[4];
+    char *tabPseudo[TOT_JOUEURS];
     joueurs.nbJoueurHumain = 2;
     joueurs.nbJoueurIA = 1;
    

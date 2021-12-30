@@ -5,6 +5,7 @@
 #include "../lib/lib.h"
 
 #define TAILLE_TAB_DOMINOS 28 // 28 dominos en longueur ou largeur
+#define TOT_JOUEURS 4
 
 DOMINO plateau [TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
 DOMINO pioche [TAILLE_TAB_DOMINOS]; // pioche
@@ -30,10 +31,12 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
     genere_pioche();
     affiche_pioche();
     distribue_premiers_dominos(totJoueur);
-    affiche_mains(totJoueur);
+    affiche_mains(totJoueur, tabPseudo);
     affiche_pioche();
     affiche_pseudos(tabPseudo, totJoueur);
+    definit_premier_joueur(tabPseudo, determine_nb_dominos_main(totJoueur));
 }
+
 void affiche_pseudos(char* tabPseudo[], int totJoueur)
 {
     int i;
@@ -127,12 +130,15 @@ void distribue_premiers_dominos(int totJoueur)
     int i;
     int j;
     DOMINO domChoisi;
+    int nbDominosMain;
+
+    nbDominosMain = determine_nb_dominos_main(totJoueur);
 
     if (totJoueur == 2)
     {
         for (i = 0; i < totJoueur; i++)
         {
-            for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
+            for (j = 0; j < nbDominosMain; j++)
             {
                 domChoisi = prend_domino_pour_distribue();
                 mainJoueurs[i][j] = domChoisi;
@@ -144,7 +150,7 @@ void distribue_premiers_dominos(int totJoueur)
     {
        for (i = 0; i < totJoueur; i++)
         {
-            for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
+            for (j = 0; j < nbDominosMain; j++)
             {
                 domChoisi = prend_domino_pour_distribue();
                 mainJoueurs[i][j] = domChoisi;
@@ -176,14 +182,14 @@ DOMINO prend_domino_pour_distribue()
     return domChoisi;
 }
 
-void affiche_mains(int totJoueur)
+void affiche_mains(int totJoueur, char* tabPseudo[])
 {
     int i;
     int j;
    
     for (i = 0; i < totJoueur; i++)
     {
-        printf("Joueur %d = ", i);
+        printf("%s = ", tabPseudo[i]);
         for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
         {
             printf("|%d %d| ", mainJoueurs[i][j].valeur1, mainJoueurs[i][j].valeur2);
@@ -201,14 +207,90 @@ void affiche_pioche()
     printf("---------  La pioche : ----------\n");
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
-        printf("|%d %d| ", pioche[i].valeur1, pioche[i].valeur2);
+        if (pioche[i].valeur1 != -1)
+            printf("|%d %d| ", pioche[i].valeur1, pioche[i].valeur2);
        
     }
      printf("\n---------------------------------\n");
 
 }
-/*
-void definit_premier_joueur(, mainJoueurs[])
-{
 
-}*/
+int compte_double_pioche()
+{
+    int compt;
+    int i;
+
+    compt = 0;
+    for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
+    {
+        if(est_double(pioche[i]) && pioche[i].valeur1 != -1)
+            compt++;
+    }
+    return compt;
+}
+
+BOOL est_double(DOMINO domino)
+{
+    if (domino.valeur1 == domino.valeur2)
+        return TRUE;
+
+    return FALSE;
+    
+}
+
+void definit_premier_joueur(char* tabPseudo[], int nbDominosMain)
+{
+    int i;
+    int j;
+    int grandDouble;
+    int tempDouble;
+    int joueurChoisi;
+    int nbrDoublePioche;
+    DOMINO grandDomino;
+
+    grandDouble = 0;
+    tempDouble = 0;
+    grandDomino.valeur1 = 0;
+    grandDomino.valeur2 = 0;
+    nbrDoublePioche = compte_double_pioche();
+    if ( nbrDoublePioche <= 7 && nbrDoublePioche != 0)
+    {
+        for (i = 0; i < TOT_JOUEURS; i++)
+        {
+            for (j = 0; j < nbDominosMain; j++)
+            {
+                if(est_double(mainJoueurs[i][j]))
+                {
+                    tempDouble = mainJoueurs[i][j].valeur1;
+                
+                    if (tempDouble > grandDouble)
+                    {
+                        grandDouble = tempDouble;
+                        joueurChoisi = i;
+                    }
+                }
+
+            }
+        }
+        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", tabPseudo[joueurChoisi], grandDouble, grandDouble);
+    }
+    else
+    {
+        for (i = 0; i < TOT_JOUEURS; i++)
+        {
+            for (j = 0; j < nbDominosMain; j++)
+            {
+                if (mainJoueurs[i][j].valeur1 >= grandDomino.valeur1 && mainJoueurs[i][j].valeur2 >= grandDomino.valeur2)
+                {
+                    grandDomino.valeur1 = mainJoueurs[i][j].valeur1;
+                    grandDomino.valeur2 = mainJoueurs[i][j].valeur2;
+                    joueurChoisi = i;
+                }
+            }
+        }
+        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabPseudo[joueurChoisi], grandDomino.valeur1, grandDomino.valeur2);
+    }
+
+    
+}
+
