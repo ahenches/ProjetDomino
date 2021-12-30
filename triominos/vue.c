@@ -31,6 +31,8 @@ void affiche_plateau_triminos()
 	dessine_rectangle(p1,p2,gris);
 	
 	
+	
+	
 	//actualise_affichage();
 	p1.x = BORDURE + 10; p1.y = HAUTEUR_MAIN; 
 	char texte[25] = "Main";
@@ -125,7 +127,7 @@ void actualise_pioche_triominos(int nbPioche)
 	p1.x = BORDURE + LARGEUR_MAIN + 11 ; p1.y = 11 ;
 	p2.x = p1.x + LARGEUR_PIOCHE -2 ; p2.y = HAUTEUR_MAIN - 22 ;
 	dessine_rectangle_plein(p1, p2, lightgrey);
-	//affiche le nouveau score
+	//affiche le nouveau nombre dans la pioche
 }
 
 void affiche_main_triominos(TRIOMINO mainJoueur[]) // main joueur contient au max 15 tuiles

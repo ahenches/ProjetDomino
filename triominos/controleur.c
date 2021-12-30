@@ -69,7 +69,7 @@ int main_triominos()
 	//test transforme point en case
 	//~ for(int j=0; j<5;j++)
 	//~ {
-		//~ case1 = transforme_point_en_case(attend_clic());
+		//~ case1 = transforme_point_en_case_triominos(attend_clic());
 		//~ printf("l : %d  c : %d  \n",case1.l, case1.c);
 	//~ }
 	
@@ -104,7 +104,7 @@ BOOL clic_dans_plateau_triominos(POINT clic)
 }
 
 //précondition le clic doit etre dans le plateau
-CASE transforme_point_en_case(POINT clic)
+CASE transforme_point_en_case_triominos(POINT clic)
 {
 	CASE caseClic;
 	caseClic.l = (HAUTEUR_PLATEAU - (clic.y - (BORDURE + HAUTEUR_MAIN))) / HAUTEUR_TUILE;
