@@ -21,10 +21,6 @@ typedef struct NB_JOUEURS
 }NB_JOUEURS;
 
 
-typedef enum BOOL{
-	FAUX, VRAI
-} BOOL;
-
 
 void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[]);
 void affiche_domino();

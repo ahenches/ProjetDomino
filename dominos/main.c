@@ -35,6 +35,12 @@ int main(int argc, char *argv[])
 		tabPseudo[i]=(char*)malloc(25);//mention  the size you need..
 		scanf("%s",tabPseudo[i]);
 	}
+	for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
+	{
+		printf("%d IA \n", joueurs.nbJoueurIA); 
+		tabPseudo[i]=(char*)malloc(25);//mention  the size you need..
+		sprintf(tabPseudo[i],"IA%d",i);
+	}
 
 	printf("-------------------------\n");
 	for (i = 0; i < 4; i++)
