@@ -16,21 +16,23 @@ int main_triominos()
 	emp.pointe = 's';
 	
 	CASE case1;
-	case1.l = 6; case1.c = 20;
+	case1.l = 1; case1.c = 19;
 
-	TRIOMINO mainJ1 [15];
+	MAIN_JOUEUR mainJ1 ;
+	mainJ1.taille = 15;
 	for(int i=0; i<14;i++)
 	{
-		mainJ1[i] = trio1;
+		mainJ1.tab[i] = trio1;
 	}
 	
 	affiche_plateau_triminos();
+	actualise_affichage();
 	clic = attend_clic();
 	
 	//test affichage plateau
 	//~ affiche_triomino(case1,emp);
 	//~ case1.l = 7;
-	//~ affiche_triomino(case1,emp);
+	affiche_triomino(case1,emp);
 	
 	//~ case1.l = 6; case1.c = 19;
 	//~ affiche_triomino(case1,emp);
@@ -72,6 +74,14 @@ int main_triominos()
 		//~ case1 = transforme_point_en_case_triominos(attend_clic());
 		//~ printf("l : %d  c : %d  \n",case1.l, case1.c);
 	//~ }
+	CASE temp;
+	for (int k=0; k < 5 ; k++)
+	{
+		clic= attend_clic();
+		temp = transforme_point_en_case_triominos(clic);
+		affiche_selection_emplacement_triominos(temp);		
+		actualise_affichage();
+	}
 	
 	attend_clic();
 	
