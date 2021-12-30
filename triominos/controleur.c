@@ -4,7 +4,7 @@
 #include "vue.h"
 #include "modele.h"
 
-
+int main_second();
 
 int main_triominos()
 {
