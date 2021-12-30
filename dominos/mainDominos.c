@@ -32,16 +32,15 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
     distribue_premiers_dominos(totJoueur);
     affiche_mains(totJoueur);
     affiche_pioche();
-    affiche_pseudos(tabPseudo);
+    affiche_pseudos(tabPseudo, totJoueur);
 }
-void affiche_pseudos(char* tabPseudo[])
+void affiche_pseudos(char* tabPseudo[], int totJoueur)
 {
     int i;
-    int j;
 
-    for(i=0;i<4;i++)
+    for(i=0;i<totJoueur;i++)
     {
-       printf("%s\n",tabPseudo[i]);
+        printf("%s\n",tabPseudo[i]);
     }
 
 }

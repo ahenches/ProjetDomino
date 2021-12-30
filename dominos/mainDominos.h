@@ -32,5 +32,5 @@ void distribue_premiers_dominos(int totJoueur);
 DOMINO prend_domino_pour_distribue();
 void affiche_mains(int totJoueur);
 void affiche_pioche();
-void affiche_pseudos(char* tabPseudo[]);
+void affiche_pseudos(char* tabPseudo[], int totJoueur);
 #endif
