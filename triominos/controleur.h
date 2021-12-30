@@ -1,4 +1,3 @@
-
 typedef struct triomino
 {
     int min ;

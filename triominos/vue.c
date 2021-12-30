@@ -1,7 +1,8 @@
+#include "../lib/lib.h"
+#include "controleur.h"
 #include "vue.h"
 #include "modele.h"
-#include "controleur.h"
-#include "../lib/lib.h"
+
 
 
 void affiche_plateau_triminos()

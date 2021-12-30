@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include "../lib/lib.h"
+#include "controleur.h"
 #include "vue.h"
 #include "modele.h"
-#include "controleur.h"
+
 
 
 int main_triominos()
 {
 	TRIOMINO trio1;
 	POINT clic;
-	trio1.lin = 1; trio1.sec = 2; trio1.der = 3;
+	trio1.min = 1; trio1.sec = 2; trio1.der = 3;
 	EMPLACEMENT emp;
 	emp.trio = trio1;
 	emp.pointe = 's';

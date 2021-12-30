@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./modele.h"
-#include "./vue.h"
-#include "./controleur.h"
+#include "../lib/lib.h"
+#include "controleur.h"
+#include "modele.h"
+#include "vue.h"
+
 
 #define TAILLE_PIOCHE_INITIALE 56
 // avant main fonction de tests
-void affiche_triomino(TRIOMINO t)
+void affiche_triomino_modele(TRIOMINO t)
 {
   printf("%d  %d  %d\n", t.min, t.sec, t.der);
 }
@@ -14,11 +16,11 @@ void affiche_main_joueur(MAIN_JOUEUR mj)
 {
   printf("affiche_main_joueur\n\n");
   for(int i = 0; i<mj.taille; i++){
-    affiche_triomino(mj.tab[i]);
+    affiche_triomino_modele(mj.tab[i]);
   }
 }
 
-int main()
+int main_second()
 {
     //declarations
     // int nbPersonne;
@@ -38,7 +40,7 @@ int main()
 
     // for(int i=0; i < TAILLE_PIOCHE_INITIALE; i++)
     // {
-    //   affiche_triomino(tabPioche[i]);
+    //   affiche_triomino_modele(tabPioche[i]);
     // }
 
 
