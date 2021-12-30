@@ -1,4 +1,4 @@
-// Maud et Michel 
+// Maud et Michel
 #define LARGEUR 1300
 #define HAUTEUR 900
 #define LARGEUR_PLATEAU 1260
@@ -16,7 +16,7 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp);
 void affiche_emplacement_possible_triominos(CASE caseP);
 void actualise_pioche_triominos(int nbPioche);
 void efface_main_triominos();
-void affiche_main_triominos(MAIN_JOUEUR mainJoueur);
+void affiche_main_triominos(MAIN_TRIOMINOS mainJoueur);
 //void affiche_joueurs_triominos(char TabPseudo[][]);
 //void actualise_score_triominos(int tabScore[]);
 //void affiche_joueur_main_triominos(int nbJoueurs, char pseudoJoueur[]);

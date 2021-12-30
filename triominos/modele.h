@@ -1,10 +1,10 @@
 // Bochra et Arnaud
 
 EMPLACEMENT ** initialise_plateau();
-TRIOMINO * initialise_pioche();
+PIOCHE_TRIOMINOS initialise_pioche();
 // VOID distribution(nb_joueurs, tabJoueur);
 // JOUEUR joueur_qui_commence();
-void pioche(MAIN_JOUEUR main, TRIOMINO *pioche, int taillePioche);
+void pioche(MAIN_TRIOMINOS main, PIOCHE_TRIOMINOS pioche);
 // VOID placer();
 // BOOL verifie_coup_valide(INT valeur1, INT valeur2, TRIOMINO a_placer);
 // INT verifie_figure();
