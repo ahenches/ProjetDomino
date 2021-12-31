@@ -7,7 +7,7 @@ typedef struct nb_joueur
 
 EMPLACEMENT ** initialise_plateau();
 PIOCHE_TRIOMINOS initialise_pioche();
-void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS **joueurs);
+void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs);
 void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
   PIOCHE_TRIOMINOS *pioche_initiale);
 // JOUEUR joueur_qui_commence();
