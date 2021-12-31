@@ -8,8 +8,139 @@ int main_second();
 
 int main_triominos()
 {
+	JOUEUR_TRIOMINOS joueurs [4];
+	int nbJ = 4;
+	char texte[25] = "test";
+	TRIOMINO trio1;
+	POINT clic;
+	trio1.min = 1; trio1.sec = 2; trio1.der = 3;
+	EMPLACEMENT emp;
+	emp.trio = trio1;
+	emp.pointe = 's';
 
-	main_second();
+	CASE case1;
+	case1.l = 1; case1.c = 19;
+
+	MAIN_J_TRIOMINOS mainJ1 ;
+	mainJ1.taille = 15;
+	for(int i=0; i<14;i++)
+	{
+		mainJ1.tab[i] = trio1;
+	}
+	
+	for (int i=0 ; i<4; i++)
+	{
+		joueurs[i].pseudo[0]='J';
+		joueurs[i].mainJoueur = mainJ1;
+		joueurs[i].score = 0;
+		joueurs[i].estHumain = FALSE;
+		
+	}
+	affiche_plateau_triminos();
+	actualise_affichage();
+	clic = attend_clic();
+
+	
+	actualise_pioche_triominos(36);
+	actualise_affichage();
+	attend_clic();
+	
+	affiche_main_triominos(joueurs[1]);
+	actualise_affichage();
+	attend_clic();
+	
+	efface_main_triominos();
+	actualise_affichage();
+	attend_clic();
+	
+	affiche_joueurs_triominos(nbJ,  joueurs);
+	actualise_affichage();
+	attend_clic();
+	
+	actualise_score_triominos( nbJ, joueurs);
+	actualise_affichage();
+	attend_clic();
+	
+	actualise_affichage();
+	attend_clic();
+
+//test affichage plateau
+	//~ affiche_triomino(case1,emp);
+	//~ case1.l = 7;
+	//~ affiche_triomino(case1,emp);
+
+	//~ case1.l = 6; case1.c = 19;
+	//~ affiche_triomino(case1,emp);
+
+	//~ case1.l = 6; case1.c = 18;
+	//~ affiche_emplacement_possible_triominos(case1);
+
+	//~ case1.l = 6; case1.c = 18;
+	//~ affiche_triomino(case1,emp);
+
+	//~ affiche_main_triominos(mainJ1);
+	//~ actualise_affichage();
+
+
+	//~ actualise_affichage();
+	//~ attend_clic();
+
+	//~ efface_main_triominos();
+
+	//~ actualise_pioche_triominos(0);
+
+	//~ actualise_affichage();
+
+	//test les fonction verifie clic
+	//~ for (int i=0; i<5;i++)
+	//~ {
+		//~ if (clic_dans_main_triominos(clic))
+		//~ printf("main ok\n");
+
+		//~ if(clic_dans_pioche_triominos(clic)) 
+		//~ printf("pioche ok\n");
+
+		//~ if(clic_dans_plateau_triominos(clic)) 
+		//~ printf("plateau ok\n");
+		//~ clic=attend_clic();
+	//~ }
+
+	//test transforme point en case
+	//~ for(int j=0; j<5;j++)
+	//~ {
+		//~ case1 = transforme_point_en_case_triominos(attend_clic());
+		//~ printf("l : %d  c : %d  \n",case1.l, case1.c);
+	//~ }
+
+	// test de affiche emplacement selectionne
+	//~ CASE temp;
+	//~ for (int k=0; k < 5 ; k++)
+	//~ {
+		//~ clic= attend_clic();
+		//~ temp = transforme_point_en_case_triominos(clic);
+		//~ affiche_selection_emplacement_triominos(temp);		
+		//~ actualise_affichage();
+	//~ }
+	//~ efface_selection_main_triominos(3);
+	//~ attend_clic();
+	//~ actualise_affichage();
+
+	//~ affiche_selection_main_triominos(0);
+	//~ attend_clic();
+	//~ actualise_affichage();
+
+	//~ affiche_selection_main_triominos(1);
+	//~ attend_clic();
+	//~ actualise_affichage();
+
+	//~ efface_selection_main_triominos(0);
+	//~ attend_clic();
+	//~ actualise_affichage();
+
+	//~ efface_selection_main_triominos(1);
+	//~ attend_clic();
+
+	//main_second();
 
 	return 0;
 }
@@ -51,7 +182,7 @@ CASE transforme_point_en_case_triominos(POINT clic)
 }
 
 //precondition le clic doit etre dans la main
-TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_TRIOMINOS mainJoueurCourant)
+TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant)
 {
 	TRIOMINO trioSelectionne;
 	int indice;

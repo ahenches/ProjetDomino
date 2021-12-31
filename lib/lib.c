@@ -460,9 +460,16 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
         SDL_Surface *surftexte= TTF_RenderText_Blended(__police, texte, coul_police);
         SDL_Rect position;
         position.x = coin.x;
-        position.y=  coin.y;
+        position.y=  HAUTEUR - coin.y;
         SDL_BlitSurface(surftexte, NULL, ecran, &position);
     }
+}
+
+void affiche_entier(int n,  int taille, POINT coin, COULEUR couleur)
+{
+	char s[32];
+	sprintf(s,"%d",n);
+	affiche_texte(s,taille,coin,couleur);
 }
 
 /*
@@ -500,52 +507,6 @@ void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C)
 	
 }
 */
-
-void test_texte()
-{
-	
-	static int ttf_deja_init = 0 ; //appel seulement la premiere fois
-	TTF_Font* font = NULL;
-	
-    if (!ttf_deja_init)
-    {
-        TTF_Init();
-		font = TTF_OpenFont("verdana.ttf", 12);
-        ttf_deja_init = 1;
-    }
-
-	
-	TTF_Font *police =NULL;
-	if((police = TTF_OpenFont("verdana.ttf",14)) == NULL)
-{
-    printf("Impossible d'ouvrir andlso.ttf\n");
-    exit(EXIT_FAILURE);
-}
-	SDL_Color couleur = {150,150,150};//Couleur du texte = Blanc
-    SDL_Rect Position;
-    Position.x=50;Position.y=50;
-    SDL_Surface *texte;
- 
-    //Ouverture de la police en taille 14
-    //police=TTF_OpenFont("verdana.ttf",14);
-	
-	texte=TTF_RenderText_Blended(police,"testext",couleur);
-	SDL_BlitSurface(texte,NULL,ecran,&Position);
-    SDL_Flip(ecran);
-	
-	
-	//~ //if(font != 0){
-		//~ SDL_Color noire = {0, 0, 0}; //attention ce n'est pas un Uint32
-		//~ SDL_Surface* texte = TTF_RenderText_Blended(font, "coucou", noire) ;
-		//~ //affichage
-		//~ SDL_FreeSurface(texte); //On oublie toujours pas
-		//~ TTF_CloseFont(font);
-	//~ //}
-	//~ //else 
-	//~ printf("Ca marche pas \n");
-
-	//~ TTF_Quit();
-}
 
 void rempli_ecran(COULEUR couleur)
 {

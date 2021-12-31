@@ -142,8 +142,8 @@ POINT attend_clic() ;
 void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur);
 
 //void affiche_texte(char *a_ecrire, int taille, POINT p, COULEUR C);
+void affiche_entier(int n,  int taille, POINT coin, COULEUR couleur);
 
-void test_texte();
 
 
 //renvoie un point qui contient la taille en pixels que prendrait ce texte si on l'affichait

@@ -11,7 +11,7 @@ void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs);
 void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
   PIOCHE_TRIOMINOS *pioche_initiale);
 // JOUEUR joueur_qui_commence();
-void pioche(MAIN_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
+void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
 // VOID placer();
 // BOOL verifie_coup_valide(INT valeur1, INT valeur2, TRIOMINO a_placer);
 // INT verifie_figure();

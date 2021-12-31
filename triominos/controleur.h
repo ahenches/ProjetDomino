@@ -17,11 +17,11 @@ typedef struct emplacement
     char pointe ;
 } EMPLACEMENT;
 
-typedef struct main_triominos
+typedef struct main_j_triominos
 {
     TRIOMINO tab[25];
     int taille;
-} MAIN_TRIOMINOS;
+} MAIN_J_TRIOMINOS;
 
 typedef struct pioche_triominos
 {
@@ -37,7 +37,8 @@ typedef struct {
 typedef struct joueur_triominos
 {
     char pseudo[MAX_TAILLE_PSEUDO];
-    MAIN_TRIOMINOS mainJoueur;
+    MAIN_J_TRIOMINOS mainJoueur;
+    int score;
     BOOL estHumain ;
 } JOUEUR_TRIOMINOS;
 
@@ -46,4 +47,4 @@ BOOL clic_dans_main_triominos(POINT clic);
 BOOL clic_dans_pioche_triominos(POINT clic);
 BOOL clic_dans_plateau_triominos(POINT clic);
 CASE transforme_point_en_case_triominos(POINT clic);
-TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_TRIOMINOS mainJoueurCourant);
+TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant);

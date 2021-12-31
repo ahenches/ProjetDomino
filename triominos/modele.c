@@ -19,7 +19,7 @@ void affiche_triomino_modele(TRIOMINO t)
   printf("%d  %d  %d\n", t.min, t.sec, t.der);
 }
 
-void affiche_main_joueur(MAIN_TRIOMINOS mj)
+void affiche_main_joueur(MAIN_J_TRIOMINOS mj)
 {
   printf("affiche_main\nTAILLE_main_joueur : %d \n", mj.taille);
   for(int i = 0; i<mj.taille; i++){
@@ -54,7 +54,7 @@ int main_second()
 
     JOUEUR_TRIOMINOS joueurs[15];
     int tailleJoueurs;
-    MAIN_TRIOMINOS mainJoueur;
+    MAIN_J_TRIOMINOS mainJoueur;
     PIOCHE_TRIOMINOS jeuPioche;
     EMPLACEMENT **tabEmplacement;
 
@@ -142,7 +142,7 @@ void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs)
   }
 }
 
-void pioche(MAIN_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
+void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
 {
   if (pioche->taille > 0)
   {
