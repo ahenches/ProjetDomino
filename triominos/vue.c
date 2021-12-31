@@ -31,10 +31,10 @@ void affiche_plateau_triminos()
 
 	//Textes a afficher
 	p1.x = BORDURE + 5; p1.y = HAUTEUR_MAIN + 5;
-	//~ affiche_texte("Main", 18, p1, noir);
+	affiche_texte("Main", 18, p1, noir);
 	
 	p1.x += LARGEUR_MAIN + 10; 
-	//~ affiche_texte("Pioche", 18, p1, noir);
+	affiche_texte("Pioche", 18, p1, noir);
 	
 	// permet d afficher le quadrillage dans le plateau
 	//~ p1.x = 20; p1.y = 820;
@@ -77,19 +77,19 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		switch (emp.pointe)
 		{
 			case 'm': 
-				//~ affiche_entier(emp.trio.min,10, pointe, noir);
-				//~ affiche_entier(emp.trio.sec,10, pDroit, noir);
-				//~ affiche_entier(emp.trio.der,10, pGauche, noir);
+				affiche_entier(emp.trio.min,10, pointe, noir);
+				affiche_entier(emp.trio.sec,10, pDroit, noir);
+				affiche_entier(emp.trio.der,10, pGauche, noir);
 				break;
 			case 's' :
-				//~ affiche_entier(emp.trio.sec,10, pointe, noir);
-				//~ affiche_entier(emp.trio.der,10, pDroit, noir);
-				//~ affiche_entier(emp.trio.min,10, pGauche, noir);
+				affiche_entier(emp.trio.sec,10, pointe, noir);
+				affiche_entier(emp.trio.der,10, pDroit, noir);
+				affiche_entier(emp.trio.min,10, pGauche, noir);
 				break;
 			default : 
-				//~ affiche_entier(emp.trio.der,10, pointe, noir);
-				//~ affiche_entier(emp.trio.min,10, pDroit, noir);
-				//~ affiche_entier(emp.trio.sec,10, pGauche, noir);
+				affiche_entier(emp.trio.der,10, pointe, noir);
+				affiche_entier(emp.trio.min,10, pDroit, noir);
+				affiche_entier(emp.trio.sec,10, pGauche, noir);
 				printf("OK");
 		}
 	}
@@ -111,19 +111,19 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		switch (emp.pointe)
 		{
 			case 'm': 
-				//~ affiche_entier(emp.trio.min,10, pointe, noir);
-				//~ affiche_entier(emp.trio.sec,10, pGauche, noir);
-				//~ affiche_entier(emp.trio.der,10, pDroit, noir);
+				affiche_entier(emp.trio.min,10, pointe, noir);
+				affiche_entier(emp.trio.sec,10, pGauche, noir);
+				affiche_entier(emp.trio.der,10, pDroit, noir);
 				break;
 			case 's' :
-				//~ affiche_entier(emp.trio.sec,10, pointe, noir);
-				//~ affiche_entier(emp.trio.der,10, pGauche, noir);
-				//~ affiche_entier(emp.trio.min,10, pDroit, noir);
+				affiche_entier(emp.trio.sec,10, pointe, noir);
+				affiche_entier(emp.trio.der,10, pGauche, noir);
+				affiche_entier(emp.trio.min,10, pDroit, noir);
 				break;
 			default : 
-				//~ affiche_entier(emp.trio.der,10, pointe, noir);
-				//~ affiche_entier(emp.trio.min,10, pGauche, noir);
-				//~ affiche_entier(emp.trio.sec,10, pDroit, noir);
+				affiche_entier(emp.trio.der,10, pointe, noir);
+				affiche_entier(emp.trio.min,10, pGauche, noir);
+				affiche_entier(emp.trio.sec,10, pDroit, noir);
 				printf("OK");
 		}
 	}
@@ -163,7 +163,7 @@ void actualise_pioche_triominos(int nbPioche)
 	
 	//Affiche le nouveau nombre
 	p1.x = BORDURE + LARGEUR_MAIN + 90 ; p1.y = 70 ;
-	//~ affiche_entier(nbPioche, 35,p1, noir );
+	affiche_entier(nbPioche, 35,p1, noir );
 	
 }
 
@@ -202,9 +202,9 @@ void affiche_main_triominos(JOUEUR_TRIOMINOS joueur) // main joueur contient au 
 		pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 13;
 		pDroitN.x = pDroit.x - 19; 		pDroitN.y = pDroit.y + 19;
 	
-		//~ affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
-		//~ affiche_entier(joueur.mainJoueur.tab[i].sec,10, pDroitN, noir);
-		//~ affiche_entier(joueur.mainJoueur.tab[i].der,10, pGaucheN, noir);
+		affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
+		affiche_entier(joueur.mainJoueur.tab[i].sec,10, pDroitN, noir);
+		affiche_entier(joueur.mainJoueur.tab[i].der,10, pGaucheN, noir);
 		
 		pointe.x += LARGEUR_TUILE + 10;		pointeN.x += LARGEUR_TUILE + 10;	
 		pGauche.x += LARGEUR_TUILE + 10;	pGaucheN.x += LARGEUR_TUILE + 10;	
@@ -221,7 +221,7 @@ void affiche_joueurs_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 	
 	for (i = 0; i< nbJoueurs; i++)
 	{
-		//~ affiche_texte(joueurs[i].pseudo, 20, p1, noir);
+		affiche_texte(joueurs[i].pseudo, 20, p1, noir);
 		p1.x += 260;
 	}
 
@@ -255,7 +255,7 @@ void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 
 	for (i = 0; i< nbJoueurs; i++)
 	{
-		//~ affiche_entier(joueurs[i].score, 20, p1, noir);
+		affiche_entier(joueurs[i].score, 20, p1, noir);
 		p1.x += 260;
 	}
 }
@@ -265,7 +265,7 @@ void affiche_joueur_main_triominos(JOUEUR_TRIOMINOS joueur)
 	POINT p1;
 	
 	p1.x = BORDURE + 80; p1.y = HAUTEUR_MAIN + 5;
-	//~ affiche_texte(joueur.pseudo, 20, p1, noir);
+	affiche_texte(joueur.pseudo, 20, p1, noir);
 }
 
 void affiche_selection_main_triominos(int trioSelect)
