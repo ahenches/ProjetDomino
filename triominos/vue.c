@@ -71,7 +71,7 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 
 		//Affichage des nombres
 		pointe.x -= 4; pointe.y -= 12;
-		pGauche.x += 10; pGauche.y += 13;
+		pGauche.x += 10; pGauche.y += 19;
 		pDroit.x -= 19; pDroit.y +=19;
 		
 		switch (emp.pointe)
@@ -105,8 +105,8 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 
 		//Affichage des nombres
 		pointe.x -= 4; pointe.y += 23;
-		pGauche.x += 10; pGauche.y -= 2;
-		pDroit.x -= 19; pDroit.y -= 2;
+		pGauche.x += 10; pGauche.y -= 4;
+		pDroit.x -= 19; pDroit.y -= 4;
 		
 		switch (emp.pointe)
 		{
@@ -162,7 +162,7 @@ void actualise_pioche_triominos(int nbPioche)
 	dessine_rectangle_plein(p1, p2, lightgrey);
 	
 	//Affiche le nouveau nombre
-	p1.x = BORDURE + LARGEUR_MAIN + 90 ; p1.y = 70 ;
+	p1.x = BORDURE + LARGEUR_MAIN + 90 ; p1.y = 75 ;
 	affiche_entier(nbPioche, 35,p1, noir );
 	
 }
@@ -199,7 +199,7 @@ void affiche_main_triominos(JOUEUR_TRIOMINOS joueur) // main joueur contient au 
 				
 		//Affichage des nombres
 		pointeN.x = pointe.x - 4; 		pointeN.y = pointe.y - 12;
-		pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 13;
+		pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 19;
 		pDroitN.x = pDroit.x - 19; 		pDroitN.y = pDroit.y + 19;
 	
 		affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
