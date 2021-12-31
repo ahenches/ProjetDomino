@@ -37,5 +37,6 @@ void affiche_pseudos(char* tabPseudo[], int totJoueur);
 int compte_double_pioche();
 int est_double(DOMINO domino);
 void definit_premier_joueur(char* tabPseudo[], int nbDominosMain);
+int determine_joueur_suivant(int tour, int totJoueur, char* tabPseudo[]);
 
 #endif

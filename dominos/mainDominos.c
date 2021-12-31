@@ -19,6 +19,7 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
 { 
     POINT coin;
     int totJoueur;
+    int tour;
 
     coin.x=100;
     coin.y=200;
@@ -37,6 +38,7 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
     definit_premier_joueur(tabPseudo, determine_nb_dominos_main(totJoueur));
 }
 
+// Fonction qui parcours le tableau des pseudos et qui affiche les pseudos des joueurs
 void affiche_pseudos(char* tabPseudo[], int totJoueur)
 {
     int i;
@@ -48,6 +50,7 @@ void affiche_pseudos(char* tabPseudo[], int totJoueur)
 
 }
 
+// Fonction qui initialise le plateau 
 void initialise_plateau()
 {
     int i;
@@ -65,6 +68,7 @@ void initialise_plateau()
 
 }
 
+//Fonction qui affiche le plateau de jeu en parcourant le tableau de jeu
 void affiche_plateau()
 {
     int i;
@@ -82,6 +86,7 @@ void affiche_plateau()
 
 }
 
+//Fonction qui genere les 28 dominos qui constitue la pioche
 void genere_pioche()
 {
     int i;
@@ -169,6 +174,7 @@ DOMINO prend_domino_pour_distribue()
     return domChoisi;
 }
 
+//Cette fonction affiche la mains des joueurs en parcourant le tableau des mainsJoueurs
 void affiche_mains(int totJoueur, char* tabPseudo[])
 {
     int i;
@@ -187,6 +193,7 @@ void affiche_mains(int totJoueur, char* tabPseudo[])
 
 }
 
+// Cette fonction affiche la pioche en parcourant le tableau pioche
 void affiche_pioche()
 {
     int i;
@@ -202,6 +209,9 @@ void affiche_pioche()
 
 }
 
+/*cette fonction compte le nombre de double dans la pioche dans le but de determine si un joueur a au moins
+un double. Cette information est necessaire dans le but de determine le joueur qui commence.
+Cette fonction est appele par la fonction definit_premier_joueur*/
 int compte_double_pioche()
 {
     int compt;
@@ -216,6 +226,7 @@ int compte_double_pioche()
     return compt;
 }
 
+// Cette fonction indique si le domino passe en parametre est un double ou non
 BOOL est_double(DOMINO domino)
 {
     if (domino.valeur1 == domino.valeur2)
@@ -225,6 +236,8 @@ BOOL est_double(DOMINO domino)
     
 }
 
+/* Cette fonction definit qui commence
+Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
 void definit_premier_joueur(char* tabPseudo[], int nbDominosMain)
 {
     int i;
@@ -281,3 +294,12 @@ void definit_premier_joueur(char* tabPseudo[], int nbDominosMain)
     
 }
 
+//Cette fonction determine qui doit jouer.
+int determine_joueur_suivant(int tour, int totJoueur, char* tabPseudo[])
+{
+    tour++;
+    if (tour >= totJoueur)
+        tour = 0;
+
+    printf("**** C'est au tour de %s de jouer ! ****\n", )
+}
