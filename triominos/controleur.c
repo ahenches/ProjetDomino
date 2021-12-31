@@ -65,7 +65,7 @@ int main_triominos()
 	attend_clic();
 
 //test affichage plateau
-	//~ affiche_triomino(case1,emp);
+	affiche_triomino(case1,emp);
 	//~ case1.l = 7;
 	//~ affiche_triomino(case1,emp);
 

@@ -69,7 +69,29 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
 		dessine_triangle(pointe,pGauche,pDroit,noir);
 
-		//placement des nombres
+		//Affichage des nombres
+		pointe.x -= 4; pointe.y -= 12;
+		pGauche.x += 10; pGauche.y += 13;
+		pDroit.x -= 19; pDroit.y +=19;
+		
+		switch (emp.pointe)
+		{
+			case 'm': 
+				//~ affiche_entier(emp.trio.min,10, pointe, noir);
+				//~ affiche_entier(emp.trio.sec,10, pDroit, noir);
+				//~ affiche_entier(emp.trio.der,10, pGauche, noir);
+				break;
+			case 's' :
+				//~ affiche_entier(emp.trio.sec,10, pointe, noir);
+				//~ affiche_entier(emp.trio.der,10, pDroit, noir);
+				//~ affiche_entier(emp.trio.min,10, pGauche, noir);
+				break;
+			default : 
+				//~ affiche_entier(emp.trio.der,10, pointe, noir);
+				//~ affiche_entier(emp.trio.min,10, pDroit, noir);
+				//~ affiche_entier(emp.trio.sec,10, pGauche, noir);
+				printf("OK");
+		}
 	}
 
 	//triangle avec pointe vers le bas
@@ -81,7 +103,29 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
 		dessine_triangle(pointe,pGauche,pDroit,noir);
 
-		//placement des nombres
+		//Affichage des nombres
+		pointe.x -= 4; pointe.y += 23;
+		pGauche.x += 10; pGauche.y -= 2;
+		pDroit.x -= 19; pDroit.y -= 2;
+		
+		switch (emp.pointe)
+		{
+			case 'm': 
+				//~ affiche_entier(emp.trio.min,10, pointe, noir);
+				//~ affiche_entier(emp.trio.sec,10, pGauche, noir);
+				//~ affiche_entier(emp.trio.der,10, pDroit, noir);
+				break;
+			case 's' :
+				//~ affiche_entier(emp.trio.sec,10, pointe, noir);
+				//~ affiche_entier(emp.trio.der,10, pGauche, noir);
+				//~ affiche_entier(emp.trio.min,10, pDroit, noir);
+				break;
+			default : 
+				//~ affiche_entier(emp.trio.der,10, pointe, noir);
+				//~ affiche_entier(emp.trio.min,10, pGauche, noir);
+				//~ affiche_entier(emp.trio.sec,10, pDroit, noir);
+				printf("OK");
+		}
 	}
 }
 
@@ -139,23 +183,32 @@ void efface_main_triominos()
 
 void affiche_main_triominos(JOUEUR_TRIOMINOS joueur) // main joueur contient au max 15 tuiles
 {
-	POINT pointe, pGauche, pDroit;
+	POINT pointe,pointeN, pGauche, pGaucheN, pDroit, pDroitN;
 
 	efface_main_triominos();
 	affiche_joueur_main_triominos(joueur);
 	
 	pointe.x = BORDURE + 5 + LARGEUR_TUILE/2; pointe.y = BORDURE + HAUTEUR_TUILE;
-	pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y - HAUTEUR_TUILE;
-	pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pGauche.y;
+	pGauche.x = pointe.x - LARGEUR_TUILE/2;	pGauche.y = pointe.y - HAUTEUR_TUILE;
+	pDroit.x = pointe.x + LARGEUR_TUILE/2; 	pDroit.y = pGauche.y;
 
 	for (int i = 0; i<15 ; i++)
 	{
 		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
 		dessine_triangle(pointe,pGauche,pDroit,noir);
-		pointe.x += LARGEUR_TUILE + 10;
-		pGauche.x += LARGEUR_TUILE + 10;
-		pDroit.x += LARGEUR_TUILE + 10;
-		//afficher les nombres
+				
+		//Affichage des nombres
+		pointeN.x = pointe.x - 4; 		pointeN.y = pointe.y - 12;
+		pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 13;
+		pDroitN.x = pDroit.x - 19; 		pDroitN.y = pDroit.y + 19;
+	
+		//~ affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
+		//~ affiche_entier(joueur.mainJoueur.tab[i].sec,10, pDroitN, noir);
+		//~ affiche_entier(joueur.mainJoueur.tab[i].der,10, pGaucheN, noir);
+		
+		pointe.x += LARGEUR_TUILE + 10;		pointeN.x += LARGEUR_TUILE + 10;	
+		pGauche.x += LARGEUR_TUILE + 10;	pGaucheN.x += LARGEUR_TUILE + 10;	
+		pDroit.x += LARGEUR_TUILE + 10;		pDroitN.x += LARGEUR_TUILE + 10;	
 	}
 }
 
@@ -172,8 +225,8 @@ void affiche_joueurs_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 		p1.x += 260;
 	}
 
-	p1.x = 255; p1.y = 885;
-	p2.x = p1.x; p2.y = p1.y - 50;
+	p1.x = 255; 	p1.y = 885;
+	p2.x = p1.x; 	p2.y = p1.y - 50;
 
 	for (i = 0; i< nbJoueurs - 1; i++)
 	{
@@ -188,12 +241,12 @@ void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 	POINT p1, p2;
 	int i;
 	
-	p1.x = 195; p1.y = 875;
-	p2.x = p1.x + 58; p2.y = p1.y - 30;
+	p1.x = 195; 		p1.y = 875;
+	p2.x = p1.x + 58; 	p2.y = p1.y - 30;
 
 	for (i = 0; i< nbJoueurs; i++)
 	{
-		dessine_rectangle_plein(p1,p2, red);
+		dessine_rectangle_plein(p1,p2, bleuclair);
 		p1.x += 260;
 		p2.x += 260;
 	}
@@ -248,13 +301,13 @@ void efface_selection_main_triominos(int trioDeselect)
 	dessine_triangle(pointe, pGauche, pDroit, lightgrey);
 
 	pointe.y += 1;
-	pGauche.x -= 1; pGauche.y -= 1;
-	pDroit.x += 1; pDroit.y = pGauche.y ;
+	pGauche.x -= 1; 	pGauche.y -= 1;
+	pDroit.x += 1; 		pDroit.y = pGauche.y ;
 	dessine_triangle(pointe, pGauche, pDroit, lightgrey);
 
 	pointe.y -= 2;
 	pGauche.x += 2; pGauche.y += 2;
-	pDroit.x -= 2; pDroit.y = pGauche.y ;
+	pDroit.x -= 2; 	pDroit.y = pGauche.y ;
 	dessine_triangle(pointe, pGauche, pDroit, noir);
 }
 
@@ -265,18 +318,18 @@ void affiche_selection_emplacement_triominos(CASE caseS)
 	//triangle avec pointe vers le haut
 	if ((caseS.l%2 == 0 && caseS.c%2== 0) || (caseS.l%2 == 1 && caseS.c%2== 1))
 	{
-		pointe.x = 20 + (LARGEUR_TUILE/2 * caseS.c); pointe.y = 820 - (HAUTEUR_TUILE * caseS.l);
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseS.c);	pointe.y = 820 - (HAUTEUR_TUILE * caseS.l);
 		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y - HAUTEUR_TUILE;
-		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y - HAUTEUR_TUILE;
+		pDroit.x = pointe.x + LARGEUR_TUILE/2; 	pDroit.y = pointe.y - HAUTEUR_TUILE;
 		dessine_triangle_plein(pointe,pGauche,pDroit,red);
 	}
 
 	//triangle avec pointe vers le bas
 	else
 	{
-		pointe.x = 20 + (LARGEUR_TUILE/2 * caseS.c); pointe.y = 820 - (HAUTEUR_TUILE * (caseS.l+1));
+		pointe.x = 20 + (LARGEUR_TUILE/2 * caseS.c);pointe.y = 820 - (HAUTEUR_TUILE * (caseS.l+1));
 		pGauche.x = pointe.x - LARGEUR_TUILE/2; pGauche.y = pointe.y + HAUTEUR_TUILE;
-		pDroit.x = pointe.x + LARGEUR_TUILE/2; pDroit.y = pointe.y + HAUTEUR_TUILE;
+		pDroit.x = pointe.x + LARGEUR_TUILE/2; 	pDroit.y = pointe.y + HAUTEUR_TUILE;
 		dessine_triangle_plein(pointe,pGauche,pDroit,red);
 	}
 }
