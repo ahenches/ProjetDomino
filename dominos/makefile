@@ -1,7 +1,7 @@
 #changer le nom des deux lignes suivantes si nécessaire
 SOURCES = main.c mainDominos.c 
-OUTPUT = resultat
-LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer
+OUTPUT = Domino
+LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer -lSDL2
 OPT = -Wall -g
 OBJ = $(SOURCES:.c=.o)
 
