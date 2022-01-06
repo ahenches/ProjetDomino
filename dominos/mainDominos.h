@@ -21,7 +21,7 @@ typedef struct NB_JOUEURS
 	int nbJoueurIA;		// Nombre d'IA
 } NB_JOUEURS;
 
-void main_dominos(NB_JOUEURS joueurs, char *tabPseudo[]);
+void main_dominos(NB_JOUEURS joueurs, char *tabPseudos[]);
 void affiche_domino();
 void initialise_plateau();
 void affiche_plateau();
