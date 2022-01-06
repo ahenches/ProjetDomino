@@ -182,7 +182,7 @@ DOMINO prend_domino_pour_distribue()
 }
 
 // affiche la main des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, char *tabPseudos[])
+void affiche_mains(int totJoueur, char *s[])
 {
     int i;
     int j;

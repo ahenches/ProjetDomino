@@ -28,7 +28,7 @@ NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
 	return joueurs;
 }
 
-void entre_pseudos(char *tabPseudo[], NB_JOUEURS joueurs)
+void entre_pseudos(char *tabPseudos[], NB_JOUEURS joueurs)
 {
 	int i;
 	int compt;
@@ -40,14 +40,14 @@ void entre_pseudos(char *tabPseudo[], NB_JOUEURS joueurs)
 	for (i = 0; i < joueurs.nbJoueurHumain; i++)
 	{
 		printf("Choisissez votre pseudo :\n");
-		tabPseudo[i] = (char *)malloc(25);
-		scanf("%s", tabPseudo[i]);
+		tabPseudos[i] = (char *)malloc(25);
+		scanf("%s", tabPseudos[i]);
 	}
 
 	for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
 	{
-		tabPseudo[i] = (char *)malloc(25);
-		sprintf(tabPseudo[i], "IA%d", compt);
+		tabPseudos[i] = (char *)malloc(25);
+		sprintf(tabPseudos[i], "IA%d", compt);
 		compt++;
 	}
 
@@ -60,11 +60,11 @@ int main(int argc, char *argv[])
 	ouvre_fenetre(RESH_FENETRE, RESV_FENETRE);
 
 	NB_JOUEURS joueurs;
-	char *tabPseudo[TOT_JOUEURS];
+	char *tabPseudos[TOT_JOUEURS];
 
 	joueurs = entre_nb_joueurs(joueurs);
-	entre_pseudos(tabPseudo, joueurs);
-	main_dominos(joueurs, tabPseudo);
+	entre_pseudos(tabPseudos, joueurs);
+	main_dominos(joueurs, tabPseudos);
 
 	attend_clic();
 	ferme_fenetre();
