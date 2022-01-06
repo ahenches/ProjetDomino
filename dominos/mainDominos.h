@@ -18,7 +18,7 @@ typedef struct DOMINO
 typedef struct NB_JOUEURS
 {
 	int nbJoueurHumain; // Nombre de joueurs humains
-	int nbJoueurIA;		// Nombre de joueur IA
+	int nbJoueurIA;		// Nombre d'IA
 } NB_JOUEURS;
 
 void main_dominos(NB_JOUEURS joueurs, char *tabPseudo[]);

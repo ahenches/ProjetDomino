@@ -15,7 +15,7 @@ DOMINO mainJoueurs[4][7];
 //                                  Fonctions Dominos                                   //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(NB_JOUEURS joueurs, char *tabPseudo[])
+void main_dominos(NB_JOUEURS joueurs, char *tabPseudos[])
 {
     POINT coin;
     int totJoueur;
@@ -34,29 +34,29 @@ void main_dominos(NB_JOUEURS joueurs, char *tabPseudo[])
     genere_pioche();
     affiche_pioche();
     distribue_premiers_dominos(totJoueur);
-    affiche_mains(totJoueur, tabPseudo);
+    affiche_mains(totJoueur, tabPseudos);
     affiche_pioche();
-    affiche_pseudos(tabPseudo, totJoueur);
-    definit_premier_joueur(tabPseudo, determine_nb_dominos_main(totJoueur));
-    printf("**** C'est au tour de %s de jouer ! ****\n", tabPseudo[0]);
+    affiche_pseudos(tabPseudos, totJoueur);
+    definit_premier_joueur(tabPseudos, determine_nb_dominos_main(totJoueur));
+    printf("**** C'est au tour de %s de jouer ! ****\n", tabPseudos[0]);
 
     while (1)
     {
         choixJoueur = recupere_choix_domino_main(mainJoueurs[tour]);
         printf("**** Le domino |%d %d| a ete choisi ****\n", choixJoueur.valeur1, choixJoueur.valeur2);
         printf("\n-----------------------------\n");
-        tour = determine_joueur_suivant(tour, totJoueur, tabPseudo);
+        tour = determine_joueur_suivant(tour, totJoueur, tabPseudos);
     }
 }
 
-// Fonction qui parcours le tableau des pseudos et qui affiche les pseudos des joueurs
-void affiche_pseudos(char *tabPseudo[], int totJoueur)
+// Fonction qui parcourt le tableau des pseudos et qui affiche les pseudos des joueurs
+void affiche_pseudos(char *tabPseudos[], int totJoueur)
 {
     int i;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s\n", tabPseudo[i]);
+        printf("%s\n", tabPseudos[i]);
     }
 }
 
@@ -96,7 +96,7 @@ void affiche_plateau()
     }
 }
 
-// Fonction qui genere les 28 dominos qui constitue la pioche
+// Fonction qui genère les 28 dominos qui constituent la pioche
 void genere_pioche()
 {
     int i;
@@ -125,7 +125,7 @@ void genere_pioche()
     }
 }
 
-// cette fonction determine le nombre de dominos que doit recevoir chaque joueur en fonction de leurs nombres
+// détermine le nombre de dominos que doit recevoir chaque joueur en fonction de leur nombre
 int determine_nb_dominos_main(int totJoueur)
 {
     int nbDominosMain;
@@ -138,7 +138,7 @@ int determine_nb_dominos_main(int totJoueur)
     return nbDominosMain;
 }
 
-// Cette fonction distribue les dominos en fonction du nombre de joueurs, et remplit le tab mainsJoueurs[]
+// distribue les dominos en fonction du nombre de joueurs, et remplit le tableau mainsJoueurs[]
 void distribue_premiers_dominos(int totJoueur)
 {
     int i;
@@ -158,7 +158,7 @@ void distribue_premiers_dominos(int totJoueur)
     }
 }
 
-// Cette fonction choisi aleatoirement un domino dans la pioche[] et le supprime de la pioche
+// choisit aléatoirement un domino dans la pioche[] et le supprime de la pioche
 DOMINO prend_domino_pour_distribue()
 {
     int alea;
@@ -181,15 +181,15 @@ DOMINO prend_domino_pour_distribue()
     return domChoisi;
 }
 
-// Cette fonction affiche la mains des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, char *tabPseudo[])
+// affiche la main des joueurs en parcourant le tableau des mainsJoueurs
+void affiche_mains(int totJoueur, char *tabPseudos[])
 {
     int i;
     int j;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s = ", tabPseudo[i]);
+        printf("%s = ", tabPseudos[i]);
         for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
         {
             printf("|%d %d| ", mainJoueurs[i][j].valeur1, mainJoueurs[i][j].valeur2);
@@ -198,7 +198,7 @@ void affiche_mains(int totJoueur, char *tabPseudo[])
     }
 }
 
-// Cette fonction affiche la pioche en parcourant le tableau pioche
+// affiche la pioche en parcourant le tableau pioche
 void affiche_pioche()
 {
     int i;
@@ -212,9 +212,9 @@ void affiche_pioche()
     printf("\n---------------------------------\n");
 }
 
-/*cette fonction compte le nombre de double dans la pioche dans le but de determine si un joueur a au moins
-un double. Cette information est necessaire dans le but de determine le joueur qui commence.
-Cette fonction est appele par la fonction definit_premier_joueur*/
+/* FIXME: compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
+un double. Cette information est nécessaire pour determine le joueur qui commence.
+est appele par la fonction definit_premier_joueurT */
 int compte_double_pioche()
 {
     int compt;
@@ -229,7 +229,7 @@ int compte_double_pioche()
     return compt;
 }
 
-// Cette fonction indique si le domino passe en parametre est un double ou non
+// indique si le domino pris en paramètre est un double ou non
 BOOL est_double(DOMINO domino)
 {
     if (domino.valeur1 == domino.valeur2)
@@ -238,9 +238,9 @@ BOOL est_double(DOMINO domino)
     return FALSE;
 }
 
-/* Cette fonction definit qui commence
-Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
-void definit_premier_joueur(char *tabPseudo[], int nbDominosMain)
+/* définit le joueur qui commence, et place les mains des joueurs dans l'ordre dans tabPseudos.
+  Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
+void definit_premier_joueur(char *tabPseudos[], int nbDominosMain)
 {
     int i;
     int j;
@@ -275,7 +275,7 @@ void definit_premier_joueur(char *tabPseudo[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", tabPseudo[joueurChoisi], grandDouble, grandDouble);
+        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", tabPseudos[joueurChoisi], grandDouble, grandDouble);
     }
     else
     {
@@ -291,15 +291,15 @@ void definit_premier_joueur(char *tabPseudo[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabPseudo[joueurChoisi], grandDomino.valeur1, grandDomino.valeur2);
+        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabPseudos[joueurChoisi], grandDomino.valeur1, grandDomino.valeur2);
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
     if (joueurChoisi != 0)
     {
-        pseudoTemp = tabPseudo[0];
-        tabPseudo[0] = tabPseudo[joueurChoisi];
-        tabPseudo[joueurChoisi] = pseudoTemp;
+        pseudoTemp = tabPseudos[0];
+        tabPseudos[0] = tabPseudos[joueurChoisi];
+        tabPseudos[joueurChoisi] = pseudoTemp;
 
         mainTemp = mainJoueurs[0];
         for (int i = 0; i < 7; ++i)
@@ -310,18 +310,18 @@ void definit_premier_joueur(char *tabPseudo[], int nbDominosMain)
     }
 }
 
-// Cette fonction determine qui doit jouer.
-int determine_joueur_suivant(int tour, int totJoueur, char *tabPseudo[])
+// determine qui doit jouer.
+int determine_joueur_suivant(int tour, int totJoueur, char *tabPseudos[])
 {
     tour++;
     if (tour >= totJoueur)
         tour = 0;
 
-    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, tabPseudo[tour]);
+    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, tabPseudos[tour]);
     return tour;
 }
 
-// Cette fonction recupere le domino que l'utilisateur a choisi (qu'il veut placer)
+// recupere le domino que l'utilisateur a choisi (qu'il veut placer)
 DOMINO recupere_choix_domino_main(DOMINO mainActive[])
 {
     int choix;

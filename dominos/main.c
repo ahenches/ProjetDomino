@@ -40,13 +40,13 @@ void entre_pseudos(char *tabPseudo[], NB_JOUEURS joueurs)
 	for (i = 0; i < joueurs.nbJoueurHumain; i++)
 	{
 		printf("Choisissez votre pseudo :\n");
-		tabPseudo[i] = (char *)malloc(25); // mention  the size you need..
+		tabPseudo[i] = (char *)malloc(25);
 		scanf("%s", tabPseudo[i]);
 	}
 
 	for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
 	{
-		tabPseudo[i] = (char *)malloc(25); // mention  the size you need..
+		tabPseudo[i] = (char *)malloc(25);
 		sprintf(tabPseudo[i], "IA%d", compt);
 		compt++;
 	}
