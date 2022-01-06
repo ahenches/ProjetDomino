@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h
 #include <stdlib.h>
 #include "mainDominos.h"
 #include "../lib/lib.h"
