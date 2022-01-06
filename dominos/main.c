@@ -10,6 +10,24 @@
 /******************************************************************************/
 /* 									MAIN                                      */
 /******************************************************************************/
+NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
+{
+	do
+	{
+		printf("Choisissez le nombre de joueurs Humain :\n"); 
+    	scanf("%d",&joueurs.nbJoueurHumain);
+	}while(joueurs.nbJoueurHumain > 4 || joueurs.nbJoueurHumain < 0);
+
+    do
+	{
+	    printf("Choisissez le nombre de joueurs Ordinateur :\n");
+	    scanf("%d",&joueurs.nbJoueurIA); 
+	}while(joueurs.nbJoueurIA > 3 || joueurs.nbJoueurIA < 0);
+	
+	printf("-------------------------\n");
+	return joueurs;
+}
+
 void entre_pseudos(char *tabPseudo[], NB_JOUEURS joueurs)
 {
 	int i;
@@ -43,10 +61,8 @@ int main(int argc, char *argv[])
 
     NB_JOUEURS joueurs;
     char *tabPseudo[TOT_JOUEURS];
-    joueurs.nbJoueurHumain = 2;
-    joueurs.nbJoueurIA = 1;
-   
-	
+
+	joueurs = entre_nb_joueurs(joueurs);
     entre_pseudos(tabPseudo, joueurs);
     main_dominos(joueurs, tabPseudo);
 

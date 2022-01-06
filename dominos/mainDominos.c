@@ -20,13 +20,15 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
     POINT coin;
     int totJoueur;
     int tour;
+    DOMINO choixJoueur;
 
     coin.x=100;
     coin.y=200;
     totJoueur = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
+    tour = 0;
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
-    affiche_image("./domino.bmp", coin);
+    affiche_image("./img_dominos/bmp/00.bmp", coin);
     initialise_plateau();
     //affiche_plateau();
     genere_pioche();
@@ -36,6 +38,16 @@ void main_dominos(NB_JOUEURS joueurs, char* tabPseudo[])
     affiche_pioche();
     affiche_pseudos(tabPseudo, totJoueur);
     definit_premier_joueur(tabPseudo, determine_nb_dominos_main(totJoueur));
+    printf("**** C'est au tour de %s de jouer ! ****\n", tabPseudo[0]);
+
+    while(1)
+    {
+        choixJoueur = recupere_choix_domino_main(mainJoueurs[tour]);
+        printf("**** Le domino |%d %d| a ete choisi ****\n", choixJoueur.valeur1, choixJoueur.valeur2);
+        printf("\n-----------------------------\n");
+        tour = determine_joueur_suivant(tour, totJoueur, tabPseudo);
+    }
+   
 }
 
 // Fonction qui parcours le tableau des pseudos et qui affiche les pseudos des joueurs
@@ -247,6 +259,8 @@ void definit_premier_joueur(char* tabPseudo[], int nbDominosMain)
     int joueurChoisi;
     int nbrDoublePioche;
     DOMINO grandDomino;
+    char *pseudoTemp;
+    DOMINO *mainTemp;
 
     grandDouble = 0;
     tempDouble = 0;
@@ -291,7 +305,21 @@ void definit_premier_joueur(char* tabPseudo[], int nbDominosMain)
         printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabPseudo[joueurChoisi], grandDomino.valeur1, grandDomino.valeur2);
     }
 
-    
+    // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
+    if (joueurChoisi != 0)
+    {
+        pseudoTemp = tabPseudo[0];
+        tabPseudo[0] = tabPseudo[joueurChoisi];
+        tabPseudo[joueurChoisi] = pseudoTemp;
+
+        mainTemp = mainJoueurs[0];
+        for (int i = 0; i < 7; ++i)
+        {
+            mainJoueurs[0][i] = mainJoueurs[joueurChoisi][i];
+            mainJoueurs[joueurChoisi][i] = mainTemp[i];
+        }
+        
+    }
 }
 
 //Cette fonction determine qui doit jouer.
@@ -301,5 +329,24 @@ int determine_joueur_suivant(int tour, int totJoueur, char* tabPseudo[])
     if (tour >= totJoueur)
         tour = 0;
 
-    printf("**** C'est au tour de %s de jouer ! ****\n", )
+    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, tabPseudo[tour]);
+    return tour;
 }
+
+//Cette fonction recupere le domino que l'utilisateur a choisi (qu'il veut placer)
+DOMINO recupere_choix_domino_main(DOMINO mainActive[])
+{
+    int choix;
+
+    printf("Choisissez le domino (0, 1, 2, 3, 4, 5, 6) :\n");
+    scanf("%d", &choix);
+    return mainActive[choix];
+}
+
+/*void place_domino(Domino dominoAPlacer)
+{
+    if ()
+    {
+        
+    }
+}*/
