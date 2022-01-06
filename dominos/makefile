@@ -1,11 +1,7 @@
 #changer le nom des deux lignes suivantes si nécessaire
 SOURCES = main.c mainDominos.c 
 OUTPUT = Domino
-<<<<<<< Updated upstream
 LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer 
-=======
-LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer
->>>>>>> Stashed changes
 OPT = -Wall -g
 OBJ = $(SOURCES:.c=.o)
 
