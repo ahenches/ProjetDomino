@@ -17,7 +17,7 @@ typedef struct DOMINO
 
 typedef struct NB_JOUEURS
 {
-	int nbJoueurHumain; // Nombre de joueur humain
+	int nbJoueurHumain; // Nombre de joueurs humains
 	int nbJoueurIA;		// Nombre de joueur IA
 } NB_JOUEURS;
 
