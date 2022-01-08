@@ -17,6 +17,7 @@ clean:
 
 $(OUTPUT): ../lib/lib.o $(OBJ)
 	@gcc $^  -o $(OUTPUT)  $(SDL_CFLAGS) $(SDL_LDFLAGS) $(LIB)
+	rm *.o
 
 
 ../lib/lib.o: ../lib/lib.c
