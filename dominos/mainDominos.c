@@ -212,7 +212,7 @@ void affiche_pioche()
     printf("\n---------------------------------\n");
 }
 
-/* FIXME: compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
+/*compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
 un double. Cette information est nécessaire pour determine le joueur qui commence.
 est appele par la fonction definit_premier_joueurT */
 int compte_double_pioche()
