@@ -2,4 +2,5 @@
 *.out
 *.o
 *.json
-Domino
+lib/lib.h
+dominos/Dominos

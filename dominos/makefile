@@ -1,6 +1,6 @@
 #changer le nom des deux lignes suivantes si nécessaire
-SOURCES = main.c mainDominos.c 
-OUTPUT = Domino
+SOURCES = main.c contrôleur.c vue.c modèle.c
+OUTPUT = Dominos
 LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer 
 OPT = -Wall -g
 OBJ = $(SOURCES:.c=.o)

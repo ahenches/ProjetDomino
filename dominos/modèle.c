@@ -1,64 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "mainDominos.h"
-#include "../lib/lib.h"
-
-#define TAILLE_TAB_DOMINOS 28 // 28 dominos en longueur ou largeur
-#define TOT_JOUEURS 4
-
-DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
-DOMINO pioche[TAILLE_TAB_DOMINOS];                      // pioche
-DOMINO mainJoueurs[4][7];
-
+#include "dominos.h"
 //////////////////////////////////////////////////////////////////////////////////////////
-//                                  Fonctions Dominos                                   //
+//                                  Fonctions du modèle                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
-
-void main_dominos(NB_JOUEURS joueurs, char *tabPseudos[])
-{
-    POINT coin;
-    int totJoueur;
-    int tour;
-    DOMINO choixJoueur;
-
-    coin.x = 100;
-    coin.y = 200;
-    totJoueur = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
-    tour = 0;
-    printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
-
-    affiche_image("./img_dominos/bmp/00.bmp", coin);
-    initialise_plateau();
-    // affiche_plateau();
-    genere_pioche();
-    affiche_pioche();
-    distribue_premiers_dominos(totJoueur);
-    affiche_mains(totJoueur, tabPseudos);
-    affiche_pioche();
-    affiche_pseudos(tabPseudos, totJoueur);
-    definit_premier_joueur(tabPseudos, determine_nb_dominos_main(totJoueur));
-    printf("**** C'est au tour de %s de jouer ! ****\n", tabPseudos[0]);
-
-    while (1)
-    {
-        choixJoueur = recupere_choix_domino_main(mainJoueurs[tour]);
-        printf("**** Le domino |%d %d| a ete choisi ****\n", choixJoueur.valeur1, choixJoueur.valeur2);
-        printf("\n-----------------------------\n");
-        tour = determine_joueur_suivant(tour, totJoueur, tabPseudos);
-    }
-}
-
-// Fonction qui parcourt le tableau des pseudos et qui affiche les pseudos des joueurs
-void affiche_pseudos(char *tabPseudos[], int totJoueur)
-{
-    int i;
-
-    for (i = 0; i < totJoueur; i++)
-    {
-        printf("%s\n", tabPseudos[i]);
-    }
-}
 
 // Fonction qui initialise le plateau
 void initialise_plateau()
@@ -79,21 +22,48 @@ void initialise_plateau()
     }
 }
 
-// Fonction qui affiche le plateau de jeu en parcourant le tableau de jeu
-void affiche_plateau()
+NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
+{
+    do
+    {
+        printf("Choisissez le nombre de joueurs Humain :\n");
+        scanf("%d", &joueurs.nbJoueurHumain);
+    } while (joueurs.nbJoueurHumain > 4 || joueurs.nbJoueurHumain < 0);
+
+    do
+    {
+        printf("Choisissez le nombre de joueurs Ordinateur :\n");
+        scanf("%d", &joueurs.nbJoueurIA);
+    } while (joueurs.nbJoueurIA > 3 || joueurs.nbJoueurIA < 0);
+
+    printf("-------------------------\n");
+    return joueurs;
+}
+
+void entre_pseudos(char *tabPseudos[], NB_JOUEURS joueurs)
 {
     int i;
-    int j;
-    for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
+    int compt;
+    int totJoueurs;
+
+    totJoueurs = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
+    compt = 1;
+
+    for (i = 0; i < joueurs.nbJoueurHumain; i++)
     {
-        for (j = 0; j < TAILLE_TAB_DOMINOS; j++)
-        {
-            if (plateau[i][j].valeur1 == -1 && plateau[i][j].valeur2 == -1)
-                printf("|-1|");
-            // printf("|%d %d| ", dominoCourant.valeur1, dominoCourant.valeur2);
-        }
-        printf("\n");
+        printf("Choisissez votre pseudo :\n");
+        tabPseudos[i] = (char *)malloc(25);
+        scanf("%s", tabPseudos[i]);
     }
+
+    for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
+    {
+        tabPseudos[i] = (char *)malloc(25);
+        sprintf(tabPseudos[i], "IA%d", compt);
+        compt++;
+    }
+
+    printf("-------------------------\n");
 }
 
 // Fonction qui genère les 28 dominos qui constituent la pioche
@@ -179,37 +149,6 @@ DOMINO prend_domino_pour_distribue()
         pioche[alea] = pasDom;
 
     return domChoisi;
-}
-
-// affiche la main des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, char *tabPseudos[])
-{
-    int i;
-    int j;
-
-    for (i = 0; i < totJoueur; i++)
-    {
-        printf("%s = ", tabPseudos[i]);
-        for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
-        {
-            printf("|%d %d| ", mainJoueurs[i][j].valeur1, mainJoueurs[i][j].valeur2);
-        }
-        printf("\n");
-    }
-}
-
-// affiche la pioche en parcourant le tableau pioche
-void affiche_pioche()
-{
-    int i;
-
-    printf("---------  La pioche : ----------\n");
-    for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
-    {
-        if (pioche[i].valeur1 != -1)
-            printf("|%d %d| ", pioche[i].valeur1, pioche[i].valeur2);
-    }
-    printf("\n---------------------------------\n");
 }
 
 /*compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
