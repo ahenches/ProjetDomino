@@ -1,7 +1,7 @@
 #include "dominos.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//                                  Fonction contrôleur                                 //
+//                                  Fonction controleur                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 void main_dominos(NB_JOUEURS joueurs, char *tabPseudos[])

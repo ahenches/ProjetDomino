@@ -1,5 +1,5 @@
 #changer le nom des deux lignes suivantes si nécessaire
-SOURCES = main.c contrôleur.c vue.c modèle.c
+SOURCES = main.c controleur.c vue.c modèle.c
 OUTPUT = Dominos
 LIB = -lm -lSDL -lSDL_ttf -lSDL_mixer 
 OPT = -Wall -g
