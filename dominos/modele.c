@@ -290,4 +290,22 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[])
     }
 }*/
 
-// BOOL verifie_compatibilite_domino(DOMINO domino, ) //renvoie vrai si le domino choisi peut être joué (même valeur qu'un domino sur le plateau)
+BOOL verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2) // renvoie vrai si le domino choisi peut être joué
+{                                                                                                                // indices_extremite1: domino le plus en  bas ou à gauche du plateau
+    if (plateau[indices_extremite1.ligne][indices_extremite1.colonne].valeur1 == domino.valeur1 || plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur2)
+    {
+        return TRUE;
+    }
+    else if (plateau[indices_extremite1.ligne][indices_extremite1.ligne].valeur1 == domino.valeur2 || plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur1)
+    {
+        int copie;
+        copie = domino.valeur1;
+        domino.valeur1 = domino.valeur2;
+        domino.valeur2 = copie;
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}

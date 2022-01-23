@@ -48,8 +48,14 @@ typedef struct JOUEUR
 	int score;							   // score du joueur
 } JOUEUR;
 
+typedef struct COORDONNEES
+{
+	int ligne;
+	int colonne;
+} COORDONNEES;
+
 // variables globales
-extern DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
+extern DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu [ligne][colonne]
 extern DOMINO pioche[TAILLE_TAB_DOMINOS];
 
 #endif

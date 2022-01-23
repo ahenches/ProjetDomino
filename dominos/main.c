@@ -8,7 +8,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // variables globales
-DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
+DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu, [ligne][colonne]
 DOMINO pioche[TAILLE_TAB_DOMINOS];
 
 int main(int argc, char *argv[])

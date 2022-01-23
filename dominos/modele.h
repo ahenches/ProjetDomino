@@ -18,5 +18,6 @@ int est_double(DOMINO domino);
 void definit_premier_joueur(JOUEUR tabJoueurs[], int nbDominosMain);
 int determine_joueur_suivant(int tour, int totJoueur, JOUEUR tabJoueurs[]);
 DOMINO recupere_choix_domino_main(DOMINO mainActive[]);
+BOOL verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
 
 #endif
