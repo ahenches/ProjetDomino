@@ -8,13 +8,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction qui parcourt le tableau des pseudos et qui affiche les pseudos des joueurs
-void affiche_pseudos(JOUEUR mains_joueurs[], int totJoueur)
+void affiche_pseudos(JOUEUR infos_joueurs[], int totJoueur)
 {
     int i;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s\n", mains_joueurs[i].pseudo);
+        printf("%s\n", infos_joueurs[i].pseudo);
     }
 }
 
@@ -36,17 +36,17 @@ void affiche_plateau()
 }
 
 // affiche la main des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, JOUEUR mains_joueurs[])
+void affiche_mains(int totJoueur, JOUEUR infos_joueurs[])
 {
     int i;
     int j;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s = ", mains_joueurs[i].pseudo);
+        printf("%s = ", infos_joueurs[i].pseudo);
         for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
         {
-            printf("|%d %d| ", mains_joueurs[i].mainJoueur[j].valeur1, mains_joueurs[i].mainJoueur[j].valeur2);
+            printf("|%d %d| ", infos_joueurs[i].mainJoueur[j].valeur1, infos_joueurs[i].mainJoueur[j].valeur2);
         }
         printf("\n");
     }

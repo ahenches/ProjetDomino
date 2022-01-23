@@ -19,6 +19,8 @@
 #define TOT_JOUEURS 4
 #define NB_MAX_DOMINO_MAIN 21
 #define SDL_TTF_OK // police
+#define VRAI 1
+#define FAUX 0
 
 // Structures et enums
 typedef enum ORIENTATION
@@ -27,6 +29,14 @@ typedef enum ORIENTATION
 	VERTICALE,
 	RIEN
 } ORIENTATION;
+
+typedef enum EXTREMITE_COMPATIBLE
+{
+	GAUCHE,
+	DROITE,
+	LES_DEUX,
+	AUCUN,
+} EXTREMITE_COMPATIBLE;
 
 typedef struct DOMINO
 {
@@ -53,6 +63,13 @@ typedef struct COORDONNEES
 	int ligne;
 	int colonne;
 } COORDONNEES;
+
+typedef struct AIDE_PLACEMENT // aide la fonction place_domino à placer ou non un domino et à quelle extrémité
+{
+	BOOL compatible;
+	int extrémité;
+
+} AIDE_PLACEMENT;
 
 // variables globales
 extern DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu [ligne][colonne]

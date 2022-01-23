@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
 	ouvre_fenetre(RESH_FENETRE, RESV_FENETRE);
 
 	NB_JOUEURS nbJoueurs;
-	JOUEUR mains_joueurs[TOT_JOUEURS];
+	JOUEUR infos_joueurs[TOT_JOUEURS];
 	nbJoueurs = entre_nb_joueurs(nbJoueurs);
-	entre_pseudos(mains_joueurs, nbJoueurs);
-	main_dominos(mains_joueurs, nbJoueurs);
+	entre_pseudos(infos_joueurs, nbJoueurs);
+	main_dominos(infos_joueurs, nbJoueurs);
 
 	attend_clic();
 	ferme_fenetre();

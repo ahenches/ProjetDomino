@@ -43,7 +43,7 @@ NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
     return joueurs;
 }
 
-void entre_pseudos(JOUEUR mains_joueurs[], NB_JOUEURS joueurs)
+void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 {
     int i;
     int compt;
@@ -55,23 +55,23 @@ void entre_pseudos(JOUEUR mains_joueurs[], NB_JOUEURS joueurs)
     for (i = 0; i < joueurs.nbJoueurHumain; i++)
     {
         printf("Choisissez votre pseudo :\n");
-        // mains_joueurs[i].pseudo = (char *)malloc(25);
-        scanf("%s", mains_joueurs[i].pseudo);
+        // infos_joueurs[i].pseudo = (char *)malloc(25);
+        scanf("%s", infos_joueurs[i].pseudo);
 
-        if (strlen(mains_joueurs[i].pseudo) > 25)
+        if (strlen(infos_joueurs[i].pseudo) > 25)
         {
             do
             {
                 printf("\nVeillez respecter la limite maximale de 25 charactères.\n");
-                scanf("%s", mains_joueurs[i].pseudo);
-            } while (strlen(mains_joueurs[i].pseudo) > 25);
+                scanf("%s", infos_joueurs[i].pseudo);
+            } while (strlen(infos_joueurs[i].pseudo) > 25);
         }
     }
 
     for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
     {
         // tabPseudos[i] = (char *)malloc(25);
-        sprintf(mains_joueurs[i].pseudo, "IA%d", compt);
+        sprintf(infos_joueurs[i].pseudo, "IA%d", compt);
         compt++;
     }
 
@@ -121,7 +121,7 @@ int determine_nb_dominos_main(int totJoueur)
 }
 
 // distribue les dominos en fonction du nombre de joueurs, et remplit le tableau mainsJoueurs[]
-void distribue_premiers_dominos(JOUEUR mains_joueurs[], int totJoueur)
+void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
 {
     int i;
     int j;
@@ -135,7 +135,7 @@ void distribue_premiers_dominos(JOUEUR mains_joueurs[], int totJoueur)
         for (j = 0; j < nbDominosMain; j++)
         {
             domChoisi = pioche_un_domino();
-            mains_joueurs[i].mainJoueur[j] = domChoisi;
+            infos_joueurs[i].mainJoueur[j] = domChoisi;
         }
     }
 }
@@ -184,14 +184,14 @@ int compte_double_pioche()
 BOOL est_double(DOMINO domino)
 {
     if (domino.valeur1 == domino.valeur2)
-        return TRUE;
+        return VRAI;
 
     return FALSE;
 }
 
 /* définit le joueur qui commence, et place les mains des joueurs dans l'ordre dans tabPseudos.
   Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
-void definit_premier_joueur(JOUEUR mains_joueurs[], int nbDominosMain)
+void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
 {
     int i;
     int j;
@@ -214,9 +214,9 @@ void definit_premier_joueur(JOUEUR mains_joueurs[], int nbDominosMain)
         {
             for (j = 0; j < nbDominosMain; j++)
             {
-                if (est_double(mains_joueurs[i].mainJoueur[j]))
+                if (est_double(infos_joueurs[i].mainJoueur[j]))
                 {
-                    tempDouble = mains_joueurs[i].mainJoueur[j].valeur1;
+                    tempDouble = infos_joueurs[i].mainJoueur[j].valeur1;
 
                     if (tempDouble > grandDouble)
                     {
@@ -226,7 +226,7 @@ void definit_premier_joueur(JOUEUR mains_joueurs[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", mains_joueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
+        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", infos_joueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
     }
     else
     {
@@ -234,41 +234,41 @@ void definit_premier_joueur(JOUEUR mains_joueurs[], int nbDominosMain)
         {
             for (j = 0; j < nbDominosMain; j++)
             {
-                if (mains_joueurs[i].mainJoueur[j].valeur1 >= grandDomino.valeur1 && mains_joueurs[i].mainJoueur[j].valeur2 >= grandDomino.valeur2)
+                if (infos_joueurs[i].mainJoueur[j].valeur1 >= grandDomino.valeur1 && infos_joueurs[i].mainJoueur[j].valeur2 >= grandDomino.valeur2)
                 {
-                    grandDomino.valeur1 = mains_joueurs[i].mainJoueur[j].valeur1;
-                    grandDomino.valeur2 = mains_joueurs[i].mainJoueur[j].valeur2;
+                    grandDomino.valeur1 = infos_joueurs[i].mainJoueur[j].valeur1;
+                    grandDomino.valeur2 = infos_joueurs[i].mainJoueur[j].valeur2;
                     joueurChoisi = i;
                 }
             }
         }
-        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", mains_joueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
+        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", infos_joueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
     if (joueurChoisi != 0)
     {
-        pseudoTemp = mains_joueurs[0].pseudo;
-        strcpy(mains_joueurs[0].pseudo, mains_joueurs[joueurChoisi].pseudo);
-        strcpy(mains_joueurs[joueurChoisi].pseudo, pseudoTemp);
+        pseudoTemp = infos_joueurs[0].pseudo;
+        strcpy(infos_joueurs[0].pseudo, infos_joueurs[joueurChoisi].pseudo);
+        strcpy(infos_joueurs[joueurChoisi].pseudo, pseudoTemp);
 
-        mainTemp = mains_joueurs[0].mainJoueur;
+        mainTemp = infos_joueurs[0].mainJoueur;
         for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
         {
-            mains_joueurs[0].mainJoueur[i] = mains_joueurs[joueurChoisi].mainJoueur[i];
-            mains_joueurs[joueurChoisi].mainJoueur[i] = mainTemp[i];
+            infos_joueurs[0].mainJoueur[i] = infos_joueurs[joueurChoisi].mainJoueur[i];
+            infos_joueurs[joueurChoisi].mainJoueur[i] = mainTemp[i];
         }
     }
 }
 
 // determine qui doit jouer.
-int determine_joueur_suivant(int tour, int totJoueur, JOUEUR mains_joueurs[])
+int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 {
     tour++;
     if (tour >= totJoueur)
         tour = 0;
 
-    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, mains_joueurs[tour].pseudo);
+    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, infos_joueurs[tour].pseudo);
     return tour;
 }
 
@@ -290,22 +290,49 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[])
     }
 }*/
 
-BOOL verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2) // renvoie vrai si le domino choisi peut être joué
-{                                                                                                                // indices_extremite1: domino le plus en  bas ou à gauche du plateau
-    if (plateau[indices_extremite1.ligne][indices_extremite1.colonne].valeur1 == domino.valeur1 || plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur2)
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2) // renvoie vrai si le domino choisi peut être joué
+{                                                                                                                          // indices_extremite1: domino le plus en  bas ou à gauche du plateau
+    AIDE_PLACEMENT a_retourner;
+
+    if (plateau[indices_extremite1.ligne][indices_extremite1.colonne].valeur1 == domino.valeur2)
     {
-        return TRUE;
+        a_retourner.compatible = VRAI;
+        a_retourner.extrémité = GAUCHE;
+
+        return a_retourner;
     }
-    else if (plateau[indices_extremite1.ligne][indices_extremite1.ligne].valeur1 == domino.valeur2 || plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur1)
+    else if (plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur1)
+    {
+        a_retourner.compatible = VRAI;
+        a_retourner.extrémité = DROITE;
+        return a_retourner;
+    }
+    else if (plateau[indices_extremite1.ligne][indices_extremite1.ligne].valeur1 == domino.valeur1)
     {
         int copie;
         copie = domino.valeur1;
         domino.valeur1 = domino.valeur2;
         domino.valeur2 = copie;
-        return TRUE;
+        a_retourner.compatible = VRAI;
+        a_retourner.extrémité = GAUCHE;
+        return a_retourner;
     }
+
+    else if (plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur2)
+    {
+        int copie;
+        copie = domino.valeur1;
+        domino.valeur1 = domino.valeur2;
+        domino.valeur2 = copie;
+        a_retourner.compatible = VRAI;
+        a_retourner.extrémité = DROITE;
+        return a_retourner;
+    }
+
     else
     {
-        return FALSE;
+        a_retourner.compatible = FAUX;
+        a_retourner.extrémité = AUCUN;
+        return a_retourner;
     }
 }
