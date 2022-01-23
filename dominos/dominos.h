@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef DOMINOS_H
+#define DOMINOS_H
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                             	   Header du jeu Domino               	                //
