@@ -1,8 +1,7 @@
-#include "main.h"
+#include "dominos.h"
 #include "modele.h"
 #include "controleur.h"
 #include "vue.h"
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                  Fonctions de la vue                                 //

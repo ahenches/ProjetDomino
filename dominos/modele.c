@@ -1,4 +1,4 @@
-#include "main.h"
+#include "dominos.h"
 #include "modele.h"
 #include "vue.h"
 
