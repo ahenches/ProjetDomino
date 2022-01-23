@@ -7,7 +7,7 @@
 //                                  Fonction controleur                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs)
+void main_dominos(JOUEUR mains_joueurs[], NB_JOUEURS joueurs)
 {
     POINT coin;
     int totJoueur;
@@ -25,18 +25,18 @@ void main_dominos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs)
     // affiche_plateau();
     genere_pioche();
     affiche_pioche();
-    distribue_premiers_dominos(tabJoueurs, totJoueur);
-    affiche_mains(totJoueur, tabJoueurs);
+    distribue_premiers_dominos(mains_joueurs, totJoueur);
+    affiche_mains(totJoueur, mains_joueurs);
     affiche_pioche();
-    affiche_pseudos(tabJoueurs, totJoueur);
-    definit_premier_joueur(tabJoueurs, determine_nb_dominos_main(totJoueur));
-    printf("**** C'est au tour de %s de jouer ! ****\n", tabJoueurs[0].pseudo);
+    affiche_pseudos(mains_joueurs, totJoueur);
+    definit_premier_joueur(mains_joueurs, determine_nb_dominos_main(totJoueur));
+    printf("**** C'est au tour de %s de jouer ! ****\n", mains_joueurs[0].pseudo);
 
     while (1)
     {
-        dominoChoisi = recupere_choix_domino_main(tabJoueurs[tour].mainJoueur);
+        dominoChoisi = recupere_choix_domino_main(mains_joueurs[tour].mainJoueur);
         printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi.valeur1, dominoChoisi.valeur2);
         printf("\n-----------------------------\n");
-        tour = determine_joueur_suivant(tour, totJoueur, tabJoueurs);
+        tour = determine_joueur_suivant(tour, totJoueur, mains_joueurs);
     }
 }

@@ -6,7 +6,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Prototype Contôleur
-void main_dominos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs);
-
+void main_dominos(JOUEUR mains_joueurs[], NB_JOUEURS joueurs);
 
 #endif
