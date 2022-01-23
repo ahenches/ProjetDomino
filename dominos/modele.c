@@ -243,11 +243,9 @@ void definit_premier_joueur(JOUEUR tabJoueurs[], int nbDominosMain)
         pseudoTemp = tabJoueurs[0].pseudo;
         strcpy(tabJoueurs[0].pseudo, tabJoueurs[joueurChoisi].pseudo);
         strcpy(tabJoueurs[joueurChoisi].pseudo, pseudoTemp);
-        /*tabJoueurs[0].pseudo = tabJoueurs[joueurChoisi].pseudo;
-        tabJoueurs[joueurChoisi].pseudo = pseudoTemp;*/
 
         mainTemp = tabJoueurs[0].mainJoueur;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
         {
             tabJoueurs[0].mainJoueur[i] = tabJoueurs[joueurChoisi].mainJoueur[i];
             tabJoueurs[joueurChoisi].mainJoueur[i] = mainTemp[i];

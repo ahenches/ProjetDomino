@@ -16,6 +16,7 @@
 #define RESH_FENETRE 600
 #define RESV_FENETRE 626
 #define TOT_JOUEURS 4
+#define NB_MAX_DOMINO_MAIN 21
 #define SDL_TTF_OK // police
 
 // Structures et enums
@@ -41,9 +42,9 @@ typedef struct NB_JOUEURS
 
 typedef struct JOUEUR
 {
-	char pseudo[20];
-	DOMINO mainJoueur[21]; // main du joueur
-	int score;
+	char pseudo[20]; // pseudo du joueur
+	DOMINO mainJoueur[NB_MAX_DOMINO_MAIN]; // main du joueur
+	int score; // score du joueur
 } JOUEUR;
 
 // variables globales
