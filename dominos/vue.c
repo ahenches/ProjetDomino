@@ -1,17 +1,21 @@
-#include "dominos.h"
+#include "main.h"
+#include "modele.h"
+#include "controleur.h"
+#include "vue.h"
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                  Fonctions de la vue                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction qui parcourt le tableau des pseudos et qui affiche les pseudos des joueurs
-void affiche_pseudos(char *tabPseudos[], int totJoueur)
+void affiche_pseudos(JOUEUR tabJoueurs[], int totJoueur)
 {
     int i;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s\n", tabPseudos[i]);
+        printf("%s\n", tabJoueurs[i].pseudo);
     }
 }
 
@@ -33,17 +37,17 @@ void affiche_plateau()
 }
 
 // affiche la main des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, char *tabPseudos[])
+void affiche_mains(int totJoueur, JOUEUR tabJoueurs[])
 {
     int i;
     int j;
 
     for (i = 0; i < totJoueur; i++)
     {
-        printf("%s = ", tabPseudos[i]);
+        printf("%s = ", tabJoueurs[i].pseudo);
         for (j = 0; j < determine_nb_dominos_main(totJoueur); j++)
         {
-            printf("|%d %d| ", mainJoueurs[i][j].valeur1, mainJoueurs[i][j].valeur2);
+            printf("|%d %d| ", tabJoueurs[i].mainJoueur[j].valeur1, tabJoueurs[i].mainJoueur[j].valeur2);
         }
         printf("\n");
     }

@@ -1,4 +1,8 @@
-#include "dominos.h"
+#include "main.h"
+#include "modele.h"
+#include "controleur.h"
+#include "vue.h"
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                  Fonctions du modele                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +44,7 @@ NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
     return joueurs;
 }
 
-void entre_pseudos(char *tabPseudos[], NB_JOUEURS joueurs)
+void entre_pseudos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs)
 {
     int i;
     int compt;
@@ -52,14 +56,14 @@ void entre_pseudos(char *tabPseudos[], NB_JOUEURS joueurs)
     for (i = 0; i < joueurs.nbJoueurHumain; i++)
     {
         printf("Choisissez votre pseudo :\n");
-        tabPseudos[i] = (char *)malloc(25);
-        scanf("%s", tabPseudos[i]);
+        //tabJoueurs[i].pseudo = (char *)malloc(25);
+        scanf("%s", tabJoueurs[i].pseudo);
     }
 
     for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
     {
-        tabPseudos[i] = (char *)malloc(25);
-        sprintf(tabPseudos[i], "IA%d", compt);
+        //tabPseudos[i] = (char *)malloc(25);
+        sprintf(tabJoueurs[i].pseudo, "IA%d", compt);
         compt++;
     }
 
@@ -109,7 +113,7 @@ int determine_nb_dominos_main(int totJoueur)
 }
 
 // distribue les dominos en fonction du nombre de joueurs, et remplit le tableau mainsJoueurs[]
-void distribue_premiers_dominos(int totJoueur)
+void distribue_premiers_dominos(JOUEUR tabJoueurs[], int totJoueur)
 {
     int i;
     int j;
@@ -123,7 +127,7 @@ void distribue_premiers_dominos(int totJoueur)
         for (j = 0; j < nbDominosMain; j++)
         {
             domChoisi = prend_domino_pour_distribue();
-            mainJoueurs[i][j] = domChoisi;
+            tabJoueurs[i].mainJoueur[j] = domChoisi;
         }
     }
 }
@@ -179,7 +183,7 @@ BOOL est_double(DOMINO domino)
 
 /* définit le joueur qui commence, et place les mains des joueurs dans l'ordre dans tabPseudos.
   Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
-void definit_premier_joueur(char *tabPseudos[], int nbDominosMain)
+void definit_premier_joueur(JOUEUR tabJoueurs[], int nbDominosMain)
 {
     int i;
     int j;
@@ -202,9 +206,9 @@ void definit_premier_joueur(char *tabPseudos[], int nbDominosMain)
         {
             for (j = 0; j < nbDominosMain; j++)
             {
-                if (est_double(mainJoueurs[i][j]))
+                if (est_double(tabJoueurs[i].mainJoueur[j]))
                 {
-                    tempDouble = mainJoueurs[i][j].valeur1;
+                    tempDouble = tabJoueurs[i].mainJoueur[j].valeur1;
 
                     if (tempDouble > grandDouble)
                     {
@@ -214,7 +218,7 @@ void definit_premier_joueur(char *tabPseudos[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", tabPseudos[joueurChoisi], grandDouble, grandDouble);
+        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", tabJoueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
     }
     else
     {
@@ -222,41 +226,43 @@ void definit_premier_joueur(char *tabPseudos[], int nbDominosMain)
         {
             for (j = 0; j < nbDominosMain; j++)
             {
-                if (mainJoueurs[i][j].valeur1 >= grandDomino.valeur1 && mainJoueurs[i][j].valeur2 >= grandDomino.valeur2)
+                if (tabJoueurs[i].mainJoueur[j].valeur1 >= grandDomino.valeur1 && tabJoueurs[i].mainJoueur[j].valeur2 >= grandDomino.valeur2)
                 {
-                    grandDomino.valeur1 = mainJoueurs[i][j].valeur1;
-                    grandDomino.valeur2 = mainJoueurs[i][j].valeur2;
+                    grandDomino.valeur1 = tabJoueurs[i].mainJoueur[j].valeur1;
+                    grandDomino.valeur2 = tabJoueurs[i].mainJoueur[j].valeur2;
                     joueurChoisi = i;
                 }
             }
         }
-        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabPseudos[joueurChoisi], grandDomino.valeur1, grandDomino.valeur2);
+        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", tabJoueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
     if (joueurChoisi != 0)
     {
-        pseudoTemp = tabPseudos[0];
-        tabPseudos[0] = tabPseudos[joueurChoisi];
-        tabPseudos[joueurChoisi] = pseudoTemp;
+        pseudoTemp = tabJoueurs[0].pseudo;
+        strcpy(tabJoueurs[0].pseudo, tabJoueurs[joueurChoisi].pseudo);
+        strcpy(tabJoueurs[joueurChoisi].pseudo, pseudoTemp);
+        /*tabJoueurs[0].pseudo = tabJoueurs[joueurChoisi].pseudo;
+        tabJoueurs[joueurChoisi].pseudo = pseudoTemp;*/
 
-        mainTemp = mainJoueurs[0];
-        for (int i = 0; i < 7; ++i)
+        mainTemp = tabJoueurs[0].mainJoueur;
+        for (int i = 0; i < 7; i++)
         {
-            mainJoueurs[0][i] = mainJoueurs[joueurChoisi][i];
-            mainJoueurs[joueurChoisi][i] = mainTemp[i];
+            tabJoueurs[0].mainJoueur[i] = tabJoueurs[joueurChoisi].mainJoueur[i];
+            tabJoueurs[joueurChoisi].mainJoueur[i] = mainTemp[i];
         }
     }
 }
 
 // determine qui doit jouer.
-int determine_joueur_suivant(int tour, int totJoueur, char *tabPseudos[])
+int determine_joueur_suivant(int tour, int totJoueur, JOUEUR tabJoueurs[])
 {
     tour++;
     if (tour >= totJoueur)
         tour = 0;
 
-    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, tabPseudos[tour]);
+    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, tabJoueurs[tour].pseudo);
     return tour;
 }
 
