@@ -7,6 +7,10 @@
 //                             		   fonction main                	                //
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// variables globales
+DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
+DOMINO pioche[TAILLE_TAB_DOMINOS];
+
 int main(int argc, char *argv[])
 {
 	// début de la session graphique
@@ -16,7 +20,7 @@ int main(int argc, char *argv[])
 	JOUEUR tabJoueurs[TOT_JOUEURS];
 	nbJoueurs = entre_nb_joueurs(nbJoueurs);
 	entre_pseudos(tabJoueurs, nbJoueurs);
-	main_dominos(tabJoueurs,nbJoueurs);
+	main_dominos(tabJoueurs, nbJoueurs);
 
 	attend_clic();
 	ferme_fenetre();

@@ -1,6 +1,5 @@
 #include "main.h"
 #include "modele.h"
-#include "controleur.h"
 #include "vue.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -56,13 +55,13 @@ void entre_pseudos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs)
     for (i = 0; i < joueurs.nbJoueurHumain; i++)
     {
         printf("Choisissez votre pseudo :\n");
-        //tabJoueurs[i].pseudo = (char *)malloc(25);
+        // tabJoueurs[i].pseudo = (char *)malloc(25);
         scanf("%s", tabJoueurs[i].pseudo);
     }
 
     for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
     {
-        //tabPseudos[i] = (char *)malloc(25);
+        // tabPseudos[i] = (char *)malloc(25);
         sprintf(tabJoueurs[i].pseudo, "IA%d", compt);
         compt++;
     }
@@ -126,14 +125,14 @@ void distribue_premiers_dominos(JOUEUR tabJoueurs[], int totJoueur)
     {
         for (j = 0; j < nbDominosMain; j++)
         {
-            domChoisi = prend_domino_pour_distribue();
+            domChoisi = pioche_un_domino();
             tabJoueurs[i].mainJoueur[j] = domChoisi;
         }
     }
 }
 
 // choisit aléatoirement un domino dans la pioche[] et le supprime de la pioche
-DOMINO prend_domino_pour_distribue()
+DOMINO pioche_un_domino()
 {
     int alea;
     DOMINO domChoisi;

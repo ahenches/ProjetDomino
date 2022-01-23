@@ -42,13 +42,13 @@ typedef struct NB_JOUEURS
 
 typedef struct JOUEUR
 {
-	char pseudo[20]; // pseudo du joueur
+	char pseudo[20];					   // pseudo du joueur
 	DOMINO mainJoueur[NB_MAX_DOMINO_MAIN]; // main du joueur
-	int score; // score du joueur
+	int score;							   // score du joueur
 } JOUEUR;
 
 // variables globales
-DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
-DOMINO pioche[TAILLE_TAB_DOMINOS];
+extern DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
+extern DOMINO pioche[TAILLE_TAB_DOMINOS];
 
 #endif
