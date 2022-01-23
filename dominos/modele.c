@@ -57,6 +57,15 @@ void entre_pseudos(JOUEUR tabJoueurs[], NB_JOUEURS joueurs)
         printf("Choisissez votre pseudo :\n");
         // tabJoueurs[i].pseudo = (char *)malloc(25);
         scanf("%s", tabJoueurs[i].pseudo);
+
+        if (strlen(tabJoueurs[i].pseudo) > 25)
+        {
+            do
+            {
+                printf("\nVeillez respecter la limite maximale de 25 charactères.\n");
+                scanf("%s", tabJoueurs[i].pseudo);
+            } while (strlen(tabJoueurs[i].pseudo) > 25);
+        }
     }
 
     for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
@@ -280,3 +289,5 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[])
 
     }
 }*/
+
+// BOOL verifie_compatibilite_domino(DOMINO domino, ) //renvoie vrai si le domino choisi peut être joué (même valeur qu'un domino sur le plateau)
