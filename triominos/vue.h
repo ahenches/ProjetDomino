@@ -16,7 +16,7 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp);
 void affiche_emplacement_possible_triominos(CASE caseP);
 void actualise_pioche_triominos(int nbPioche);
 void efface_main_triominos();
-void affiche_main_triominos(JOUEUR_TRIOMINOS joueur);
+void affiche_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
 void affiche_joueurs_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[]);
 void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[]);
 void affiche_joueur_main_triominos(JOUEUR_TRIOMINOS joueur);

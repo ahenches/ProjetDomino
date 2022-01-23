@@ -32,10 +32,10 @@ void affiche_plateau_triminos()
 	//Textes a afficher
 	p1.x = BORDURE + 5; p1.y = HAUTEUR_MAIN + 5;
 	affiche_texte("Main", 18, p1, noir);
-	
-	p1.x += LARGEUR_MAIN + 10; 
+
+	p1.x += LARGEUR_MAIN + 10;
 	affiche_texte("Pioche", 18, p1, noir);
-	
+
 	// permet d afficher le quadrillage dans le plateau
 	//~ p1.x = 20; p1.y = 820;
 	//~ p2.x = 1280; p2.y = 820;
@@ -73,10 +73,10 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		pointe.x -= 4; pointe.y -= 12;
 		pGauche.x += 10; pGauche.y += 19;
 		pDroit.x -= 19; pDroit.y +=19;
-		
+
 		switch (emp.pointe)
 		{
-			case 'm': 
+			case 'm':
 				affiche_entier(emp.trio.min,10, pointe, noir);
 				affiche_entier(emp.trio.sec,10, pDroit, noir);
 				affiche_entier(emp.trio.der,10, pGauche, noir);
@@ -86,11 +86,10 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 				affiche_entier(emp.trio.der,10, pDroit, noir);
 				affiche_entier(emp.trio.min,10, pGauche, noir);
 				break;
-			default : 
+			default :
 				affiche_entier(emp.trio.der,10, pointe, noir);
 				affiche_entier(emp.trio.min,10, pDroit, noir);
 				affiche_entier(emp.trio.sec,10, pGauche, noir);
-				printf("OK");
 		}
 	}
 
@@ -107,10 +106,10 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 		pointe.x -= 4; pointe.y += 23;
 		pGauche.x += 10; pGauche.y -= 4;
 		pDroit.x -= 19; pDroit.y -= 4;
-		
+
 		switch (emp.pointe)
 		{
-			case 'm': 
+			case 'm':
 				affiche_entier(emp.trio.min,10, pointe, noir);
 				affiche_entier(emp.trio.sec,10, pGauche, noir);
 				affiche_entier(emp.trio.der,10, pDroit, noir);
@@ -120,11 +119,10 @@ void affiche_triomino(CASE caseP, EMPLACEMENT emp)
 				affiche_entier(emp.trio.der,10, pGauche, noir);
 				affiche_entier(emp.trio.min,10, pDroit, noir);
 				break;
-			default : 
+			default :
 				affiche_entier(emp.trio.der,10, pointe, noir);
 				affiche_entier(emp.trio.min,10, pGauche, noir);
 				affiche_entier(emp.trio.sec,10, pDroit, noir);
-				printf("OK");
 		}
 	}
 }
@@ -160,11 +158,10 @@ void actualise_pioche_triominos(int nbPioche)
 	p1.x = BORDURE + LARGEUR_MAIN + 11 ; p1.y = 11 ;
 	p2.x = p1.x + LARGEUR_PIOCHE -2 ; p2.y = HAUTEUR_MAIN - 22 ;
 	dessine_rectangle_plein(p1, p2, lightgrey);
-	
+
 	//Affiche le nouveau nombre
 	p1.x = BORDURE + LARGEUR_MAIN + 90 ; p1.y = 75 ;
 	affiche_entier(nbPioche, 35,p1, noir );
-	
 }
 
 void efface_main_triominos()
@@ -181,44 +178,65 @@ void efface_main_triominos()
 	dessine_rectangle_plein(p1, p2, lightgrey);
 }
 
-void affiche_main_triominos(JOUEUR_TRIOMINOS joueur) // main joueur contient au max 15 tuiles
+void affiche_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain)
 {
 	POINT pointe,pointeN, pGauche, pGaucheN, pDroit, pDroitN;
 
 	efface_main_triominos();
 	affiche_joueur_main_triominos(joueur);
-	
+
 	pointe.x = BORDURE + 5 + LARGEUR_TUILE/2; pointe.y = BORDURE + HAUTEUR_TUILE;
 	pGauche.x = pointe.x - LARGEUR_TUILE/2;	pGauche.y = pointe.y - HAUTEUR_TUILE;
 	pDroit.x = pointe.x + LARGEUR_TUILE/2; 	pDroit.y = pGauche.y;
 
-	for (int i = 0; i<15 ; i++)
+	for (int i = 0 + partieMain*14; i < 14 + partieMain*14 ; i++)
 	{
-		dessine_triangle_plein(pointe,pGauche,pDroit,beige);
-		dessine_triangle(pointe,pGauche,pDroit,noir);
-				
-		//Affichage des nombres
-		pointeN.x = pointe.x - 4; 		pointeN.y = pointe.y - 12;
-		pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 19;
-		pDroitN.x = pDroit.x - 19; 		pDroitN.y = pDroit.y + 19;
-	
-		affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
-		affiche_entier(joueur.mainJoueur.tab[i].sec,10, pDroitN, noir);
-		affiche_entier(joueur.mainJoueur.tab[i].der,10, pGaucheN, noir);
-		
-		pointe.x += LARGEUR_TUILE + 10;		pointeN.x += LARGEUR_TUILE + 10;	
-		pGauche.x += LARGEUR_TUILE + 10;	pGaucheN.x += LARGEUR_TUILE + 10;	
-		pDroit.x += LARGEUR_TUILE + 10;		pDroitN.x += LARGEUR_TUILE + 10;	
+		if (joueur.mainJoueur.taille > i)
+		{
+			dessine_triangle_plein(pointe,pGauche,pDroit,beige);
+			dessine_triangle(pointe,pGauche,pDroit,noir);
+
+			//Affichage des nombres
+			pointeN.x = pointe.x - 4; 		pointeN.y = pointe.y - 12;
+			pGaucheN.x = pGauche.x + 10; 	pGaucheN.y = pGauche.y + 19;
+			pDroitN.x = pDroit.x - 19; 		pDroitN.y = pDroit.y + 19;
+
+			affiche_entier(joueur.mainJoueur.tab[i].min,10, pointeN, noir);
+			affiche_entier(joueur.mainJoueur.tab[i].sec,10, pDroitN, noir);
+			affiche_entier(joueur.mainJoueur.tab[i].der,10, pGaucheN, noir);
+		}
+
+		pointe.x += LARGEUR_TUILE + 10;
+		pGauche.x += LARGEUR_TUILE + 10;
+		pDroit.x += LARGEUR_TUILE + 10;
 	}
+
+	//Affichage de la flèche de navigation
+	if (partieMain == DEBUT_MAIN)
+	{
+		pointe.x -= LARGEUR_TUILE/2 - 10; //pointe.y = ;
+		pGauche.x = pointe.x ; pGauche.y += 5;
+		pDroit.x -= 10; pDroit.y += HAUTEUR_TUILE/2 +2;
+		dessine_triangle_plein(pointe, pDroit, pGauche, rouge);
+	}
+	else{
+		pointe.x += LARGEUR_TUILE/2 - 10; //pointe.y = ;
+		pGauche.x += 10 ; pGauche.y += HAUTEUR_TUILE/2 +2;
+		pDroit.x = pointe.x ; pDroit.y += 5;
+		dessine_triangle_plein(pGauche,  pointe,pDroit, rouge);
+	}
+
+	dessine_triangle(pointe, pGauche, pDroit, noir);
+
 }
 
 void affiche_joueurs_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 {
 	POINT p1, p2;
 	int i;
-	
+
 	p1.x = BORDURE; p1.y = 870;
-	
+
 	for (i = 0; i< nbJoueurs; i++)
 	{
 		affiche_texte(joueurs[i].pseudo, 20, p1, noir);
@@ -240,7 +258,7 @@ void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 {
 	POINT p1, p2;
 	int i;
-	
+
 	p1.x = 195; 		p1.y = 875;
 	p2.x = p1.x + 58; 	p2.y = p1.y - 30;
 
@@ -250,7 +268,7 @@ void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 		p1.x += 260;
 		p2.x += 260;
 	}
-	
+
 	p1.x = 200; p1.y = 870;
 
 	for (i = 0; i< nbJoueurs; i++)
@@ -263,7 +281,7 @@ void actualise_score_triominos(int nbJoueurs, JOUEUR_TRIOMINOS joueurs[])
 void affiche_joueur_main_triominos(JOUEUR_TRIOMINOS joueur)
 {
 	POINT p1;
-	
+
 	p1.x = BORDURE + 80; p1.y = HAUTEUR_MAIN + 5;
 	affiche_texte(joueur.pseudo, 20, p1, noir);
 }

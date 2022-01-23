@@ -2,6 +2,8 @@
 #define HAUTEUR_PLATEAU_MAX 14
 #define LARGEUR_PLATEAU_MAX 48
 #define MAX_TAILLE_PSEUDO 48
+#define DEBUT_MAIN 0
+#define FIN_MAIN 1
 
 typedef struct triomino
 {
@@ -44,7 +46,9 @@ typedef struct joueur_triominos
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
+BOOL clic_sur_fleche_triominos(POINT clic);
 BOOL clic_dans_pioche_triominos(POINT clic);
 BOOL clic_dans_plateau_triominos(POINT clic);
 CASE transforme_point_en_case_triominos(POINT clic);
-TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant);
+TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant, int partieMain);
+int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
