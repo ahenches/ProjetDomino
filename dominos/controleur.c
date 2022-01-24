@@ -9,29 +9,26 @@
 
 void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 {
-    POINT coin;
     int totJoueur;
-    int tour; // a qui le tour
+    int tour;    // a qui le tour
     int tourJeu; // nombre de tour jouer
-    
+
     COORDONNEES indiceExtremite1;
     COORDONNEES indiceExtremite2;
     BOOL dominoPlace;
 
-    indiceExtremite1.ligne = TAILLE_TAB_DOMINOS/2;
-    indiceExtremite1.colonne = TAILLE_TAB_DOMINOS/2;
-    indiceExtremite2.ligne = TAILLE_TAB_DOMINOS/2;
-    indiceExtremite2.colonne = TAILLE_TAB_DOMINOS/2;
+    indiceExtremite1.ligne = TAILLE_TAB_DOMINOS / 2;
+    indiceExtremite1.colonne = TAILLE_TAB_DOMINOS / 2;
+    indiceExtremite2.ligne = TAILLE_TAB_DOMINOS / 2;
+    indiceExtremite2.colonne = TAILLE_TAB_DOMINOS / 2;
 
-    coin.x = 100;
-    coin.y = 200;
     totJoueur = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
     tour = 0;
     tourJeu = 1;
     dominoPlace = FALSE;
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
-    affiche_image("./img_dominos/bmp/00.bmp", coin);
+    affiche_fond();
     actualise_affichage();
     initialise_plateau();
     initialise_mains_joueurs(infos_joueurs, totJoueur);
@@ -53,15 +50,14 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
             if (strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA3") == 0)
             {
                 dominoPlace = joue_IA(infos_joueurs[tour].mainJoueur, &indiceExtremite1, &indiceExtremite2, tourJeu);
-                
             }
             else
             {
                 dominoPlace = joue_joueur(infos_joueurs[tour].mainJoueur, &indiceExtremite1, &indiceExtremite2, tourJeu);
             }
 
-        }while(dominoPlace == FALSE);
-        
+        } while (dominoPlace == FALSE);
+
         affiche_plateau();
         tour = determine_joueur_suivant(tour, totJoueur, infos_joueurs);
         tourJeu++;
