@@ -142,6 +142,43 @@ void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs)
   }
 }
 
+JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale)
+{
+  int sommeValTrioJou[(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi)] ;
+  int max ;
+  JOUEUR_TRIOMINOS jouComm ;
+  for(int i=0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi); i++)
+  {
+    pioche(&joueurs[i].mainJoueur, pioche_initiale);
+    TRIOMINO trio= joueurs[i].mainJoueur.tab[0] ;
+    sommeValTrioJou[i]=trio.min+trio.sec+trio.der ;
+  }
+  max = sommeValTrioJou[0];
+  for(int i=0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi); i++)
+  {
+    if (sommeValTrioJou[i]>max)
+      jouComm = joueurs[i] ;
+    else
+      jouComm = joueurs[0] ;
+  }
+  return(jouComm);
+}
+
+void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
+  PIOCHE_TRIOMINOS *pioche_initiale)
+{
+  int nb_de_triomino_distribue = 3;
+  for(int i = 0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi);i++)
+  {
+
+    for(int j = 0; j<nb_de_triomino_distribue;j++)
+    {
+      pioche(&joueurs[i].mainJoueur, pioche_initiale);
+    }
+    // affiche_pioche(*pioche_initiale);
+  }
+}
+
 void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
 {
   if (pioche->taille > 0)
@@ -158,17 +195,22 @@ void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
   }
 }
 
-void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
-  PIOCHE_TRIOMINOS *pioche_initiale)
-{
-  int nb_de_triomino_distribue = 3;
-  for(int i = 0; i<(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi);i++)
-  {
+void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement){
 
-    for(int j = 0; j<nb_de_triomino_distribue;j++)
-    {
-      pioche(&joueurs[i].mainJoueur, pioche_initiale);
-    }
-    // affiche_pioche(*pioche_initiale);
+}
+
+BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio)
+{
+  if(v1<v2)
+  {
+    if ( v1 == trio.min && v2==der)
+      return true;
   }
+  else
+  {
+    if( (v1== trio.sec && v2==trio.der) || (v1==trio.min && v2==trio.sec) )
+      return true;
+  }
+  return false;
+
 }

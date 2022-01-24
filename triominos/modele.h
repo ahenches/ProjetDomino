@@ -10,11 +10,13 @@ PIOCHE_TRIOMINOS initialise_pioche();
 void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs);
 void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
   PIOCHE_TRIOMINOS *pioche_initiale);
-// JOUEUR joueur_qui_commence();
+JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur,
+  JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale)
+
 void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
 // VOID placer();
-// BOOL verifie_coup_valide(INT valeur1, INT valeur2, TRIOMINO a_placer);
+BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
 // INT verifie_figure();
 // BOOL test_fin();
 // INT calcule_score(JOUEUR j);
-// void jeu_ordinateur(JOUEUR ordi);
+void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement);
