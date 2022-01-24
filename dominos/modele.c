@@ -360,7 +360,7 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO* domino, COORDONNEES indicesE
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
     }
-    else if (plateau[indicesExtremite1.ligne][indicesExtremite1.ligne].valeur1 == domino->valeur1)
+    else if (plateau[indicesExtremite1.ligne][indicesExtremite1.colonne].valeur1 == domino->valeur1)
     {
         
         copie = domino->valeur1;
