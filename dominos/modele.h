@@ -19,7 +19,7 @@ int est_double(DOMINO domino);
 void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain);
 int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[]);
 DOMINO recupere_choix_domino_main(DOMINO mainActive[]);
-BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR tabJoueurs[]);
-AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
+BOOL place_domino(DOMINO* dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR infos_joueurs[]);
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO* domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
 
 #endif

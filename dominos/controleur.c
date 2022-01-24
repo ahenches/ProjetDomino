@@ -13,9 +13,10 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     int totJoueur;
     int tour; // a qui le tour
     int tourJeu; // nombre de tour jouer
-    DOMINO dominoChoisi;
+    
     COORDONNEES indiceExtremite1;
     COORDONNEES indiceExtremite2;
+    BOOL dominoPlace;
 
     indiceExtremite1.ligne = TAILLE_TAB_DOMINOS/2;
     indiceExtremite1.colonne = TAILLE_TAB_DOMINOS/2;
@@ -27,6 +28,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     totJoueur = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
     tour = 0;
     tourJeu = 1;
+    dominoPlace = FALSE;
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
     affiche_image("./img_dominos/bmp/00.bmp", coin);
@@ -44,10 +46,17 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 
     while (1)
     {
-        dominoChoisi = recupere_choix_domino_main(infos_joueurs[tour].mainJoueur);
-        printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi.valeur1, dominoChoisi.valeur2);
-        printf("\n-----------------------------\n");
-        place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs);
+        do
+        {
+            affiche_mains(totJoueur, infos_joueurs);
+            DOMINO temp = recupere_choix_domino_main(infos_joueurs[tour].mainJoueur);
+            DOMINO *dominoChoisi = &temp;
+            printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
+            printf("\n-----------------------------\n");
+        
+            dominoPlace = place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs);
+        }while(dominoPlace == FALSE);
+        
         affiche_plateau();
         tour = determine_joueur_suivant(tour, totJoueur, infos_joueurs);
         tourJeu++;

@@ -345,36 +345,36 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[])
 
 // renvoie vrai si le domino choisi peut être joué
 // indicesExtremite1: domino le plus en bas ou à gauche du plateau
-AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2) 
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO* domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2) 
 {                                                                                                                          
     AIDE_PLACEMENT a_retourner;
+    int copie;
 
-    if (plateau[indicesExtremite1.ligne][indicesExtremite1.colonne].valeur1 == domino.valeur2)
+    if (plateau[indicesExtremite1.ligne][indicesExtremite1.colonne].valeur1 == domino->valeur2)
     {
         a_retourner.compatible = VRAI;
         a_retourner.extremite = GAUCHE;
     }
-    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino.valeur1)
+    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino->valeur1)
     {
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
     }
-    else if (plateau[indicesExtremite1.ligne][indicesExtremite1.ligne].valeur1 == domino.valeur1)
+    else if (plateau[indicesExtremite1.ligne][indicesExtremite1.ligne].valeur1 == domino->valeur1)
     {
-        /*int copie;
-        copie = domino.valeur1;
-        domino.valeur1 = domino.valeur2;
-        domino.valeur2 = copie;*/
+        
+        copie = domino->valeur1;
+        domino->valeur1 = domino->valeur2;
+        domino->valeur2 = copie;
         a_retourner.compatible = VRAI;
         a_retourner.extremite = GAUCHE;
     }
 
-    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino.valeur2)
+    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino->valeur2)
     {
-        /*int copie;
-        copie = domino.valeur1;
-        domino.valeur1 = domino.valeur2;
-        domino.valeur2 = copie;*/
+        copie = domino->valeur1;
+        domino->valeur1 = domino->valeur2;
+        domino->valeur2 = copie;
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
     }
@@ -387,7 +387,7 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indicesEx
     return a_retourner;
 }
 
-BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR tabJoueurs[])
+BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR infos_joueurs[])
 {
     int alea;
     EXTREMITE_COMPATIBLE extremiteCompatible;
@@ -396,7 +396,7 @@ BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNE
       
     if (tourJeu == 1)
     {
-        plateau[TAILLE_TAB_DOMINOS/2][TAILLE_TAB_DOMINOS/2] = dominoAPlacer;
+        plateau[TAILLE_TAB_DOMINOS/2][TAILLE_TAB_DOMINOS/2] = *dominoAPlacer;
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
@@ -407,7 +407,7 @@ BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNE
         {
             if (indiceExtremite1->colonne != 0)
             {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = dominoAPlacer;
+                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
                 indiceExtremite1->colonne--;
                 printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
             }
@@ -416,7 +416,7 @@ BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNE
         {
             if (indiceExtremite2->colonne != TAILLE_TAB_DOMINOS-1)
             {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = dominoAPlacer;
+                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
                 indiceExtremite2->colonne++;
                 printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
             }
@@ -427,12 +427,12 @@ BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNE
             printf("** DOMINO choisi COMPATIBLE a DROITE et a GAUCHE **\n");
             if (alea == 0)
             {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = dominoAPlacer;
+                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
                 indiceExtremite1->colonne--;
             }
             else
             {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = dominoAPlacer;
+                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
                 indiceExtremite2->colonne++;
             }
         }
