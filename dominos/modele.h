@@ -22,5 +22,6 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[]);
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino);
 BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[]);
 AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO* domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
-
+BOOL passe_tour();
+DOMINO recupere_choix_IA(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
 #endif

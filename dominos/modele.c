@@ -468,3 +468,35 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 
     return TRUE;
 }
+
+BOOL passe_tour()
+{
+    int choix;
+    printf("** Tu veux passer ton tour ? 1 = OUI,0 = NON **\n");
+    scanf("%d", &choix);
+
+    if (choix == 0)
+        return FALSE;
+    else if (choix == 1)
+        return TRUE;
+
+    return FALSE;
+}
+
+
+/////////////////////////////////////////////////////////////////////
+///                           FONCTION IA                          ///
+/////////////////////////////////////////////////////////////////////
+/*DOMINO recupere_choix_IA(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+{
+    for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+    {
+        if (verifie_compatibilite_domino(mainActive[i], indicesExtremite1, indicesExtremite2).compatible)
+        {
+            
+        } 
+    }
+    
+}
+
+*/
