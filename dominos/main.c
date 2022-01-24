@@ -14,7 +14,7 @@ DOMINO pioche[TAILLE_TAB_DOMINOS];
 int main(int argc, char *argv[])
 {
 	// début de la session graphique
-	ouvre_fenetre(RESH_FENETRE, RESV_FENETRE);
+	ouvre_fenetre(LARGEUR, HAUTEUR);
 
 	NB_JOUEURS nbJoueurs;
 	JOUEUR infos_joueurs[TOT_JOUEURS];

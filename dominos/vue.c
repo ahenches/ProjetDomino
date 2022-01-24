@@ -71,3 +71,10 @@ void affiche_pioche()
     }
     printf("\n---------------------------------\n");
 }
+
+void affiche_domino(DOMINO domino_a_afficher, POINT coin)
+{
+    char nom_image[100];
+    sprintf(nom_image, "./img_dominos/bmp/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+    affiche_image(nom_image, coin);
+}
