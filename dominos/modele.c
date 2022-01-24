@@ -294,7 +294,7 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n", infos_joueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
+        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n\n\n", infos_joueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
     }
     else
     {
@@ -310,7 +310,7 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n", infos_joueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
+        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n\n\n", infos_joueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
@@ -386,17 +386,36 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO* domino, COORDONNEES indicesE
     }
     return a_retourner;
 }
+int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino)
+{
+    int i;
 
-BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR infos_joueurs[])
+    for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+    {
+        if ((mainActive[i].valeur1 == domino.valeur1) && (mainActive[i].valeur2 == domino.valeur2))
+            return i; 
+    }
+    
+    return -1;
+}
+
+BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[])
 {
     int alea;
     EXTREMITE_COMPATIBLE extremiteCompatible;
+    DOMINO pasDom;
+    int dominoMain;
 
+    pasDom.valeur1 = -1;
+    pasDom.valeur2 = -1;
     alea = rand() % 2;
-      
+
+    dominoMain = trouve_indice_domino_main(mainActive, *dominoAPlacer);  
+
     if (tourJeu == 1)
     {
         plateau[TAILLE_TAB_DOMINOS/2][TAILLE_TAB_DOMINOS/2] = *dominoAPlacer;
+        mainActive[dominoMain] = pasDom;
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
@@ -409,6 +428,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             {
                 plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
                 indiceExtremite1->colonne--;
+                mainActive[dominoMain] = pasDom;
                 printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
             }
         }
@@ -418,6 +438,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             {
                 plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
                 indiceExtremite2->colonne++;
+                mainActive[dominoMain] = pasDom;
                 printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
             }
             
@@ -435,6 +456,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
                 indiceExtremite2->colonne++;
             }
+            mainActive[dominoMain] = pasDom;
         }
         else
         {

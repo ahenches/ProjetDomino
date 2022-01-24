@@ -32,6 +32,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
     affiche_image("./img_dominos/bmp/00.bmp", coin);
+    actualise_affichage();
     initialise_plateau();
     initialise_mains_joueurs(infos_joueurs, totJoueur);
     affiche_plateau();
@@ -42,7 +43,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     affiche_pioche();
     affiche_pseudos(infos_joueurs, totJoueur);
     definit_premier_joueur(infos_joueurs, determine_nb_dominos_main(totJoueur));
-    printf("**** C'est au tour de %s de jouer ! ****\n", infos_joueurs[0].pseudo);
+    printf("**** C'est au tour de %s de jouer ! ****\n\n", infos_joueurs[0].pseudo);
 
     while (1)
     {
@@ -54,7 +55,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
             printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
             printf("\n-----------------------------\n");
         
-            dominoPlace = place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs);
+            dominoPlace = place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs[tour].mainJoueur);
         }while(dominoPlace == FALSE);
         
         affiche_plateau();
