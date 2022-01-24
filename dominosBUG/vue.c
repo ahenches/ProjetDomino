@@ -23,18 +23,15 @@ void affiche_plateau()
 {
     int i;
     int j;
-    printf("\n\n         ");
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
         for (j = 0; j < TAILLE_TAB_DOMINOS; j++)
         {
-            /*if (plateau[i][j].valeur1 == -1 && plateau[i][j].valeur2 == -1)
-                printf("|-1|");*/
-            if (plateau[i][j].valeur1 != -1 && plateau[i][j].valeur2 != -1)
-                printf("|%d %d| ", plateau[i][j].valeur1, plateau[i][j].valeur2);
+            if (plateau[i][j].valeur1 == -1 && plateau[i][j].valeur2 == -1)
+                printf("|-1|");
+            // printf("|%d %d| ", dominoCourant.valeur1, dominoCourant.valeur2);
         }
-        if (plateau[i][j].valeur1 != -1 && plateau[i][j].valeur2 != -1)
-            printf("\n\n");
+        printf("\n");
     }
 }
 
@@ -47,7 +44,7 @@ void affiche_mains(int totJoueur, JOUEUR infos_joueurs[])
     for (i = 0; i < totJoueur; i++)
     {
         printf("%s = ", infos_joueurs[i].pseudo);
-        for (j = 0; j < NB_MAX_DOMINO_MAIN; j++)
+        for (j = 0; j < 6; j++)
         {
             if (infos_joueurs[i].mainJoueur[j].valeur1 != -1)
             {

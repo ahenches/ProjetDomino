@@ -25,23 +25,6 @@ void initialise_plateau()
     }
 }
 
-void initialise_mains_joueurs(JOUEUR infos_joueurs[], int totJoueurs)
-{
-    int i;
-    int j;
-    DOMINO emplacementVide;
-
-    emplacementVide.valeur1 = -1;
-    emplacementVide.valeur2 = -1;
-    emplacementVide.orientation = RIEN;
-    for (i = 0; i < totJoueurs; i++)
-    {
-        for (j = 0; j < NB_MAX_DOMINO_MAIN; j++)
-        {
-            infos_joueurs[i].mainJoueur[j] = emplacementVide;
-        }
-    }
-}
 
 NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
 {
@@ -72,7 +55,7 @@ void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 
     for (i = 0; i < joueurs.nbJoueurHumain; i++)
     {
-        printf("Choisissez votre pseudo :\n");
+        printf("Saisissez votre pseudo :\n");
         // infos_joueurs[i].pseudo = (char *)malloc(25);
         scanf("%s", infos_joueurs[i].pseudo);
 
@@ -80,7 +63,7 @@ void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
         {
             do
             {
-                printf("\nVeillez respecter la limite maximale de 25 charactères.\n");
+                printf("\nVeuillez respecter la limite maximale de 25 charactères.\n");
                 scanf("%s", infos_joueurs[i].pseudo);
             } while (strlen(infos_joueurs[i].pseudo) > 25);
         }
@@ -139,7 +122,7 @@ int determine_nb_dominos_main(int totJoueur)
 }
 
 // distribue les dominos en fonction du nombre de joueurs, et remplit le tableau mainsJoueurs[]
-void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
+JOUEUR* distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
 {
     int i;
     int j;
@@ -153,29 +136,36 @@ void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
         {
             pioche_un_domino(infos_joueurs, i);
         }
+        for (j = nbDominosMain; j < NB_MAX_DOMINO_MAIN; j++)
+        {
+            infos_joueurs[i].mainJoueur[j].valeur1 = -1;
+            infos_joueurs[i].mainJoueur[j].valeur2 = -1; //-1 signifie qu'il n'y a pas de domino dans cette case
+        }
     }
+    return infos_joueurs;
 }
 
-
+// choisit aléatoirement un domino dans la pioche[], le supprime de la pioche et l'ajoute dans la main du joueur actif
 void pioche_un_domino(JOUEUR infos_joueurs[], int numero_joueur_actif)
 {
-    int alea;
-    int i;
+
     DOMINO domChoisi;
     DOMINO pasDom;
+    int alea;
 
-    pasDom.valeur1 = -1;
-    pasDom.valeur2 = -1;
-    pasDom.orientation = HORIZONTALE;
-    i = 0;
     do
     {
         alea = rand() % TAILLE_TAB_DOMINOS;
         domChoisi = pioche[alea];
     } while (domChoisi.valeur1 == -1 && domChoisi.valeur2 == -1);
 
-    if (domChoisi.valeur1 != -1 && domChoisi.valeur2 != -1)
-        pioche[alea] = pasDom;
+    
+    pasDom.valeur1 = -1;
+    pasDom.valeur2 = -1;
+    pasDom.orientation = HORIZONTALE;
+    pioche[alea] = pasDom; // on supprime le domino de la pioche
+
+    int i;
 
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
@@ -186,51 +176,7 @@ void pioche_un_domino(JOUEUR infos_joueurs[], int numero_joueur_actif)
             i = NB_MAX_DOMINO_MAIN + 1;                                   // on arrête la boucle
         }
     }
-
- }
-// choisit aléatoirement un domino dans la pioche[] et le supprime de la pioche
-/*
-void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
-{
-    int i;
-    int j;
-    DOMINO domChoisi;
-    int nbDominosMain;
-
-    nbDominosMain = determine_nb_dominos_main(totJoueur);
-
-    for (i = 0; i < totJoueur; i++)
-    {
-        for (j = 0; j < nbDominosMain; j++)
-        {
-            domChoisi = pioche_un_domino();
-            infos_joueurs[i].mainJoueur[j] = domChoisi;
-        }
-    }
 }
-
-DOMINO pioche_un_domino()
-{
-    int alea;
-    DOMINO domChoisi;
-    DOMINO pasDom;
-
-    pasDom.valeur1 = -1;
-    pasDom.valeur2 = -1;
-    pasDom.orientation = HORIZONTALE;
-
-    do
-    {
-        alea = rand() % TAILLE_TAB_DOMINOS;
-        domChoisi = pioche[alea];
-    } while (domChoisi.valeur1 == -1 && domChoisi.valeur2 == -1);
-
-    if (domChoisi.valeur1 != -1 && domChoisi.valeur2 != -1)
-        pioche[alea] = pasDom;
-
-    return domChoisi;
-}*/
-
 
 /*compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
 un double. Cette information est nécessaire pour determine le joueur qui commence.
@@ -269,7 +215,8 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
     int joueurChoisi;
     int nbrDoublePioche;
     DOMINO grandDomino;
-    JOUEUR joueurTemp;
+    char *pseudoTemp;
+    DOMINO *mainTemp;
 
     grandDouble = 0;
     tempDouble = 0;
@@ -316,9 +263,16 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
     if (joueurChoisi != 0)
     {
-        joueurTemp = infos_joueurs[0];
-        infos_joueurs[0] = infos_joueurs[joueurChoisi];
-        infos_joueurs[joueurChoisi] = joueurTemp;
+        pseudoTemp = infos_joueurs[0].pseudo;
+        strcpy(infos_joueurs[0].pseudo, infos_joueurs[joueurChoisi].pseudo);
+        strcpy(infos_joueurs[joueurChoisi].pseudo, pseudoTemp);
+
+        mainTemp = infos_joueurs[0].mainJoueur;
+        for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+        {
+            infos_joueurs[0].mainJoueur[i] = infos_joueurs[joueurChoisi].mainJoueur[i];
+            infos_joueurs[joueurChoisi].mainJoueur[i] = mainTemp[i];
+        }
     }
 }
 
@@ -343,106 +297,57 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[])
     return mainActive[choix];
 }
 
-// renvoie vrai si le domino choisi peut être joué
-// indicesExtremite1: domino le plus en bas ou à gauche du plateau
-AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2) 
-{                                                                                                                          
+/*void place_domino(Domino dominoAPlacer)
+{
+    if ()
+    {
+
+    }
+}*/
+
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2) // renvoie vrai si le domino choisi peut être joué
+{                                                                                                                          // indices_extremite1: domino le plus en  bas ou à gauche du plateau
     AIDE_PLACEMENT a_retourner;
 
-    if (plateau[indicesExtremite1.ligne][indicesExtremite1.colonne].valeur1 == domino.valeur2)
+    if (plateau[indices_extremite1.ligne][indices_extremite1.colonne].valeur1 == domino.valeur2)
     {
         a_retourner.compatible = VRAI;
         a_retourner.extremite = GAUCHE;
+
+        return a_retourner;
     }
-    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino.valeur1)
+    else if (plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur1)
     {
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
+        return a_retourner;
     }
-    else if (plateau[indicesExtremite1.ligne][indicesExtremite1.ligne].valeur1 == domino.valeur1)
+    else if (plateau[indices_extremite1.ligne][indices_extremite1.ligne].valeur1 == domino.valeur1)
     {
-        /*int copie;
+        int copie;
         copie = domino.valeur1;
         domino.valeur1 = domino.valeur2;
-        domino.valeur2 = copie;*/
+        domino.valeur2 = copie;
         a_retourner.compatible = VRAI;
         a_retourner.extremite = GAUCHE;
+        return a_retourner;
     }
 
-    else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino.valeur2)
+    else if (plateau[indices_extremite2.ligne][indices_extremite2.colonne].valeur2 == domino.valeur2)
     {
-        /*int copie;
+        int copie;
         copie = domino.valeur1;
         domino.valeur1 = domino.valeur2;
-        domino.valeur2 = copie;*/
+        domino.valeur2 = copie;
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
+        return a_retourner;
     }
 
     else
     {
         a_retourner.compatible = FAUX;
         a_retourner.extremite = AUCUN;
+        return a_retourner;
     }
-    return a_retourner;
-}
-
-BOOL place_domino(DOMINO dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, JOUEUR tabJoueurs[])
-{
-    int alea;
-    EXTREMITE_COMPATIBLE extremiteCompatible;
-
-    alea = rand() % 2;
-      
-    if (tourJeu == 1)
-    {
-        plateau[TAILLE_TAB_DOMINOS/2][TAILLE_TAB_DOMINOS/2] = dominoAPlacer;
-        printf("** C'est le premier tour, place n'importe quel domino **\n");
-    }
-    else
-    {
-        extremiteCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2).extremite;
-        
-        if(extremiteCompatible == GAUCHE)
-        {
-            if (indiceExtremite1->colonne != 0)
-            {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = dominoAPlacer;
-                indiceExtremite1->colonne--;
-                printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
-            }
-        }
-        else if(extremiteCompatible == DROITE)
-        {
-            if (indiceExtremite2->colonne != TAILLE_TAB_DOMINOS-1)
-            {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = dominoAPlacer;
-                indiceExtremite2->colonne++;
-                printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
-            }
-            
-        }
-        else if (extremiteCompatible == LES_DEUX)
-        {
-            printf("** DOMINO choisi COMPATIBLE a DROITE et a GAUCHE **\n");
-            if (alea == 0)
-            {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = dominoAPlacer;
-                indiceExtremite1->colonne--;
-            }
-            else
-            {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = dominoAPlacer;
-                indiceExtremite2->colonne++;
-            }
-        }
-        else
-        {
-            printf("** DOMINO choisi PAS COMPATIBLE **\n");
-            return FALSE;
-        }
-        
-    }
-
-    return TRUE;
 }

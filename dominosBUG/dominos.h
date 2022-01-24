@@ -67,7 +67,7 @@ typedef struct COORDONNEES
 typedef struct AIDE_PLACEMENT // aide la fonction place_domino à placer ou non un domino et à quelle extrémité
 {
 	BOOL compatible;
-	EXTREMITE_COMPATIBLE extremite;
+	int extremite;
 
 } AIDE_PLACEMENT;
 
