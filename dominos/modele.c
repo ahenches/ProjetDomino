@@ -403,6 +403,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 {
     int alea;
     EXTREMITE_COMPATIBLE extremiteCompatible;
+    AIDE_PLACEMENT dominoCompatible;
     DOMINO pasDom;
     int dominoMain;
 
@@ -420,43 +421,47 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     }
     else
     {
-        extremiteCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2).extremite;
+        dominoCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2);
+        extremiteCompatible = dominoCompatible.extremite;
         
-        if(extremiteCompatible == GAUCHE)
+        if (dominoCompatible.compatible == TRUE)
         {
-            if (indiceExtremite1->colonne != 0)
+            if(extremiteCompatible == GAUCHE)
             {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
-                indiceExtremite1->colonne--;
+                if (indiceExtremite1->colonne != 0)
+                {
+                    plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
+                    indiceExtremite1->colonne--;
+                    mainActive[dominoMain] = pasDom;
+                    printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
+                }
+            }
+            else if(extremiteCompatible == DROITE)
+            {
+                if (indiceExtremite2->colonne != TAILLE_TAB_DOMINOS-1)
+                {
+                    plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
+                    indiceExtremite2->colonne++;
+                    mainActive[dominoMain] = pasDom;
+                    printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
+                }
+                
+            }
+            else if (extremiteCompatible == LES_DEUX)
+            {
+                printf("** DOMINO choisi COMPATIBLE a DROITE et a GAUCHE **\n");
+                if (alea == 0)
+                {
+                    plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
+                    indiceExtremite1->colonne--;
+                }
+                else
+                {
+                    plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
+                    indiceExtremite2->colonne++;
+                }
                 mainActive[dominoMain] = pasDom;
-                printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
             }
-        }
-        else if(extremiteCompatible == DROITE)
-        {
-            if (indiceExtremite2->colonne != TAILLE_TAB_DOMINOS-1)
-            {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
-                indiceExtremite2->colonne++;
-                mainActive[dominoMain] = pasDom;
-                printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
-            }
-            
-        }
-        else if (extremiteCompatible == LES_DEUX)
-        {
-            printf("** DOMINO choisi COMPATIBLE a DROITE et a GAUCHE **\n");
-            if (alea == 0)
-            {
-                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne-1] = *dominoAPlacer;
-                indiceExtremite1->colonne--;
-            }
-            else
-            {
-                plateau[indiceExtremite2->ligne][indiceExtremite2->colonne+1] = *dominoAPlacer;
-                indiceExtremite2->colonne++;
-            }
-            mainActive[dominoMain] = pasDom;
         }
         else
         {
@@ -487,16 +492,49 @@ BOOL passe_tour()
 /////////////////////////////////////////////////////////////////////
 ///                           FONCTION IA                          ///
 /////////////////////////////////////////////////////////////////////
-/*DOMINO recupere_choix_IA(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+BOOL joue_IA(DOMINO mainActive[], COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu)
 {
-    for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+    BOOL dominoPlace;
+    DOMINO temp;
+    int i;
+    do
     {
-        if (verifie_compatibilite_domino(mainActive[i], indicesExtremite1, indicesExtremite2).compatible)
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // on parcours la main de l'ia et des lors que l'on trouve un domino compatible on le place
         {
-            
+            temp = mainActive[i];
+            if (temp.valeur1 != -1)
+            {
+                DOMINO *dominoChoisi = &temp;
+                printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
+                dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+                printf("\n-----------------------------\n");
+                if (dominoPlace == TRUE)
+                    return TRUE;
+                
+            }
+        }
+        if (i >= NB_MAX_DOMINO_MAIN)// Si pas de domino compatible on passe le tour
+        {
+            printf("**** Je passe mon tour ****\n");
+            printf("\n-----------------------------\n");
+            return TRUE;
         } 
-    }
-    
+           
+    }while(dominoPlace == FALSE);
+
+    return FALSE;
 }
 
-*/
+BOOL joue_joueur(DOMINO mainActive[], COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu)
+{
+    BOOL dominoPlace;
+    DOMINO temp = recupere_choix_domino_main(mainActive);
+    DOMINO *dominoChoisi = &temp;
+
+    printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
+    dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+    //dominoPlace = passe_tour();
+    printf("\n-----------------------------\n");
+
+    return dominoPlace;
+}

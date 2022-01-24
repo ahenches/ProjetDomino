@@ -52,34 +52,12 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
             affiche_mains(totJoueur, infos_joueurs);
             if (strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA3") == 0)
             {
-                do
-                {
-                    for (int i = 0; i < NB_MAX_DOMINO_MAIN; i++)
-                    {
-                        DOMINO temp = infos_joueurs[tour].mainJoueur[i];
-                        if (temp.valeur1 != -1)
-                        {
-                            DOMINO *dominoChoisi = &temp;
-                            printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
-                            printf("\n-----------------------------\n");
-                            dominoPlace = place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs[tour].mainJoueur);
-                            if (dominoPlace == TRUE)
-                                break;
-                            
-                        }
-                    }
-                   
-                }while(dominoPlace == FALSE);
+                dominoPlace = joue_IA(infos_joueurs[tour].mainJoueur, &indiceExtremite1, &indiceExtremite2, tourJeu);
                 
             }
             else
             {
-                DOMINO temp = recupere_choix_domino_main(infos_joueurs[tour].mainJoueur);
-                DOMINO *dominoChoisi = &temp;
-                printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
-                printf("\n-----------------------------\n");
-                dominoPlace = place_domino(dominoChoisi, &indiceExtremite1, &indiceExtremite2, tourJeu, infos_joueurs[tour].mainJoueur);
-                //dominoPlace = passe_tour();
+                dominoPlace = joue_joueur(infos_joueurs[tour].mainJoueur, &indiceExtremite1, &indiceExtremite2, tourJeu);
             }
 
         }while(dominoPlace == FALSE);

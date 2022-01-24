@@ -51,7 +51,7 @@ void affiche_mains(int totJoueur, JOUEUR infos_joueurs[])
         {
             if (infos_joueurs[i].mainJoueur[j].valeur1 != -1)
             {
-                printf("|%d %d| ", infos_joueurs[i].mainJoueur[j].valeur1, infos_joueurs[i].mainJoueur[j].valeur2);
+                printf("(%d)|%d %d| ", j, infos_joueurs[i].mainJoueur[j].valeur1, infos_joueurs[i].mainJoueur[j].valeur2);
             }
         }
         printf("\n");
