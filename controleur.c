@@ -13,6 +13,14 @@ int main()
 	actualise_affichage();
 	attend_clic();
 
+	affiche_menu_nombre_joueurs();
+	actualise_affichage();
+	attend_clic();
+
+	affiche_menu_pseudo(2);
+	actualise_affichage();
+	attend_clic();
+
 	attend_clic();
 
 	return 0;
