@@ -101,6 +101,7 @@ void affiche_menu_pseudo(int numeroJoueur)
 void affiche_menu_choix_jeu()
 {
     POINT pGauche, pDroit, pTexte;
+
     pGauche.x = 0; pGauche.y = 900;
     affiche_image("./fond.bmp", pGauche);
 
@@ -175,6 +176,56 @@ void affiche_menu_choix_jeu()
 
     pTexte.x = pGauche.x + 110; pTexte.y = pGauche.y - 30;
     affiche_texte("Jouer", 30, pTexte, noir);
+}
+
+void affiche_menu_classement()
+{
+    POINT pGauche, pDroit, pTexte;
+    FILE* fichier = NULL;
+    char texte[500] = "";
+
+    pGauche.x = 0; pGauche.y = 900;
+    affiche_image("./fond.bmp", pGauche);
+
+    pTexte.x = 510; pTexte.y = 750;
+    affiche_texte("Classement", 40, pTexte, noir);
+
+    fichier = fopen("./classement.txt", "r");
+
+    //Tableau du classement
+    pGauche.x = 450; pGauche.y = 650 ;
+    pDroit.x = pGauche.x +400 ; pDroit.y = pGauche.y -100 ;
+    pTexte.x = pGauche.x +30 ;pTexte.y = pGauche.y -40 ;
+    if (fichier != NULL)
+    {
+        while(fgets(texte, 500, fichier) != NULL)
+        {
+            dessine_rectangle_plein(pGauche,pDroit,bleuclair);
+            dessine_rectangle(pGauche,pDroit, noir);
+            affiche_texte( texte, 20 , pTexte, noir );
+            pGauche.y -= 100;
+            pDroit.y -= 100;
+            pTexte.y -= 100;
+        }
+        fclose(fichier);
+    }
+
+    //Bouton Rejouer et Quitter
+    pGauche.x = 425; pGauche.y = 200 ;
+    pDroit.x = pGauche.x +200 ; pDroit.y = pGauche.y -100 ;
+    pTexte.x = pGauche.x + 40 ;pTexte.y = pGauche.y -30 ;
+
+    dessine_rectangle_plein(pGauche,pDroit,lightgrey);
+    dessine_rectangle(pGauche,pDroit, noir);
+    affiche_texte("Rejouer" , 30 , pTexte, noir );
+
+    pGauche.x += 250;
+    pDroit.x += 250;
+    pTexte.x += 250;
+
+    dessine_rectangle_plein(pGauche,pDroit,lightgrey);
+    dessine_rectangle(pGauche,pDroit, noir);
+    affiche_texte("Quitter" , 30 , pTexte, noir );
 }
 
 void affiche_selection_nb_joueurs_humains(int nbHumains)

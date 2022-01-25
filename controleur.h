@@ -34,3 +34,4 @@ typedef struct CHOIX_JEU
 BOOL est_clic_sur_jouer_menu_accueil(POINT clic);
 NB_JOUEURS transforme_clic_en_nb_joueurs();
 CHOIX_JEU transforme_clic_en_choix_jeu();
+BOOL veut_rejouer();

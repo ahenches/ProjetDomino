@@ -12,25 +12,9 @@ int main()
 	NB_JOUEURS nbJoueurs;
 	PSEUDO_JOUEUR pseudoJoueurs[4];
 	CHOIX_JEU choixJeu;
+	BOOL rejouer;
 
 	ouvre_fenetre(1300, 900);
-
-	//main_triominos();
-	// affiche_menu_accueil();
-	// actualise_affichage();
-	// attend_clic();
-	//
-	// affiche_menu_nombre_joueurs();
-	// actualise_affichage();
-	// attend_clic();
-	//
-	// affiche_menu_pseudo(2);
-	// actualise_affichage();
-	// attend_clic();
-	//
-	// affiche_menu_choix_jeu();
-	// actualise_affichage();
-	// attend_clic();
 
 	//On attend que l'utilisateur clique sur Jouer
 	affiche_menu_accueil();
@@ -72,23 +56,31 @@ int main()
         sprintf(pseudoJoueurs[i].pseudo, "IA%d", compt);
         compt++;
     }
+	rejouer = TRUE;
+	do {
+		//On affiche le menu pour le choix et du jeu et de sa variante
+		affiche_menu_choix_jeu();
+		actualise_affichage();
 
-	//On affiche le menu pour le choix et du jeu et de sa variante
-	affiche_menu_choix_jeu();
-	actualise_affichage();
+		choixJeu = transforme_clic_en_choix_jeu();
 
-	choixJeu = transforme_clic_en_choix_jeu();
+		//On lance le jeu selectionné
+		if (choixJeu.jeu == DOMINOS)
+		{
+			main_dominos(pseudoJoueurs,nbJoueurs, choixJeu.variante);
+		}
+		else
+		{
+			main_triominos(pseudoJoueurs,nbJoueurs, choixJeu.variante);
+		}
 
-	//On lance le jeu selectionné
-	if (choixJeu.jeu == DOMINOS)
-	{
-		main_dominos(pseudoJoueurs,nbJoueurs, choixJeu.variante);
-	}
-	else
-	{
-		main_triominos(pseudoJoueurs,nbJoueurs, choixJeu.variante);
-	}
-	attend_clic();
+		//On affiche le classement
+		affiche_menu_classement();
+		actualise_affichage();
+
+		//On atend de savoir si l'utilsateur veut rejouer ou non
+		rejouer = veut_rejouer();
+	} while(rejouer);
 
 	return 0;
 }
@@ -245,4 +237,30 @@ CHOIX_JEU transforme_clic_en_choix_jeu()
 	choix.jeu = jeuSelect;
 	choix.variante = varSelect;
 	return choix;
+}
+
+BOOL veut_rejouer()
+{
+	POINT clic;
+	BOOL estCLicBon, choixRejouer;
+
+	estCLicBon = FALSE;
+	do
+	{
+		clic = attend_clic();
+		if (clic.y < 200 && clic.y > 200 - 100)
+		{
+			if(clic.x > 425 && clic.x < 425 + 200)
+			{
+				estCLicBon =TRUE;
+				choixRejouer = TRUE;
+			}
+			if(clic.x > 675 && clic.x < 675 + 200)
+			{
+				estCLicBon =TRUE;
+				choixRejouer = FALSE;
+			}
+		}
+	}while(!estCLicBon);
+	return choixRejouer;
 }
