@@ -7,7 +7,7 @@
 //                                  Fonction controleur                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
+void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
     int totJoueurs;
     int tour;    // a qui le tour
@@ -18,8 +18,6 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     COORDONNEES indiceExtremite2;
     BOOL dominoPlace;
     BOOL continuePartie;
-
-    VARIANTE variante;
 
     indiceExtremite1.ligne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite1.colonne = TAILLE_TAB_DOMINOS / 2;
@@ -33,14 +31,12 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     dominoPlace = FALSE;
     continuePartie = TRUE;
 
-    variante = SANS_PIOCHE;
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
     affiche_fond();
     actualise_affichage();
     initialise_plateau();
     initialise_joueurs(infos_joueurs, totJoueurs);
-    variante = choix_variante();
     affiche_plateau();
     genere_pioche();
     affiche_pioche();
@@ -69,11 +65,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 
         } while (dominoPlace == FALSE);
 
-<<<<<<< Updated upstream
-        
         affiche_pioche();
-=======
->>>>>>> Stashed changes
         affiche_plateau();
 
         if (tourJeu > 0)

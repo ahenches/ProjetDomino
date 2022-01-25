@@ -20,7 +20,10 @@ int main(int argc, char *argv[])
 	JOUEUR infos_joueurs[TOT_JOUEURS];
 	nbJoueurs = entre_nb_joueurs(nbJoueurs);
 	entre_pseudos(infos_joueurs, nbJoueurs);
-	main_dominos(infos_joueurs, nbJoueurs);
+	VARIANTE variante;
+	variante = SANS_PIOCHE;
+	variante = choix_variante();
+	main_dominos(infos_joueurs, nbJoueurs, variante);
 
 	attend_clic();
 	ferme_fenetre();
