@@ -199,7 +199,7 @@ void affiche_main(DOMINO main_a_afficher[])
 {
     int i;
     POINT coordonnees_domino;
-    coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN + 5;
+    coordonnees_domino.y = HAUTEUR_MAIN - 5;
 
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {

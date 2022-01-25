@@ -520,14 +520,14 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite)
 
     for (i = 0; i < indiceExtremite.colonne; i++)
     {
-        x+=71;
+        x += 71;
     }
     for (i = 0; i < indiceExtremite.ligne; i++)
     {
-        y+=36;
+        y += 36;
     }
     coin.x = ABSCISSE_BOUTON_QUITTER;
-    coin.y = 100;
+    coin.y = ORDONNEE_BOUTON_QUITTER;
 
     return coin;
 }
