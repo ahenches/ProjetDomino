@@ -176,3 +176,128 @@ void affiche_menu_choix_jeu()
     pTexte.x = pGauche.x + 110; pTexte.y = pGauche.y - 30;
     affiche_texte("Jouer", 30, pTexte, noir);
 }
+
+void affiche_selection_nb_joueurs_humains(int nbHumains)
+{
+    POINT pGauche, pDroit;
+
+    pGauche.x = 520 ; pGauche.y = 630;
+    pDroit.x = pGauche.x + COTE_NB_JOUEUR ; pDroit.y = pGauche.y - COTE_NB_JOUEUR;
+    for (int i = 1 ; i <= 4 ; i++)
+    {
+        if(i == nbHumains)
+            dessine_rectangle(pGauche, pDroit, rouge);
+        else
+            dessine_rectangle(pGauche, pDroit, noir);
+        pGauche.x += COTE_NB_JOUEUR + 30;
+        pDroit.x += COTE_NB_JOUEUR + 30;
+    }
+}
+
+void affiche_selection_nb_joueurs_ordi(int nbOrdi)
+{
+    POINT pGauche, pDroit;
+
+    pGauche.x = 520 ; pGauche.y = 380;
+    pDroit.x = pGauche.x + COTE_NB_JOUEUR ; pDroit.y = pGauche.y - COTE_NB_JOUEUR;
+    for (int i = 0; i <= 3 ; i++)
+    {
+        if(i == nbOrdi)
+            dessine_rectangle(pGauche, pDroit, rouge);
+        else
+            dessine_rectangle(pGauche, pDroit, noir);
+
+        pGauche.x += COTE_NB_JOUEUR + 30;
+        pDroit.x += COTE_NB_JOUEUR + 30;
+    }
+}
+
+void affiche_selection_jeu(JEU jeuSelect)
+{
+    POINT pGauche,  pDroit;
+
+    //Efface la selection precedente des variantes
+    pGauche.x = 155; pGauche.y = 350;
+    pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 190;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 460;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 190;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    // affiche la selection du jeu
+    pGauche.x = 125; pGauche.y = 580;
+    pDroit.x = pGauche.x + 400; pDroit.y = pGauche.y - 100;
+    if(jeuSelect == DOMINOS)
+    {
+        dessine_rectangle(pGauche, pDroit, rouge);
+        pGauche.x += 650;
+        pDroit.x = pGauche.x + 400;
+        dessine_rectangle(pGauche, pDroit, noir);
+
+    }
+    else{
+        dessine_rectangle(pGauche, pDroit, noir);
+        pGauche.x += 650;
+        pDroit.x = pGauche.x + 400;
+        dessine_rectangle(pGauche, pDroit, rouge);
+
+    }
+}
+
+void affiche_selection_variante(VARIANTE varSelect)
+{
+    POINT pGauche, pDroit;
+
+    //Efface la selection precedente
+    pGauche.x = 155; pGauche.y = 350;
+    pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 190;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 460;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    pGauche.x += 190;
+    pDroit.x = pGauche.x + 150;
+    dessine_rectangle(pGauche, pDroit, noir);
+
+    switch(varSelect)
+    {
+        case SANS_PIOCHE :
+            affiche_selection_jeu(DOMINOS);
+            pGauche.x = 345; pGauche.y = 350;
+            pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+            dessine_rectangle(pGauche, pDroit, rouge);
+            break;
+        case AVEC_PIOCHE :
+            affiche_selection_jeu(DOMINOS);
+            pGauche.x = 155; pGauche.y = 350;
+            pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+            dessine_rectangle(pGauche, pDroit, rouge);
+            break;
+        case AVEC_SCORE :
+            affiche_selection_jeu(TRIOMINOS);
+            pGauche.x = 805; pGauche.y = 350;
+            pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+            dessine_rectangle(pGauche, pDroit, rouge);
+            break;
+         default :
+             affiche_selection_jeu(TRIOMINOS);
+             pGauche.x = 995; pGauche.y = 350;
+             pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
+             dessine_rectangle(pGauche, pDroit, rouge);
+     }
+}
