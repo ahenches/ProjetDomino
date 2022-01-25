@@ -45,6 +45,8 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     genere_pioche();
     affiche_pioche();
     distribue_premiers_dominos(infos_joueurs, totJoueurs);
+    affiche_main(infos_joueurs, 0);
+    actualise_affichage();
     affiche_mains(totJoueurs, infos_joueurs);
     affiche_pioche();
     affiche_pseudos(infos_joueurs, totJoueurs);
@@ -67,15 +69,18 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
 
         } while (dominoPlace == FALSE);
 
+<<<<<<< Updated upstream
         
         affiche_pioche();
+=======
+>>>>>>> Stashed changes
         affiche_plateau();
 
         if (tourJeu > 0)
         {
             gagnant = verifie_gagnant(infos_joueurs, indiceExtremite1, indiceExtremite2, totJoueurs);
         }
-        
+
         if (gagnant != -1)
         {
             affiche_victoire(gagnant, infos_joueurs);
@@ -86,6 +91,5 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
             tour = determine_joueur_suivant(tour, totJoueurs, infos_joueurs);
             tourJeu++;
         }
-
     }
 }

@@ -136,3 +136,19 @@ void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
         printf("*** SCORE : %d ***\n", infos_joueurs[gagnant].score);
     }
 }
+
+void affiche_main(JOUEUR infos_joueurs[], int numero_joueur)
+{
+    int i;
+    POINT coordonnees_domino;
+    coordonnees_domino.x = LARGEUR_MAIN;
+    coordonnees_domino.y = HAUTEUR_MAIN;
+    for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+    {
+        if (infos_joueurs[numero_joueur].mainJoueur[i].valeur1 != -1)
+        {
+            affiche_domino(infos_joueurs[numero_joueur].mainJoueur[i], coordonnees_domino);
+            coordonnees_domino.x = coordonnees_domino.x + 40;
+        }
+    }
+}
