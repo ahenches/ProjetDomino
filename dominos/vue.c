@@ -125,11 +125,3 @@ void affiche_fond()
     dessine_rectangle_plein(p1, p2, blanc);
     dessine_rectangle(p1, p2, gris);
 }
-
-void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
-{
-    if (gagnant < 4)
-        printf("*** C'est le JOUEUR n %d : %s qui a gagné !!! ***\n", gagnant, infos_joueurs[gagnant].pseudo);
-    else
-        printf("*** EGALITE Personne n'a gagné ***\n");
-}

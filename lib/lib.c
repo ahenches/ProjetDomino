@@ -79,8 +79,6 @@ void ouvre_fenetre(int largeur, int hauteur)
 
     // initialisation du hasard
     srand(time(NULL));
-
-
 }
 
 // terminer le programme
@@ -370,7 +368,7 @@ void affiche_image(char *nom, POINT coin)
     SDL_Surface *img = SDL_LoadBMP(nom);
     SDL_Rect position_img;
     position_img.x = coin.x;
-    position_img.y = HAUTEUR - coin.y;
+    position_img.y = coin.y;
     SDL_BlitSurface(img, NULL, ecran, &position_img);
 }
 

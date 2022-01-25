@@ -18,13 +18,12 @@ int compte_double_pioche();
 int est_double(DOMINO domino);
 void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain);
 int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[]);
-DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
+DOMINO recupere_choix_domino_main(DOMINO mainActive[]);
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino);
 BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[]);
-BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
 AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
+BOOL passe_tour();
 BOOL joue_IA(DOMINO mainActive[], COORDONNEES *indicesExtremite1, COORDONNEES *indicesExtremite2, int tourJeu);
 BOOL joue_joueur(DOMINO mainActive[], COORDONNEES *indicesExtremite1, COORDONNEES *indicesExtremite2, int tourJeu);
 int compte_dominos_pioche();
-int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs);
 #endif

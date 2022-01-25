@@ -23,5 +23,5 @@ void affiche_mains(int totJoueur, JOUEUR infos_joueurs[]);
 void affiche_pioche();
 void affiche_pseudos(JOUEUR infos_joueurs[], int totJoueur);
 void affiche_fond();
-void affiche_victoire(int gagnant, JOUEUR infos_joueurs[]);
+
 #endif
