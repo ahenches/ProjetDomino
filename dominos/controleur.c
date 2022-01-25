@@ -42,7 +42,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     genere_pioche();
     affiche_pioche();
     distribue_premiers_dominos(infos_joueurs, totJoueurs);
-    affiche_main(infos_joueurs, 0);
+    affiche_main(infos_joueurs[tour].mainJoueur);
     DOMINO domino_test_horizontal;
     domino_test_horizontal.valeur1 = 0;
     domino_test_horizontal.valeur2 = 2;
@@ -59,6 +59,11 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         do
         {
             affiche_mains(totJoueurs, infos_joueurs);
+            affiche_interface();
+            affiche_tour(infos_joueurs[tour].pseudo);
+            affiche_main(infos_joueurs[tour].mainJoueur);
+            actualise_affichage();
+
             if (strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA3") == 0)
             {
                 dominoPlace = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);

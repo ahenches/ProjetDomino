@@ -138,7 +138,7 @@ void affiche_interface()
     dessine_rectangle_plein(p1, p2, lightgrey);
     dessine_rectangle(p1, p2, gris);
     p1.x = p1.x + 10;
-    p1.y = p1.y + 30;
+    p1.y = p1.y + 33;
     affiche_texte("Quitter", 17, p1, noir);
 }
 
@@ -153,18 +153,18 @@ void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
     }
 }
 
-void affiche_main(JOUEUR infos_joueurs[], int numero_joueur)
+void affiche_main(DOMINO main_a_afficher[])
 {
     int i;
     POINT coordonnees_domino;
-    coordonnees_domino.x = LARGEUR_PIOCHE - 50;
     coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN + 5;
+
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
-        if (infos_joueurs[numero_joueur].mainJoueur[i].valeur1 != -1)
+        coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+        if (main_a_afficher[i].valeur1 != -1)
         {
-            affiche_domino(infos_joueurs[numero_joueur].mainJoueur[i], coordonnees_domino);
-            coordonnees_domino.x = coordonnees_domino.x + 50;
+            affiche_domino(main_a_afficher[i], coordonnees_domino);
         }
     }
 }
