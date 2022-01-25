@@ -79,7 +79,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
     affiche_image(nom_image, coin);
 }
 
-void affiche_fond()
+void affiche_interface()
 {
 
     POINT p1, p2;
@@ -124,6 +124,17 @@ void affiche_fond()
     p2.y = p1.y + HAUTEUR_PLATEAU;
     dessine_rectangle_plein(p1, p2, blanc);
     dessine_rectangle(p1, p2, gris);
+
+    // affiche bouton quitter
+    p1.x = ABSCISSE_BOUTON_QUITTER;
+    p1.y = ORDONNEE_BOUTON_QUITTER;
+    p2.x = ABSCISSE_BOUTON_QUITTER + 80;
+    p2.y = ORDONNEE_BOUTON_QUITTER + 40;
+    dessine_rectangle_plein(p1, p2, lightgrey);
+    dessine_rectangle(p1, p2, gris);
+    p1.x = p1.x + 10;
+    p1.y = p1.y + 30;
+    affiche_texte("Quitter", 17, p1, noir);
 }
 
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
@@ -166,4 +177,14 @@ void affiche_domino_horizontal(DOMINO domino_a_afficher, POINT coin)
     char nom_image[100];
     sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     affiche_image(nom_image, coin);
+}
+
+void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le tour en haut à gauche de l'écran
+{
+    POINT coordonnees_phrase;
+    coordonnees_phrase.x = 20;
+    coordonnees_phrase.y = 850;
+    char phrase_a_afficher[50];
+    sprintf(phrase_a_afficher, "C'est au tour de: %s", pseudo);
+    affiche_texte(phrase_a_afficher, 18, coordonnees_phrase, noir);
 }
