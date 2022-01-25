@@ -43,7 +43,7 @@ typedef struct joueur_triominos
     char pseudo[MAX_TAILLE_PSEUDO];
     MAIN_J_TRIOMINOS mainJoueur;
     int score;
-    BOOL estHumain ;
+    BOOL estHumain;
 } JOUEUR_TRIOMINOS;
 
 typedef struct coup
