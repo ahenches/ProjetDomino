@@ -206,22 +206,175 @@ void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
   }
 }
 
-// void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement){
+void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement){
   // int i, j;
   // EMPLACEMENT emplacements_possibles[HAUTEUR_PLATEAU_MAX*LARGEUR_PLATEAU_MAX];
-
+  //
   // for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++){
-    // for (j = 0; j < LARGEUR_PLATEAU_MAX; j++){
-      // if (tabEmplacement[i][j].trio != NULL){
-        // affiche_triomino_modele(tabEmplacement[i][j].trio);
-
-      // }
-    // }
+  //   for (j = 0; j < LARGEUR_PLATEAU_MAX; j++){
+  //     if (tabEmplacement[i][j].trio != NULL){
+  //       affiche_triomino_modele(tabEmplacement[i][j].trio);
+  //
+  //     }
+  //   }
   // }
   // return plateau;
-// }
+}
 
-// BOOL placer_trio()
+void placer_trio (TRIOMINO TrioAPlacer , EMPLACEMENT tabEmpl[x][y] )
+{
+  // les x et y on les récupère de la vue
+  // on veut placer trio dans la case tabEmpl[x][y]
+  // faut ajouter variable dir dans la structure EMPLACEMENT (on peut la mettre en tant que char ou int)
+  if(tabEmpl[x][y]!=null)
+    printf("case pleine! coup impossible");
+  else
+  {
+    if(tabEmpl[x-1][y]!=null)
+    {
+      if (tabEmpl[x-1][y].dir == "h")
+      {
+        if (tabEmpl[x-1][y].pointe=="m" || tabEmpl[x-1][y].pointe=="s" )
+        {
+          if(verif_coup_valide(tabEmpl[x-1][y].trio.min,tabEmpl[x-1][y].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x-1][y].trio.sec,tabEmpl[x-1][y].trio.der,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].pointe="d";
+            tabEmpl[x][y].dir="b";
+          }
+        }
+        else
+        {
+          if(verif_coup_valide(tabEmpl[x-1][y].trio.der,tabEmpl[x-1][y].trio.min,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].dir="b";
+            if(TrioAPlacer.min==tabEmpl[x-1][y].trio.sec)
+              tabEmpl[x][y].pointe="m";
+            else
+              tabEmpl[x][y].pointe="s";
+          }
+        }
+      }
+      else
+      {
+        if (tabEmpl[x-1][y].pointe=="s" || tabEmpl[x-1][y].pointe=="d" )
+        {
+          if(verif_coup_valide(tabEmpl[x-1][y].trio.min,tabEmpl[x-1][y].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x-1][y].trio.sec,tabEmpl[x-1][y].trio.der,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].pointe="m";
+            tabEmpl[x][y].dir="h";
+          }
+        }
+        else
+        {
+          if(verif_coup_valide(tabEmpl[x-1][y].trio.der,tabEmpl[x-1][y].trio.min,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].dir="h";
+            if(TrioAPlacer.sec==tabEmpl[x-1][y].trio.min)
+              tabEmpl[x][y].pointe="s";
+            else
+              tabEmpl[x][y].pointe="d";
+          }
+        }
+      }
+    }
+    else if(tabEmpl[x+1][y]!=null)
+    {
+      if (tabEmpl[x+1][y].dir == "b")
+      {
+        if (tabEmpl[x+1][y].pointe=="m" || tabEmpl[x+1][y].pointe=="s" )
+        {
+          if(verif_coup_valide(tabEmpl[x+1][y].trio.min,tabEmpl[x+1][y].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x+1][y].trio.sec,tabEmpl[x+1][y].trio.der,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].pointe="d";
+            tabEmpl[x][y].dir="h";
+          }
+        }
+        else
+        {
+          if(verif_coup_valide(tabEmpl[x+1][y].trio.der,tabEmpl[x+1][y].trio.min,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].dir="b";
+            if(TrioAPlacer.min==tabEmpl[x+1][y].trio.min)
+              tabEmpl[x][y].pointe="m";
+            else
+              tabEmpl[x][y].pointe="s";
+          }
+        }
+      }
+      else
+      {
+        if (tabEmpl[x+1][y].pointe=="s" || tabEmpl[x+1][y].pointe=="d" )
+        {
+          if(verif_coup_valide(tabEmpl[x+1][y].trio.min,tabEmpl[x+1][y].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x+1][y].trio.sec,tabEmpl[x+1][y].trio.der,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].pointe="m";
+            tabEmpl[x][y].dir="b";
+          }
+        }
+        else
+        {
+          if(verif_coup_valide(tabEmpl[x+1][y].trio.der,tabEmpl[x+1][y].trio.min,TrioAPlacer))
+          {
+            tabEmpl[x][y].trio=TrioAPlacer ;
+            tabEmpl[x][y].dir="b";
+            if(TrioAPlacer.sec==tabEmpl[x+1][y].trio.min)
+              tabEmpl[x][y].pointe="d";
+            else
+              tabEmpl[x][y].pointe="s";
+          }
+        }
+      }
+    }
+
+    else if(tabEmpl[x][y-1] != null && tabEmpl[x][y-1].dir=="h")
+    {
+      if(tabEmpl[x][y-1].pointe=='m' || tabEmpl[x][y-1].pointe=='d')
+      {
+        if(verif_coup_valide(tabEmpl[x][y-1].trio.min,tabEmpl[x][y-1].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x][y-1].trio.sec,tabEmpl[x][y-1].trio.der,TrioAPlacer) )
+        {
+          tabEmpl[x][y].trio=TrioAPlacer ;
+          tabEmpl[x][y].pointe="d";
+          tabEmpl[x][y].dir="b";
+        }
+      }
+      else if(verif_coup_valide(tabEmpl[x][y-1].trio.der,tabEmpl[x][y-1].trio.min,TrioAPlacer))
+      {
+        tabEmpl[x][y].trio=TrioAPlacer ;
+        tabEmpl[x][y].dir="b";
+        tabEmpl[x][y].pointe="d";
+      }
+    }
+
+    else if (tabEmpl[x][y+1] != null && tabEmpl[x][y+1].dir=="b")
+    {
+      if(tabEmpl[x][y+1].pointe=='m' || tabEmpl[x][y+1].pointe=='d')
+      {
+        if(verif_coup_valide(tabEmpl[x][y+1].trio.min,tabEmpl[x][y+1].trio.sec,TrioAPlacer) || verif_coup_valide(tabEmpl[x][y+1].trio.sec,tabEmpl[x][y+1].trio.der,TrioAPlacer) )
+        {
+          tabEmpl[x][y].trio=TrioAPlacer ;
+          tabEmpl[x][y].dir="h";
+          tabEmpl[x][y].pointe="s";
+        }
+      }
+      else if(verif_coup_valide(tabEmpl[x][y+1].trio.der,tabEmpl[x][y+1].trio.min,TrioAPlacer))
+      {
+        tabEmpl[x][y].trio=TrioAPlacer ;
+        tabEmpl[x][y].dir="b";
+        if(TrioAPlacer.der==tabEmpl[x][y+1].trio.der)
+          tabEmpl[x][y].pointe="d";
+        else
+          tabEmpl[x][y].pointe="m";
+      }
+    }
+  }
+}
 
 BOOL verif_coup_valide(int v1 , int v2 , TRIOMINO trio)
 {
@@ -234,7 +387,7 @@ BOOL verif_coup_valide(int v1 , int v2 , TRIOMINO trio)
   else
   {
     if( (v1== trio.der&& v2==trio.sec) || (v1==trio.sec && v2==trio.min) )
-      test= true ;
+      test=true;
   }
-  return test ;
+  return test;
 }
