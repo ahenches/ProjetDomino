@@ -75,7 +75,7 @@ void affiche_pioche()
 void affiche_domino(DOMINO domino_a_afficher, POINT coin)
 {
     char nom_image[100];
-    sprintf(nom_image, "./img_dominos/bmp/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+    sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     affiche_image(nom_image, coin);
 }
 
@@ -104,7 +104,7 @@ void affiche_interface()
     POINT coordonnees_image;
     coordonnees_image.x = 1220;
     coordonnees_image.y = 805;
-    affiche_image("./img_dominos/bmp/pioche.bmp", coordonnees_image);
+    affiche_image("./img_dominos/bmp_vertical/pioche.bmp", coordonnees_image);
 
     // affiche le mot "main"
     p1.x = BORDURE + 5;
