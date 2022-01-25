@@ -84,9 +84,9 @@ void affiche_interface()
 
     POINT p1, p2;
 
-    rempli_ecran(bleuclair);
+    rempli_ecran(bleuclair); // affiche un fond bleu
 
-    // Affiche un rectangle qui contiendra la main du joueur
+    // Affiche la case qui contient la main du joueur
     p1.x = BORDURE;
     p1.y = 10;
     p2.x = p1.x + LARGEUR_MAIN;
@@ -94,28 +94,33 @@ void affiche_interface()
     dessine_rectangle_plein(p1, p2, lightgrey);
     dessine_rectangle(p1, p2, gris);
 
-    // Affiche pioche
+    // affiche la case qui contient la pioche
     p1.x = p2.x + 10;
     p2.x = p1.x + LARGEUR_PIOCHE;
     dessine_rectangle_plein(p1, p2, lightgrey);
-    dessine_rectangle(p1, p2, gris); // affiche le conteneur de la pioche
+    dessine_rectangle(p1, p2, gris);
 
+    // affiche un domino décoratif pour représenter la pioche
     POINT coordonnees_image;
     coordonnees_image.x = 1220;
     coordonnees_image.y = 805;
-    affiche_image("./img_dominos/bmp/pioche.bmp", coordonnees_image); // affiche un domino décoratif
+    affiche_image("./img_dominos/bmp/pioche.bmp", coordonnees_image);
 
-    // textes à afficher
+    // affiche le mot "main"
     p1.x = BORDURE + 5;
     p1.y = HAUTEUR_MAIN + 5;
     affiche_texte("Main", 18, p1, noir);
+
+    // affiche le mot "Pioche"
     p1.x += LARGEUR_MAIN + 10;
     affiche_texte("Pioche", 18, p1, noir);
     p1.x = p1.x + 10;
     p1.y = p1.y - 20;
+
+    // affiche le nombre de dominos dans la pioche
     char nombre_dominos_pioche[4];
     sprintf(nombre_dominos_pioche, "(%d)", compte_dominos_pioche()); //écrit le nombre de dominos restant dans la pioche dans un tableau de char
-    affiche_texte(nombre_dominos_pioche, 18, p1, noir);              // affiche le nombre contenu dans le tableau
+    affiche_texte(nombre_dominos_pioche, 18, p1, noir);              // affiche le nombre contenu dans ce tableau
 
     // Affiche plateau
     p1.x = BORDURE;
