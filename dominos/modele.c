@@ -340,7 +340,7 @@ BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite
 
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
-        if (verifie_compatibilite_domino(&mainActive[i], indiceExtremite1, indiceExtremite2).compatible)
+        if (verifie_compatibilite_domino(&mainActive[i], indiceExtremite1, indiceExtremite2, 0).compatible)
             return TRUE;
     }
 
@@ -350,7 +350,7 @@ BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite
 
 // renvoie vrai si le domino choisi peut être joué
 // indicesExtremite1: domino le plus en bas ou à gauche du plateau
-AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2, int inverse)
 {
     AIDE_PLACEMENT a_retourner;
     int copie;
@@ -367,19 +367,24 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     }
     else if (plateau[indicesExtremite1.ligne][indicesExtremite1.colonne].valeur1 == domino->valeur1)
     {
-
-        copie = domino->valeur1;
-        domino->valeur1 = domino->valeur2;
-        domino->valeur2 = copie;
+        if(inverse == 1)
+        {
+            copie = domino->valeur1;
+            domino->valeur1 = domino->valeur2;
+            domino->valeur2 = copie;
+        }
         a_retourner.compatible = VRAI;
         a_retourner.extremite = GAUCHE;
     }
 
     else if (plateau[indicesExtremite2.ligne][indicesExtremite2.colonne].valeur2 == domino->valeur2)
     {
-        copie = domino->valeur1;
-        domino->valeur1 = domino->valeur2;
-        domino->valeur2 = copie;
+        if(inverse == 1)
+        {
+            copie = domino->valeur1;
+            domino->valeur1 = domino->valeur2;
+            domino->valeur2 = copie;
+        }
         a_retourner.compatible = VRAI;
         a_retourner.extremite = DROITE;
     }
@@ -426,7 +431,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     }
     else
     {
-        dominoCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2);
+        dominoCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2, 1);
         extremiteCompatible = dominoCompatible.extremite;
 
         if (dominoCompatible.compatible == TRUE)
@@ -661,7 +666,7 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
         {
             if (infos_joueurs[i].mainJoueur[j].valeur1 != -1)
             {
-                compatible = verifie_compatibilite_domino(&infos_joueurs[i].mainJoueur[j], indiceExtremite1, indiceExtremite2).compatible;
+                compatible = verifie_compatibilite_domino(&infos_joueurs[i].mainJoueur[j], indiceExtremite1, indiceExtremite2, 0).compatible;
                 if (compatible) // si au moin un domino est compatible, on peut toujours jouer
                     peutEncoreJouer = TRUE;
 

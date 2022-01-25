@@ -23,7 +23,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino);
 BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[]);
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
-AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indices_extremite1, COORDONNEES indices_extremite2);
+AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2, int inverse);
 BOOL joue_IA(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante);
 BOOL joue_joueur(JOUEUR* infos_joueur, COORDONNEES *indicesExtremite1, COORDONNEES *indicesExtremite2, int tourJeu, VARIANTE variante);
 int compte_dominos_pioche();
