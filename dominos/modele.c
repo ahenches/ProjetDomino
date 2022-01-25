@@ -331,22 +331,48 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
-DOMINO recupere_choix_domino_main(DOMINO mainActive[])
+DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
-    printf("Choisissez le domino (0, 1, 2, 3, 4, 5, 6) :\n");
-    scanf("%d", &choix);
-
-    if (choix == 9)
+    choix = -1;
+    do
     {
-        DOMINO passeTour;
-        passeTour.valeur1 = 9;
-        passeTour.valeur2 = 9;
-        return passeTour;
+        printf("Choisissez le domino (0, 1, 2, 3, 4, 5, 6) :\n");
+        scanf("%d", &choix);
+
+        if (choix == -2)
+        {
+            if (verifie_compatibilite_main(mainActive, indicesExtremite1, indicesExtremite2))
+            {
+                DOMINO passeTour;
+                passeTour.valeur1 = -2;
+                passeTour.valeur2 = -2;
+                return passeTour;
+            }
+            else 
+                choix = -1;
+        }
+        else
+            return mainActive[choix];
+    }while(choix == -1);
+
+    return mainActive[0];
+}
+
+// Cette fonction verifie si le joueur a encore la possibilité de jouer.
+BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
+{
+    int i;
+
+    for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
+    {
+        if (verifie_compatibilite_domino(&mainActive[i], indiceExtremite1, indiceExtremite2).extremite)
+            return TRUE;
     }
-    else
-        return mainActive[choix];
+
+    return FALSE;
+    
 }
 
 // renvoie vrai si le domino choisi peut être joué
@@ -517,10 +543,10 @@ BOOL joue_IA(DOMINO mainActive[], COORDONNEES *indiceExtremite1, COORDONNEES *in
 BOOL joue_joueur(DOMINO mainActive[], COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu)
 {
     BOOL dominoPlace;
-    DOMINO temp = recupere_choix_domino_main(mainActive);
+    DOMINO temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
     DOMINO *dominoChoisi = &temp;
 
-    if (dominoChoisi->valeur1 == 9)
+    if (dominoChoisi->valeur1 == -2)
     {
         printf("**** Je passe mon tour ****\n");
         printf("\n-----------------------------\n");
@@ -617,3 +643,4 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
     else
         return -1;
 }
+
