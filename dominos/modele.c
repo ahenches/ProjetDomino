@@ -527,7 +527,7 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite)
         y+=36;
     }
     coin.x = ABSCISSE_BOUTON_QUITTER;
-    coin.y = ORDONNEE_BOUTON_QUITTER;
+    coin.y = 100;
 
     return coin;
 }
