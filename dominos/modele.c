@@ -708,6 +708,13 @@ DOMINO gere_clic_domino(DOMINO main_joueur[])
             }
             j++;
         }
+        if ((1130 <= coordonees_clic.x) && (coordonees_clic.x <= 1280) && (10 <= coordonees_clic.y) && (coordonees_clic.y <= 115)) // si on clique sur le bouton piocher ou passer son tour
+        {
+            DOMINO piocher_ou_passer_son_tour;
+            piocher_ou_passer_son_tour.valeur1 = -2;
+            piocher_ou_passer_son_tour.valeur1 = -2;
+            return piocher_ou_passer_son_tour;
+        }
     } while (clic_sur_bouton == 0);
 
     return main_joueur[position_domino];

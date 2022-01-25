@@ -23,7 +23,7 @@ void affiche_domino_main(DOMINO domino_a_afficher, POINT coin);
 void affiche_mains(int totJoueur, JOUEUR infos_joueurs[]);
 void affiche_pioche();
 void affiche_pseudos(JOUEUR infos_joueurs[], int totJoueur);
-void affiche_interface();
+void affiche_interface(VARIANTE variante);
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[]);
 void affiche_main(DOMINO main_a_afficher[]);
 void affiche_tour(char pseudo[]);

@@ -108,7 +108,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
     affiche_image(nom_image, coin);
 }
 
-void affiche_interface()
+void affiche_interface(VARIANTE variante)
 {
 
     POINT p1, p2;
@@ -123,33 +123,45 @@ void affiche_interface()
     dessine_rectangle_plein(p1, p2, lightgrey);
     dessine_rectangle(p1, p2, gris);
 
-    // affiche la case qui contient la pioche
+    // affiche la case qui contient le bouton pour piocher ou passer son tour
     p1.x = p2.x + 10;
     p2.x = p1.x + LARGEUR_PIOCHE;
     dessine_rectangle_plein(p1, p2, lightgrey);
     dessine_rectangle(p1, p2, gris);
-
-    // affiche un domino décoratif pour représenter la pioche
-    POINT coordonnees_image;
-    coordonnees_image.x = 1220;
-    coordonnees_image.y = 805;
-    affiche_image("./img_dominos/bmp_vertical/pioche.bmp", coordonnees_image);
 
     // affiche le mot "main"
     p1.x = BORDURE + 5;
     p1.y = HAUTEUR_MAIN + 5;
     affiche_texte("Main", 18, p1, noir);
 
-    // affiche le mot "Pioche"
-    p1.x += LARGEUR_MAIN + 10;
-    affiche_texte("Pioche", 18, p1, noir);
-    p1.x = p1.x + 10;
-    p1.y = p1.y - 20;
+    if (variante == AVEC_PIOCHE)
+    {
+        // affiche le mot "Pioche"
+        p1.x += LARGEUR_MAIN + 10;
+        affiche_texte("Pioche", 18, p1, noir);
 
-    // affiche le nombre de dominos dans la pioche
-    char nombre_dominos_pioche[4];
-    sprintf(nombre_dominos_pioche, "(%d)", compte_dominos_pioche()); //écrit le nombre de dominos restant dans la pioche dans un tableau de char
-    affiche_texte(nombre_dominos_pioche, 18, p1, noir);              // affiche le nombre contenu dans ce tableau
+        // affiche le nombre de dominos dans la pioche
+        p1.x = p1.x + 10;
+        p1.y = p1.y - 20;
+        char nombre_dominos_pioche[4];
+        sprintf(nombre_dominos_pioche, "(%d)", compte_dominos_pioche()); //écrit le nombre de dominos restant dans la pioche dans un tableau de char
+        affiche_texte(nombre_dominos_pioche, 18, p1, noir);              // affiche le nombre contenu dans ce tableau
+
+        // affiche un domino décoratif pour représenter la pioche
+        POINT coordonnees_image;
+        coordonnees_image.x = 1220;
+        coordonnees_image.y = 805;
+        affiche_image("./img_dominos/bmp_vertical/pioche.bmp", coordonnees_image);
+    }
+    else // affiche "Passer son tour"
+    {
+        p1.x += LARGEUR_MAIN + 50;
+        p1.y = p1.y - 18;
+        affiche_texte("Passer", 18, p1, noir);
+        p1.y = p1.y - 30;
+        p1.x = p1.x - 8;
+        affiche_texte("son tour", 18, p1, noir);
+    }
 
     // Affiche plateau
     p1.x = BORDURE;
