@@ -86,7 +86,7 @@ void affiche_fond()
 
     rempli_ecran(bleuclair);
 
-    // Affiche main
+    // Affiche un rectangle qui contiendra la main du joueur
     p1.x = BORDURE;
     p1.y = 10;
     p2.x = p1.x + LARGEUR_MAIN;
@@ -101,7 +101,7 @@ void affiche_fond()
     dessine_rectangle(p1, p2, gris); // affiche le conteneur de la pioche
 
     POINT coordonnees_image;
-    coordonnees_image.x = 1190;
+    coordonnees_image.x = 1220;
     coordonnees_image.y = 805;
     affiche_image("./img_dominos/bmp/pioche.bmp", coordonnees_image); // affiche un domino décoratif
 
@@ -141,14 +141,29 @@ void affiche_main(JOUEUR infos_joueurs[], int numero_joueur)
 {
     int i;
     POINT coordonnees_domino;
-    coordonnees_domino.x = LARGEUR_MAIN / 2;
-    coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN;
+    coordonnees_domino.x = LARGEUR_PIOCHE - 50;
+    coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN + 5;
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
         if (infos_joueurs[numero_joueur].mainJoueur[i].valeur1 != -1)
         {
             affiche_domino(infos_joueurs[numero_joueur].mainJoueur[i], coordonnees_domino);
-            coordonnees_domino.x = coordonnees_domino.x + 40;
+            coordonnees_domino.x = coordonnees_domino.x + 50;
         }
     }
+}
+
+void affiche_test_horizontal(DOMINO domino_a_afficher)
+{
+    POINT coordonnees_domino;
+    coordonnees_domino.x = LARGEUR / 2;
+    coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN;
+    affiche_domino_horizontal(domino_a_afficher, coordonnees_domino);
+}
+
+void affiche_domino_horizontal(DOMINO domino_a_afficher, POINT coin)
+{
+    char nom_image[100];
+    sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+    affiche_image(nom_image, coin);
 }
