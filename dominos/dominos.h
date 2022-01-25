@@ -38,6 +38,12 @@ typedef enum EXTREMITE_COMPATIBLE
 	AUCUN,
 } EXTREMITE_COMPATIBLE;
 
+typedef enum VARIANTE
+{
+	SANS_PIOCHE,
+	AVEC_PIOCHE,
+} VARIANTE;
+
 typedef struct DOMINO
 {
 	int valeur1; // Valeur Bas ou Gauche du domino

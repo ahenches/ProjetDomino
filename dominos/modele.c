@@ -6,6 +6,7 @@
 //                                  Fonctions du modele                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
+
 // Fonction qui initialise le plateau
 void initialise_plateau()
 {
@@ -97,6 +98,16 @@ void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     printf("-------------------------\n");
 }
 
+VARIANTE choix_variante()
+{
+    int choix;
+    printf("Choisissez la variante : 0 SANS Pioche, 1 AVEC Pioche : \n");
+    scanf("%d", &choix);
+
+    return choix;
+
+}
+
 // Fonction qui genère les 28 dominos qui constituent la pioche
 void genere_pioche()
 {
@@ -152,12 +163,12 @@ void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
     {
         for (j = 0; j < nbDominosMain; j++)
         {
-            pioche_un_domino(infos_joueurs, i);
+            pioche_un_domino(&infos_joueurs[i]);
         }
     }
 }
 
-void pioche_un_domino(JOUEUR infos_joueurs[], int numero_joueur_actif)
+DOMINO pioche_un_domino(JOUEUR* infos_joueur)
 {
     int alea;
     int i;
@@ -180,12 +191,14 @@ void pioche_un_domino(JOUEUR infos_joueurs[], int numero_joueur_actif)
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
 
-        if (infos_joueurs[numero_joueur_actif].mainJoueur[i].valeur1 == -1) // si on parcourt une case dans laquelle il n'y a pas de domino
+        if (infos_joueur->mainJoueur[i].valeur1 == -1) // si on parcourt une case dans laquelle il n'y a pas de domino
         {
-            infos_joueurs[numero_joueur_actif].mainJoueur[i] = domChoisi; // on stocke le domino dans la case
+            infos_joueur->mainJoueur[i] = domChoisi; // on stocke le domino dans la case
             i = NB_MAX_DOMINO_MAIN + 1;                                   // on arrête la boucle
         }
     }
+
+    return domChoisi;
 }
 
 
@@ -469,7 +482,17 @@ void calcule_score(int* score, DOMINO dominoPose)
     *score += dominoPose.valeur1 + dominoPose.valeur2;
 }
 
-BOOL joue_IA(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu)
+BOOL est_vide_pioche()
+{
+    for (int i = 0; i < TAILLE_TAB_DOMINOS; i++)
+    {
+        if (pioche[i].valeur1 != -1)
+            return FALSE;
+    }
+    return TRUE;
+}
+
+BOOL joue_IA(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
     BOOL dominoPlace;
     DOMINO temp;
@@ -496,9 +519,38 @@ BOOL joue_IA(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
         }
         if (i >= NB_MAX_DOMINO_MAIN) // Si pas de domino compatible on passe le tour
         {
-            printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
-            printf("\n-----------------------------\n");
-            return TRUE;
+            if (variante == SANS_PIOCHE)
+            {
+                printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
+                printf("\n-----------------------------\n");
+                return TRUE;
+            }
+            else if(variante == AVEC_PIOCHE)
+            {
+                do
+                {
+                    if (!est_vide_pioche())
+                    {
+                        DOMINO temp = pioche_un_domino(infos_joueur);
+                        DOMINO *dominoChoisi = &temp;
+                        dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+                        printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
+                        printf("\n-----------------------------\n");
+                        if (dominoPlace == TRUE)
+                        {
+                            calcule_score(&infos_joueur->score, *dominoChoisi);
+                            return TRUE;
+                        }
+                    }
+                    else
+                    {
+                        printf("**** PIOCHE EST VIDE ****\n");
+                        printf("\n-----------------------------\n");
+                        return TRUE;
+                    }
+                    
+                }while(dominoPlace == FALSE);
+            }
         }
 
     } while (dominoPlace == FALSE);
@@ -506,7 +558,7 @@ BOOL joue_IA(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
     return FALSE;
 }
 
-BOOL joue_joueur(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu)
+BOOL joue_joueur(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
     BOOL dominoPlace;
     DOMINO* mainActive= infos_joueur->mainJoueur;
@@ -515,9 +567,38 @@ BOOL joue_joueur(JOUEUR* infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEE
 
     if (dominoChoisi->valeur1 == -2)
     {
-        printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
-        printf("\n-----------------------------\n");
-        return TRUE;
+        if (variante == SANS_PIOCHE)
+        {
+            printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
+            printf("\n-----------------------------\n");
+            return TRUE;
+        }
+        else if(variante == AVEC_PIOCHE)
+        {
+            do
+            {
+                if (!est_vide_pioche())
+                {
+                    DOMINO temp = pioche_un_domino(infos_joueur);
+                    DOMINO *dominoChoisi = &temp;
+                    dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+                    printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
+                    printf("\n-----------------------------\n");
+                    if (dominoPlace == TRUE)
+                    {
+                        calcule_score(&infos_joueur->score, *dominoChoisi);
+                        return TRUE;
+                    }
+                }
+                else
+                {
+                    printf("**** PIOCHE EST VIDE ****\n");
+                    printf("\n-----------------------------\n");
+                    return TRUE;
+                }
+            }while(dominoPlace == FALSE);
+        }
+        
     }
     else
     {

@@ -19,6 +19,8 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     BOOL dominoPlace;
     BOOL continuePartie;
 
+    VARIANTE variante;
+
     indiceExtremite1.ligne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite1.colonne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite2.ligne = TAILLE_TAB_DOMINOS / 2;
@@ -30,12 +32,15 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
     gagnant = -1;
     dominoPlace = FALSE;
     continuePartie = TRUE;
+
+    variante = SANS_PIOCHE;
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
     affiche_fond();
     actualise_affichage();
     initialise_plateau();
     initialise_joueurs(infos_joueurs, totJoueurs);
+    variante = choix_variante();
     affiche_plateau();
     genere_pioche();
     affiche_pioche();
@@ -53,17 +58,17 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
             affiche_mains(totJoueurs, infos_joueurs);
             if (strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA3") == 0)
             {
-                dominoPlace = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu);
+                dominoPlace = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
             }
             else
             {
-                dominoPlace = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu);
+                dominoPlace = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
             }
 
         } while (dominoPlace == FALSE);
 
         
-
+        affiche_pioche();
         affiche_plateau();
 
         if (tourJeu > 0)
