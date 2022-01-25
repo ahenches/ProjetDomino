@@ -106,6 +106,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
     }
 
     affiche_image(nom_image, coin);
+    printf("///////Le domino a ete affiche avec SUCCES///////\n");
 }
 
 void affiche_interface(VARIANTE variante)

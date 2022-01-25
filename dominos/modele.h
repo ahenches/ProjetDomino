@@ -21,6 +21,7 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain);
 int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[]);
 DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino);
+POINT transforme_coord_point(COORDONNEES indiceExtremite);
 BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[]);
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2);
 AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2, int inverse);

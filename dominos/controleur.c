@@ -89,5 +89,6 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             tour = determine_joueur_suivant(tour, totJoueurs, infos_joueurs);
             tourJeu++;
         }
+        actualise_affichage();
     }
 }
