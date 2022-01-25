@@ -14,7 +14,7 @@ JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur,
   JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale);
 
 void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
-// VOID placer();
+void placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int x, int y);
 BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
 // INT verifie_figure();
 // BOOL test_fin();

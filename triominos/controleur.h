@@ -15,9 +15,10 @@ typedef struct triomino
 
 typedef struct emplacement
 {
-    TRIOMINO trio ;
+    TRIOMINO trio;
     char pointe ; // valeur possible : m, s, d
-    // char direction ;
+    char direction ; // direction de la pointe
+    // valeur possible : n, s (nord, sud)
 } EMPLACEMENT;
 
 typedef struct main_j_triominos
@@ -44,6 +45,13 @@ typedef struct joueur_triominos
     int score;
     BOOL estHumain ;
 } JOUEUR_TRIOMINOS;
+
+typedef struct coup
+{
+  int indice_trio_dans_main;
+  int indice_ligne;
+  int indice_colonne;
+} COUP; // utiliser dans la fonction jeu_ordinateur
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
