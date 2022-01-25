@@ -52,35 +52,39 @@ int main_second()
 {
     //declarations
 
-    JOUEUR_TRIOMINOS joueurs[15];
-    int tailleJoueurs;
-    MAIN_J_TRIOMINOS mainJoueur;
-    PIOCHE_TRIOMINOS jeuPioche;
-    EMPLACEMENT **tabEmplacement;
+    // JOUEUR_TRIOMINOS joueurs[15];
+    // int tailleJoueurs;
+    // MAIN_J_TRIOMINOS mainJoueur;
+    // PIOCHE_TRIOMINOS jeuPioche;
+    // EMPLACEMENT **tabEmplacement;
+    //
+    // // initialisation
+    // NB_JOUEUR nb_joueur = {3, 7};
+    // for (int i=0;i<3;i++){
+    //   scanf("%s", joueurs[i].pseudo);
+    //   joueurs[i].mainJoueur.taille = 0;
+    //   joueurs[i].estHumain = 1;
+    // }
+    // initialise_ordis(nb_joueur, joueurs);
+    // tabEmplacement = initialise_plateau();
+    // jeuPioche = initialise_pioche();
+    // jeuPioche.taille = TAILLE_PIOCHE_INITIALE;
+    // mainJoueur.taille = 0;
+    //
+    //
+    //
+    //
+    // affiche_joueurs(nb_joueur, joueurs);
+    // affiche_pioche(jeuPioche);
+    //
+    // distribution(nb_joueur, joueurs, &jeuPioche);
+    //
+    // affiche_joueurs(nb_joueur, joueurs);
+    // affiche_pioche(jeuPioche);
 
-    // initialisation
-    NB_JOUEUR nb_joueur = {3, 7};
-    for (int i=0;i<3;i++){
-      scanf("%s", joueurs[i].pseudo);
-      joueurs[i].mainJoueur.taille = 0;
-      joueurs[i].estHumain = 1;
-    }
-    initialise_ordis(nb_joueur, joueurs);
-    tabEmplacement = initialise_plateau();
-    jeuPioche = initialise_pioche();
-    jeuPioche.taille = TAILLE_PIOCHE_INITIALE;
-    mainJoueur.taille = 0;
-
-
-
-    affiche_joueurs(nb_joueur, joueurs);
-    affiche_pioche(jeuPioche);
-
-    distribution(nb_joueur, joueurs, &jeuPioche);
-
-    affiche_joueurs(nb_joueur, joueurs);
-    affiche_pioche(jeuPioche);
-
+    TRIOMINO t = {1, 2, 4};
+    if (verif_coup_valide(4, 2, t)) printf("VRAI");
+    else printf("FAUX");
 
     // affiche_pioche(jeuPioche);
     // affiche_main_joueur(mainJoueur);
@@ -98,11 +102,17 @@ int main_second()
 EMPLACEMENT ** initialise_plateau()
 {
   EMPLACEMENT **plateau;
-  int i;
+  int i, j;
 
   plateau = (EMPLACEMENT **)(malloc(HAUTEUR_PLATEAU_MAX*sizeof(EMPLACEMENT *)));
-  for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++)
+  for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++){
     plateau[i] = malloc(sizeof(EMPLACEMENT) * LARGEUR_PLATEAU_MAX);
+
+    // for (j = 0; j < LARGEUR_PLATEAU_MAX; j++){
+    //   plateau
+    // }
+
+  }
   return plateau;
 }
 
@@ -142,7 +152,8 @@ void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs)
   }
 }
 
-JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale)
+JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur,
+  JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale)
 {
   int sommeValTrioJou[(nb_joueur.nbJouHum+nb_joueur.nbJouOrdi)] ;
   int max ;
@@ -195,22 +206,35 @@ void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
   }
 }
 
-void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement){
+// void jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement){
+  // int i, j;
+  // EMPLACEMENT emplacements_possibles[HAUTEUR_PLATEAU_MAX*LARGEUR_PLATEAU_MAX];
 
-}
+  // for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++){
+    // for (j = 0; j < LARGEUR_PLATEAU_MAX; j++){
+      // if (tabEmplacement[i][j].trio != NULL){
+        // affiche_triomino_modele(tabEmplacement[i][j].trio);
 
-BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio)
+      // }
+    // }
+  // }
+  // return plateau;
+// }
+
+// BOOL placer_trio()
+
+BOOL verif_coup_valide(int v1 , int v2 , TRIOMINO trio)
 {
+  BOOL test=false;
   if(v1<v2)
   {
-    if ( v1 == trio.min && v2==der)
-      return true;
+    if ( (v1 == trio.min && v2==trio.der) )
+      test= true;
   }
   else
   {
-    if( (v1== trio.sec && v2==trio.der) || (v1==trio.min && v2==trio.sec) )
-      return true;
+    if( (v1== trio.der&& v2==trio.sec) || (v1==trio.sec && v2==trio.min) )
+      test= true ;
   }
-  return false;
-
+  return test ;
 }

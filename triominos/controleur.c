@@ -8,46 +8,47 @@ int main_second();
 
 int main_triominos()
 {
-	JOUEUR_TRIOMINOS joueurs [4];
-	int nbJ = 4;
-	char texte[25] = "test";
-	TRIOMINO trio1;
-	POINT clic;
-	trio1.min = 1; trio1.sec = 2; trio1.der = 3;
-	EMPLACEMENT emp;
-	emp.trio = trio1;
-	emp.pointe = 's';
-
-	CASE case1;
-	case1.l = 1; case1.c = 19;
-
-	MAIN_J_TRIOMINOS mainJ1 ;
-	mainJ1.taille = 15;
-	for(int i=0; i<15;i++)
-	{
-		mainJ1.tab[i] = trio1;
-	}
-
-	for (int i=0 ; i<4; i++)
-	{
-		joueurs[i].pseudo[0]='J';
-		joueurs[i].pseudo[1]='\0';
-		joueurs[i].mainJoueur = mainJ1;
-		joueurs[i].score = 0;
-		joueurs[i].estHumain = FALSE;
-
-	}
-	affiche_plateau_triminos();
-	actualise_affichage();
-	clic = attend_clic();
-
-
-	actualise_pioche_triominos(36);
-	actualise_affichage();
-	//attend_clic();
-
-	affiche_main_triominos(joueurs[1], FIN_MAIN);
-	actualise_affichage();
+	main_second();
+	// JOUEUR_TRIOMINOS joueurs [4];
+	// int nbJ = 4;
+	// char texte[25] = "test";
+	// TRIOMINO trio1;
+	// POINT clic;
+	// trio1.min = 1; trio1.sec = 2; trio1.der = 3;
+	// EMPLACEMENT emp;
+	// emp.trio = trio1;
+	// emp.pointe = 's';
+	//
+	// CASE case1;
+	// case1.l = 1; case1.c = 19;
+	//
+	// MAIN_J_TRIOMINOS mainJ1 ;
+	// mainJ1.taille = 15;
+	// for(int i=0; i<15;i++)
+	// {
+	// 	mainJ1.tab[i] = trio1;
+	// }
+	//
+	// for (int i=0 ; i<4; i++)
+	// {
+	// 	joueurs[i].pseudo[0]='J';
+	// 	joueurs[i].pseudo[1]='\0';
+	// 	joueurs[i].mainJoueur = mainJ1;
+	// 	joueurs[i].score = 0;
+	// 	joueurs[i].estHumain = FALSE;
+	//
+	// }
+	// affiche_plateau_triminos();
+	// actualise_affichage();
+	// clic = attend_clic();
+	//
+	//
+	// actualise_pioche_triominos(36);
+	// actualise_affichage();
+	// //attend_clic();
+	//
+	// affiche_main_triominos(joueurs[1], FIN_MAIN);
+	// actualise_affichage();
 	//attend_clic();
 
 	// efface_main_triominos();

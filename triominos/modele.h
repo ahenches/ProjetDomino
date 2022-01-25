@@ -11,7 +11,7 @@ void initialise_ordis(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs);
 void distribution(NB_JOUEUR nb_joueur, JOUEUR_TRIOMINOS *joueurs,
   PIOCHE_TRIOMINOS *pioche_initiale);
 JOUEUR_TRIOMINOS joueur_qui_commence(NB_JOUEUR nb_joueur,
-  JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale)
+  JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS *pioche_initiale);
 
 void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
 // VOID placer();
