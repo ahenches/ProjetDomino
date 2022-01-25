@@ -43,10 +43,6 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     affiche_pioche();
     distribue_premiers_dominos(infos_joueurs, totJoueurs);
     affiche_main(infos_joueurs[tour].mainJoueur);
-    DOMINO domino_test_horizontal;
-    domino_test_horizontal.valeur1 = 0;
-    domino_test_horizontal.valeur2 = 2;
-    affiche_test_horizontal(domino_test_horizontal);
     actualise_affichage();
     affiche_mains(totJoueurs, infos_joueurs);
     affiche_pioche();
@@ -59,10 +55,6 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         do
         {
             affiche_mains(totJoueurs, infos_joueurs);
-            do
-            {
-                attend_clic();
-            } while (1);
 
             affiche_interface();
             affiche_tour(infos_joueurs[tour].pseudo);

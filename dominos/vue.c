@@ -85,7 +85,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
             sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
-            coin.y-=40;
+            coin.y -= 40;
         }
         else
             sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
@@ -99,12 +99,12 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
             sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
-            coin.x-=40;
+            coin.x -= 40;
         }
         else
             sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
-    
+
     affiche_image(nom_image, coin);
 }
 
@@ -193,24 +193,9 @@ void affiche_main(DOMINO main_a_afficher[])
         coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
         if (main_a_afficher[i].valeur1 != -1)
         {
-            affiche_domino(main_a_afficher[i], coordonnees_domino);
+            affiche_domino_main(main_a_afficher[i], coordonnees_domino);
         }
     }
-}
-
-void affiche_test_horizontal(DOMINO domino_a_afficher)
-{
-    POINT coordonnees_domino;
-    coordonnees_domino.x = LARGEUR / 2;
-    coordonnees_domino.y = HAUTEUR - HAUTEUR_MAIN;
-    affiche_domino_horizontal(domino_a_afficher, coordonnees_domino);
-}
-
-void affiche_domino_horizontal(DOMINO domino_a_afficher, POINT coin)
-{
-    char nom_image[100];
-    sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
-    affiche_image(nom_image, coin);
 }
 
 void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le tour en haut à gauche de l'écran
@@ -221,4 +206,12 @@ void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le to
     char phrase_a_afficher[50];
     sprintf(phrase_a_afficher, "C'est au tour de: %s", pseudo);
     affiche_texte(phrase_a_afficher, 18, coordonnees_phrase, noir);
+}
+
+void affiche_domino_main(DOMINO domino_a_afficher, POINT coin)
+{
+    char nom_image[100];
+
+    sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+    affiche_image(nom_image, coin);
 }

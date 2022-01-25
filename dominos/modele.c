@@ -540,6 +540,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                         if (dominoPlace == TRUE)
                         {
                             calcule_score(&infos_joueur->score, *dominoChoisi);
+                            // affiche_domino(*dominoChoisi, );
                             return TRUE;
                         }
                     }
