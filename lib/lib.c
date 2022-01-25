@@ -79,6 +79,8 @@ void ouvre_fenetre(int largeur, int hauteur)
 
     // initialisation du hasard
     srand(time(NULL));
+
+
 }
 
 // terminer le programme
