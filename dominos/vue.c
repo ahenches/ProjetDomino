@@ -129,10 +129,10 @@ void affiche_fond()
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
 {
     if (gagnant == -2)
-        printf("*** EGALITE Personne n'a gagné ***\n");
+        printf("*** EGALITE Personne n'a gagne ***\n");
     else
     {
-        printf("*** C'est le JOUEUR n %d : %s qui a gagné !!! ***\n", gagnant, infos_joueurs[gagnant].pseudo);
+        printf("*** C'est le JOUEUR n %d : %s qui a gagne !!! ***\n", gagnant, infos_joueurs[gagnant].pseudo);
         printf("*** SCORE : %d ***\n", infos_joueurs[gagnant].score);
     }
 }
