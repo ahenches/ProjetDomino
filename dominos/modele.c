@@ -348,14 +348,6 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
         }
     } while (choix_est_valable == FAUX);
 
-<<<<<<< Updated upstream
-    printf("recupere_choix domino_main bug, il retourne une valeur en fin de fonction (pas normal");
-    DOMINO bug;
-    bug.valeur1 = -1;
-    bug.valeur2 = -1;
-    return bug;
-}
-=======
     return mainActive[0];
 }*/
 
@@ -383,7 +375,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
         }
         else
             return mainActive[choix];
-    }while(choix == -1);
+    } while (choix == -1);
 
     return mainActive[0];
 }
@@ -490,9 +482,9 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         indiceExtremite2->colonne++;
         direction = DROITE;
         coin = transforme_coord_point(&indiceExtremite2, direction);
-    
+
         mainActive[dominoMain] = pasDom;
-        
+
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
@@ -535,7 +527,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     indiceExtremite1->colonne--;
                     direction = GAUCHE;
                     coin = transforme_coord_point(&indiceExtremite1, direction);
-                   
                 }
                 else
                 {
@@ -546,15 +537,12 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 }
                 mainActive[dominoMain] = pasDom;
             }
-
-            
         }
         else
         {
             printf("** DOMINO choisi PAS COMPATIBLE **\n");
             return FALSE;
         }
-
     }
 
     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
@@ -590,21 +578,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     y = 0;*/
     if (direction == DROITE)
     {
-
-        for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
-        {
-            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
-            {
-                x += 36;
-                printf("Le domino précédent est un double donc on decale de 36\n");
-            }
-            else
-            {
-                x += 71;
-                printf("On decale pas\n");
-            }
-        }
-        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne-1]))
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne - 1]))
             (*indiceExtremite)->coin.x += 36;
         else
             (*indiceExtremite)->coin.x += 71;
@@ -612,27 +586,10 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
-
     }
     else if (direction == GAUCHE)
     {
-
-        for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
-        {
-            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
-            {
-                x -= 71;
-                printf("C'est un double donc on decale\n");
-            }
-            else
-            {
-                x -= 71;
-                printf("On decale pas\n");
-            }
-        }
-    }
-
-        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne+1]))
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne + 1]))
             (*indiceExtremite)->coin.x -= 36;
         else
             (*indiceExtremite)->coin.x -= 71;
@@ -640,7 +597,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
-    
+    }
 
     return coin;
 }
