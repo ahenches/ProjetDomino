@@ -75,6 +75,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 }
             }
 
+
         } while (dominoPlace == DOMINO_NON_PLACE);
 
         affiche_pioche();

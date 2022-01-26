@@ -467,7 +467,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         mainActive[dominoMain] = pasDom;
         coin = transforme_coord_point(*indiceExtremite2, DROITE);
         printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-        affiche_domino(*dominoAPlacer, coin);
+        affiche_domino(*dominoAPlacer, coin, DROITE);
         actualise_affichage();
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
@@ -488,6 +488,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     coin = transforme_coord_point(*indiceExtremite1, GAUCHE);
                     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
                     printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
+                    affiche_domino(*dominoAPlacer, coin, GAUCHE);
                 }
             }
             else if (extremiteCompatible == DROITE)
@@ -500,6 +501,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     coin = transforme_coord_point(*indiceExtremite2, DROITE);
                     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
                     printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
+                    affiche_domino(*dominoAPlacer, coin, DROITE);
                 }
             }
             else if (extremiteCompatible == LES_DEUX)
@@ -511,6 +513,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     indiceExtremite1->colonne--;
                     coin = transforme_coord_point(*indiceExtremite1, GAUCHE);
                     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
+                    affiche_domino(*dominoAPlacer, coin, GAUCHE);
                 }
                 else
                 {
@@ -518,11 +521,12 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     indiceExtremite2->colonne++;
                     coin = transforme_coord_point(*indiceExtremite2, DROITE);
                     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
+                    affiche_domino(*dominoAPlacer, coin, DROITE);
                 }
                 mainActive[dominoMain] = pasDom;
             }
 
-            affiche_domino(*dominoAPlacer, coin);
+           
             actualise_affichage();
         }
         else
@@ -565,21 +569,15 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
         {
             x += 71;
         }
-        for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.ligne; i++)
-        {
-            y += 36;
-        }
+        
     }
     if (direction == GAUCHE)
     {
-        for (i = indiceExtremite.colonne; i < indiceExtremite.colonne; i--)
+        for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
             x -= 71;
         }
-        for (i = indiceExtremite.colonne; i < indiceExtremite.colonne; i--)
-        {
-            y += 36;
-        }
+        
     }
 
     coin.x = (LARGEUR_PLATEAU / 2) + x;

@@ -17,7 +17,7 @@
 #define ABSCISSE_BOUTON_QUITTER 1175
 
 // Prototypes Vue
-void affiche_domino(DOMINO domino_a_afficher, POINT coin);
+void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE direction);
 void affiche_plateau();
 void affiche_domino_main(DOMINO domino_a_afficher, POINT coin);
 void affiche_mains(int totJoueur, JOUEUR infos_joueurs[]);
