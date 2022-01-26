@@ -704,6 +704,9 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
             if (!est_vide_pioche())
             {
                 pioche_un_domino(infos_joueur);
+                affiche_interface(variante);
+                affiche_main(infos_joueur->mainJoueur);
+                actualise_affichage();
                 *dominoChoisi = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
                 printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
                 printf("\n-----------------------------\n");

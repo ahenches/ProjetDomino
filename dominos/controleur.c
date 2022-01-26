@@ -108,5 +108,37 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         }
         actualise_affichage();
     }
+
+    /*FILE *fichier = NULL;
+
+    fichier = fopen("../classement.txt", "w");
+
+    if (fichier != NULL)
+    {
+
+        int i;
+        for (i = 0; i < totJoueurs; i++)
+        {
+            fprintf(fichier, "score de %s: %d", infos_joueurs[i].pseudo, infos_joueurs[i].score);
+        }
+        fclose(fichier);
+    }*/
+
+    FILE *fichier = NULL;
+    int age = 0;
+
+    fichier = fopen("../classement", "w");
+
+    if (fichier != NULL)
+    {
+        // On demande l'âge
+        printf("Quel age avez-vous ? ");
+        scanf("%d", &age);
+
+        // On l'écrit dans le fichier
+        fprintf(fichier, "Le Monsieur qui utilise le programme, il a %d ans", age);
+        fclose(fichier);
+    }
+
     return 0;
 }

@@ -227,6 +227,7 @@ void affiche_main(DOMINO main_a_afficher[])
         if (main_a_afficher[i].valeur1 != -1)
         {
             affiche_domino_main(main_a_afficher[i], coordonnees_domino);
+            actualise_affichage();
         }
     }
 }
