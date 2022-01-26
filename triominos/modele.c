@@ -550,7 +550,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
           {
             tabEmpl[l][c].trio=TrioAPlacer ;
             tabEmpl[l][c].pointe='d';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer, tabEmpl, l, c);
           }
         }
         else
@@ -562,7 +563,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
               tabEmpl[l][c].pointe='m';
             else
               tabEmpl[l][c].pointe='s';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
 
           }
         }
@@ -575,7 +577,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
           {
             tabEmpl[l][c].trio=TrioAPlacer ;
             tabEmpl[l][c].pointe='m';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
         else
@@ -587,7 +590,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
               tabEmpl[l][c].pointe='s';
             else
               tabEmpl[l][c].pointe='d';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
       }
@@ -602,7 +606,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
           {
             tabEmpl[l][c].trio=TrioAPlacer ;
             tabEmpl[l][c].pointe='d';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
         else
@@ -614,7 +619,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
               tabEmpl[l][c].pointe='m';
             else
               tabEmpl[l][c].pointe='s';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
       }
@@ -626,7 +632,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
           {
             tabEmpl[l][c].trio=TrioAPlacer ;
             tabEmpl[l][c].pointe='m';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
         else
@@ -638,7 +645,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
               tabEmpl[l][c].pointe='d';
             else
               tabEmpl[l][c].pointe='s';
-            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+            return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+              est_hexagone(TrioAPlacer , tabEmpl, l, c);
           }
         }
       }
@@ -652,14 +660,16 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
         {
           tabEmpl[l][c].trio=TrioAPlacer ;
           tabEmpl[l][c].pointe='d';
-          return (TrioAPlacer.min + TrioAPlacer.sec + TrioAPlacer.der);
+          return (TrioAPlacer.min + TrioAPlacer.sec + TrioAPlacer.der)+
+            est_hexagone(TrioAPlacer , tabEmpl, l, c);
         }
       }
       else if(verif_coup_valide(tabEmpl[l][c-1].trio.der,tabEmpl[l][c-1].trio.min,TrioAPlacer))
       {
         tabEmpl[l][c].trio=TrioAPlacer ;
         tabEmpl[l][c].pointe='d';
-        return (TrioAPlacer.min + TrioAPlacer.sec + TrioAPlacer.der);
+        return (TrioAPlacer.min + TrioAPlacer.sec + TrioAPlacer.der)+
+          est_hexagone(TrioAPlacer , tabEmpl, l, c);
       }
     }
 
@@ -671,7 +681,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
         {
           tabEmpl[l][c].trio=TrioAPlacer;
           tabEmpl[l][c].pointe='s';
-          return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+          return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+            est_hexagone(TrioAPlacer , tabEmpl, l, c);
         }
       }
       else if(verif_coup_valide(tabEmpl[l][c+1].trio.der,tabEmpl[l][c+1].trio.min,TrioAPlacer))
@@ -681,7 +692,8 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
           tabEmpl[l][c].pointe='d';
         else
           tabEmpl[l][c].pointe='m';
-        return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der);
+        return (TrioAPlacer.min + TrioAPlacer.sec +TrioAPlacer.der)+
+          est_hexagone(TrioAPlacer , tabEmpl, l, c);
       }
     }
   }
@@ -773,9 +785,9 @@ BOOL est_pont(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
   BOOL estPont;
   if (tabEmpl[l][c].direction == 'n')
   {
-    bas = (l+1<= HAUTEUR_PLATEAU_MAX-1 && tabEmpl[l+1][c].triomino.min != -1);
-    gauche = (c-1>= 0 && tabEmpl[l][c-1].triomino.min != -1);
-    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].triomino.min != -1);
+    bas = (l+1<= HAUTEUR_PLATEAU_MAX-1 && tabEmpl[l+1][c].trio.min != -1);
+    gauche = (c-1>= 0 && tabEmpl[l][c-1].trio.min != -1);
+    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].trio.min != -1);
     if ((bas + gauche + droite) != 1)
     {
       return false;
@@ -853,9 +865,9 @@ BOOL est_pont(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
   }
   else // if (tabEmpl[l][c].direction == 's')
   {
-    haut = (l-1>= 0 && tabEmpl[l-1][c].triomino.min != -1);
-    gauche = (c-1>= 0 && tabEmpl[l][c-1].triomino.min != -1);
-    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].triomino.min != -1);
+    haut = (l-1>= 0 && tabEmpl[l-1][c].trio.min != -1);
+    gauche = (c-1>= 0 && tabEmpl[l][c-1].trio.min != -1);
+    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].trio.min != -1);
     if ((haut + gauche + droite) != 1)
     {
       return false;

@@ -8,7 +8,8 @@
 
 int main_second();
 
-int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE v)
+int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
+	VARIANTE variante)
 {
 	// Pour tester facilement le déroulement d'une partie ajouter ça dans ../controleur.c
 	// PSEUDO_JOUEUR pseudoJoueurs[4];
@@ -25,9 +26,14 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 	EMPLACEMENT **plateau;
 	PIOCHE_TRIOMINOS laPioche;
 	JOUEUR_TRIOMINOS joueurs[nbJoueurs.nbJoueurHumain+nbJoueurs.nbJoueurIA];
-	int quiJoue;
-	int nJoueurs;
-	int gainEnScore;
+	int quiJoue, nJoueurs;
+	int gainEnScore, partieMainEnCours, indiceDansMain;
+	int nFoisPioche;
+	POINT clic;
+	BOOL clicSignificatif;
+	CASE caseDuClic;
+	TRIOMINO trioSelectionne;
+
 
 	// initialisation de la partie.
 	// modele
@@ -50,7 +56,10 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 	nJoueurs = (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
 	affiche_plateau_triminos();
 	affiche_joueurs_triominos(nJoueurs, joueurs);
-	actualise_score_triominos(nJoueurs, joueurs);
+	if(variante == AVEC_SCORE)
+		actualise_score_triominos(nJoueurs, joueurs);
+
+	actualise_affichage();
 
 	// Jeu
 	while(!test_fin(nbJoueurs, joueurs, laPioche, plateau))
@@ -82,11 +91,70 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 				}
 			}
 		}
-		// affiche_main_joueur
-		// actualise_score_triominos
+		else // if (joueurs[quiJoue].estHumain == true)
+		{
+			nFoisPioche = 0;
+			indiceDansMain = -1;
+			partieMainEnCours = DEBUT_MAIN;
+			affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+			actualise_affichage();
+
+			do {
+				clic = attend_clic();
+				if (est_clic_sur_quitter(clic))
+					return 0;
+				else if (clic_sur_fleche_triominos(clic))
+				{
+					partieMainEnCours = change_partie_main_triominos(joueurs[quiJoue],
+						partieMainEnCours);
+				}
+				else if (clic_dans_main_triominos(clic))
+				{
+
+					indiceDansMain = transforme_selection_en_indice_main(clic,
+						partieMainEnCours);
+					if (indiceDansMain < joueurs[quiJoue].mainJoueur.taille)
+					{
+						trioSelectionne = joueurs[quiJoue].mainJoueur.tab[indiceDansMain];
+						affiche_selection_main_triominos(indiceDansMain);
+					}
+					else
+						indiceDansMain = -1;
+				}
+				else if (clic_dans_pioche_triominos(clic))
+				{
+					pioche(&joueurs[quiJoue].mainJoueur, &laPioche);
+					joueurs[quiJoue].score -= 5;
+					nFoisPioche ++; // mammamamama
+					actualise_pioche_triominos(laPioche.taille);
+					actualise_score_triominos(nJoueurs, joueurs);
+					affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+				}
+				else if (indiceDansMain != -1 && clic_dans_plateau_triominos(clic))
+				{
+					caseDuClic = transforme_point_en_case_triominos(clic);
+					gainEnScore = placer_trio(trioSelectionne, plateau,
+							caseDuClic.l, caseDuClic.c);
+					if (gainEnScore != 0)
+					{
+						actualise_plateau_triominos(plateau);
+					}
+					else
+					{
+
+					}
+				}
+				actualise_affichage();
+			}
+			while (!clicSignificatif);
+		}
+		if(variante == AVEC_SCORE)
+			actualise_score_triominos(nJoueurs, joueurs);
+		actualise_plateau_triominos(plateau);
+		actualise_pioche_triominos(laPioche.taille);
+		actualise_affichage();
 		quiJoue = quiJoue+1 % (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
 	}
-
 	// JOUEUR_TRIOMINOS joueurs [4];
 	// char texte[25] = "test";
 	// TRIOMINO trio1;
@@ -232,84 +300,81 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 	return 0;
 }
 
-//
-// BOOL clic_dans_main_triominos(POINT clic)
-// {
-// 	if(clic.x > BORDURE && clic.x < BORDURE + LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) )
-// 		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
-// 			return TRUE;
-// 	return FALSE;
-// }
-//
-// BOOL clic_sur_fleche_triominos(POINT clic)
-// {
-// 	if(clic.x > BORDURE +LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) && clic.x < BORDURE + LARGEUR_MAIN  )
-// 		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
-// 			return TRUE;
-// 	return FALSE;
-// }
-//
-// BOOL clic_dans_pioche_triominos(POINT clic)
-// {
-// 	if(clic.x > BORDURE+LARGEUR_MAIN+10 && clic.x < BORDURE+LARGEUR_MAIN+LARGEUR_PIOCHE+10)
-// 		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
-// 			return TRUE;
-// 	return FALSE;
-// }
-//
-// BOOL clic_dans_plateau_triominos(POINT clic)
-// {
-// 	if(clic.x > BORDURE && clic.x < BORDURE+LARGEUR_PLATEAU)
-// 		if (clic.y > BORDURE + HAUTEUR_MAIN && clic.y < BORDURE + HAUTEUR_MAIN + HAUTEUR_PLATEAU)
-// 			return TRUE;
-// 	return FALSE;
-// }
-//
-// //précondition le clic doit etre dans le plateau
-// CASE transforme_point_en_case_triominos(POINT clic)
-// {
-// 	CASE caseClic;
-//
-// 	caseClic.l = (HAUTEUR_PLATEAU - (clic.y - (BORDURE + HAUTEUR_MAIN))) / HAUTEUR_TUILE;
-// 	caseClic.c = (clic.x -BORDURE) / (LARGEUR_TUILE / 2);
-//
-// 	return caseClic;
-// }
-//
-// //precondition le clic doit etre dans la main
-// //A voir si elle retourne pas un entier (indice) pour ne pas avoir de probleme si le trionmino est "vide" (rien a l emplacement du clic)
-// TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant, int partieMain)
-// {
-// 	TRIOMINO trioSelectionne;
-// 	int indice;
-//
-// 	indice = (clic.x - BORDURE) / (LARGEUR_TUILE + 10);
-//
-// 	if (partieMain == FIN_MAIN)
-// 		indice += 14;
-//
-// 	trioSelectionne = mainJoueurCourant.tab[indice];
-//
-// 	return trioSelectionne;
-// }
-//
-// int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain)
-// {
-// 	efface_main_triominos();
-// 	if (partieMain == DEBUT_MAIN)
-// 	{
-// 		affiche_main_triominos(joueur, FIN_MAIN);
-// 		return FIN_MAIN;
-// 	}
-// 	else
-// 	{
-// 		affiche_main_triominos(joueur, DEBUT_MAIN);
-// 		return DEBUT_MAIN;
-// 	}
-// }
-// BOOL est_clic_sur_quitter(POINT clic)
-// {
-// 	if(clic.x > 1150  && clic.x < 1150 + 100 && clic.y < 885 && clic.y > 885 - 50)
-// 		return TRUE;
-// 	return FALSE;
-// }
+
+BOOL clic_dans_main_triominos(POINT clic)
+{
+	if(clic.x > BORDURE && clic.x < BORDURE + LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) )
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+			return TRUE;
+	return FALSE;
+}
+
+BOOL clic_sur_fleche_triominos(POINT clic)
+{
+	if(clic.x > BORDURE +LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) && clic.x < BORDURE + LARGEUR_MAIN  )
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+			return TRUE;
+	return FALSE;
+}
+
+BOOL clic_dans_pioche_triominos(POINT clic)
+{
+	if(clic.x > BORDURE+LARGEUR_MAIN+10 && clic.x < BORDURE+LARGEUR_MAIN+LARGEUR_PIOCHE+10)
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+			return TRUE;
+	return FALSE;
+}
+
+BOOL clic_dans_plateau_triominos(POINT clic)
+{
+	if(clic.x > BORDURE && clic.x < BORDURE+LARGEUR_PLATEAU)
+		if (clic.y > BORDURE + HAUTEUR_MAIN && clic.y < BORDURE + HAUTEUR_MAIN + HAUTEUR_PLATEAU)
+			return TRUE;
+	return FALSE;
+}
+
+// précondition le clic doit etre dans le plateau
+CASE transforme_point_en_case_triominos(POINT clic)
+{
+	CASE caseClic;
+
+	caseClic.l = (HAUTEUR_PLATEAU - (clic.y - (BORDURE + HAUTEUR_MAIN))) / HAUTEUR_TUILE;
+	caseClic.c = (clic.x -BORDURE) / (LARGEUR_TUILE / 2);
+
+	return caseClic;
+}
+
+// precondition le clic doit etre dans la main
+// A voir si elle retourne pas un entier (indice) pour ne pas avoir de probleme si le trionmino est "vide" (rien a l emplacement du clic)
+int transforme_selection_en_indice_main(POINT clic, int partieMain)
+{
+	int indice;
+
+	indice = (clic.x - BORDURE) / (LARGEUR_TUILE + 10);
+
+	if (partieMain == FIN_MAIN)
+		indice += 14;
+
+	return indice;
+}
+
+int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain)
+{
+	efface_main_triominos();
+	if (partieMain == DEBUT_MAIN)
+	{
+		affiche_main_triominos(joueur, FIN_MAIN);
+		return FIN_MAIN;
+	}
+	else
+	{
+		affiche_main_triominos(joueur, DEBUT_MAIN);
+		return DEBUT_MAIN;
+	}
+}
+BOOL est_clic_sur_quitter(POINT clic)
+{
+	if(clic.x > 1150  && clic.x < 1150 + 100 && clic.y < 885 && clic.y > 885 - 50)
+		return TRUE;
+	return FALSE;
+}

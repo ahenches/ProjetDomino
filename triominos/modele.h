@@ -11,7 +11,7 @@ typedef enum HEXAGONE
   AUCUN,
 	SIMPLE,
 	DOUBLE,
-  TRIPLE,
+  TRIPLE
 } HEXAGONE;
 
 void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs);
@@ -27,9 +27,8 @@ BOOL test_fin(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
 int trouve_coups_legaux(JOUEUR_TRIOMINOS j, EMPLACEMENT **tabEmplacement,
   COUP *coups_legaux[N_COUPS_MAXIMAL]);
 void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
-int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int c, int l);
+int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
-// INT verifie_figure();
 int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement);
-HEXAGONE est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
-BOOL est_pont(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
+HEXAGONE est_hexagone(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
+BOOL est_pont(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
