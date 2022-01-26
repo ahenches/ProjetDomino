@@ -14,6 +14,7 @@
 
 int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
+
     int totJoueurs;
     int tour;    // a qui le tour
     int tourJeu; // nombre de tour jouer
@@ -75,7 +76,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             if (strcmp(infos_joueurs[tour].pseudo, "IA0") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0)
             {
                 choix_joueur = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
-            }
+                        }
             else
             {
                 choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
@@ -128,6 +129,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 }
                 fclose(fichier);
             }
+            SDL_Delay(2000);
             continuePartie = FALSE;
         }
         else
