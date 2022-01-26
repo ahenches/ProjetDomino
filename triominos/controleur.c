@@ -23,7 +23,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 
 	//declarations
 	EMPLACEMENT **plateau;
-	PIOCHE_TRIOMINOS pioche;
+	PIOCHE_TRIOMINOS laPioche;
 	JOUEUR_TRIOMINOS joueurs[nbJoueurs.nbJoueurHumain+nbJoueurs.nbJoueurIA];
 	int quiJoue;
 	int nJoueurs;
@@ -41,10 +41,10 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 	initialise_ordis(nbJoueurs, joueurs);
 
 	plateau = initialise_plateau();
-	pioche = initialise_pioche();
-	pioche.taille = TAILLE_PIOCHE_INITIALE;
-	quiJoue = joueur_qui_commence(nbJoueurs, joueurs, pioche);
-	distribution(nbJoueurs, joueurs, &pioche);
+	laPioche = initialise_pioche();
+	laPioche.taille = TAILLE_PIOCHE_INITIALE;
+	quiJoue = joueur_qui_commence(nbJoueurs, joueurs, laPioche);
+	distribution(nbJoueurs, joueurs, &laPioche);
 
 	// vue
 	nJoueurs = (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
@@ -53,7 +53,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 	actualise_score_triominos(nJoueurs, joueurs);
 
 	// Jeu
-	while(!test_fin(nbJoueurs, joueurs, pioche, plateau))
+	while(!test_fin(nbJoueurs, joueurs, laPioche, plateau))
 	{
 		if (joueurs[quiJoue].estHumain == false)
 		{
@@ -68,7 +68,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 				int i = 0;
 				while(i<3 && gainEnScore == 0)
 				{
-					pioche(joueurs[quiJoue].mainJoueur, pioche);
+					pioche(&joueurs[quiJoue].mainJoueur, &laPioche);
 					joueurs[quiJoue].score -= 5;
 					gainEnScore = jeu_ordinateur(joueurs[quiJoue], plateau);
 					i ++;
@@ -84,7 +84,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs, VARIANTE 
 		}
 		// affiche_main_joueur
 		// actualise_score_triominos
-		quiJoue = quiJoue+1 % (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain)
+		quiJoue = quiJoue+1 % (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
 	}
 
 	// JOUEUR_TRIOMINOS joueurs [4];
