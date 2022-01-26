@@ -18,6 +18,8 @@ clean:
 $(OUTPUT): ./lib/lib.o $(OBJ)
 	@gcc $^  -o $(OUTPUT)  $(SDL_CFLAGS) $(SDL_LDFLAGS) $(LIB)
 	rm *.o
+	rm dominos/*.o
+	rm triominos/*.o
 
 
 ./lib/lib.o: ./lib/lib.c
