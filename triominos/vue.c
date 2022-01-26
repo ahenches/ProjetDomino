@@ -276,14 +276,32 @@ void affiche_joueur_main_triominos(JOUEUR_TRIOMINOS joueur)
 	affiche_texte(joueur.pseudo, 20, p1, noir);
 }
 
-void affiche_selection_main_triominos(int trioSelect)
+void affiche_selection_main_triominos(int trioSelect, int partieMain, int tailleMain)
 {
 	POINT pointe, pDroit, pGauche;
+	int indiceTrio;
+
+	efface_selection_main_triominos(tailleMain, partieMain);
+	if (partieMain == DEBUT_MAIN)
+	{
+		if(trioSelect >= 14)
+			indiceTrio = 14;
+		else
+			indiceTrio = trioSelect;
+	}
+	else
+	{
+		if(trioSelect < 15)
+			indiceTrio = 0;
+		else
+			indiceTrio = trioSelect - 14;
+	}
+
 
 	//Entoure le triomino selectionné dans la main
-	pointe.x = BORDURE_T + 5 + (LARGEUR_TUILE_T/2) + (trioSelect * 70);
+	pointe.x = BORDURE_T + 5 + (LARGEUR_TUILE_T/2) + (indiceTrio * 70);
 	pointe.y = BORDURE_T + HAUTEUR_TUILE_T + 1;
-	pGauche.x = BORDURE_T + 4 + (trioSelect * 70);
+	pGauche.x = BORDURE_T + 4 + (indiceTrio * 70);
 	pGauche.y = BORDURE_T - 1;
 	pDroit.x = pGauche.x + LARGEUR_TUILE_T + 2 ;
 	pDroit.y = pGauche.y;
@@ -295,29 +313,47 @@ void affiche_selection_main_triominos(int trioSelect)
 	dessine_triangle(pointe, pGauche, pDroit, red);
 }
 
-void efface_selection_main_triominos(int trioDeselect)
+void efface_selection_main_triominos(int tailleMain, int partieMain)
 {
 	POINT pointe, pDroit, pGauche;
+	int nbAEffacer, i;
+	if (partieMain == DEBUT_MAIN)
+	{
+		if(tailleMain >= 14)
+			nbAEffacer = 14;
+		else
+			nbAEffacer = tailleMain;
+	}
+	else
+	{
+		if(tailleMain < 15)
+			nbAEffacer = 0;
+		else
+			nbAEffacer = tailleMain - 14;
+	}
 
-	//Efface la selection (entouré) d un triomino
-	pointe.x = BORDURE_T + 5 + (LARGEUR_TUILE_T/2) + (trioDeselect * 70);
-	pointe.y = BORDURE_T + HAUTEUR_TUILE_T + 1;
-	pGauche.x = BORDURE_T + 4 + (trioDeselect * 70);
-	pGauche.y = BORDURE_T - 1;
-	pDroit.x = pGauche.x + LARGEUR_TUILE_T + 2 ;
-	pDroit.y = pGauche.y;
+	for(i = 0; i< nbAEffacer; i++)
+	{
+		//Efface la selection (entouré) de tous les triomino
+		pointe.x = BORDURE_T + 5 + (LARGEUR_TUILE_T/2) + (i * 70);
+		pointe.y = BORDURE_T + HAUTEUR_TUILE_T + 1;
+		pGauche.x = BORDURE_T + 4 + (i * 70);
+		pGauche.y = BORDURE_T - 1;
+		pDroit.x = pGauche.x + LARGEUR_TUILE_T + 2 ;
+		pDroit.y = pGauche.y;
 
-	dessine_triangle(pointe, pGauche, pDroit, lightgrey);
+		dessine_triangle(pointe, pGauche, pDroit, lightgrey);
 
-	pointe.y += 1;
-	pGauche.x -= 1; 	pGauche.y -= 1;
-	pDroit.x += 1; 		pDroit.y = pGauche.y ;
-	dessine_triangle(pointe, pGauche, pDroit, lightgrey);
+		pointe.y += 1;
+		pGauche.x -= 1; 	pGauche.y -= 1;
+		pDroit.x += 1; 		pDroit.y = pGauche.y ;
+		dessine_triangle(pointe, pGauche, pDroit, lightgrey);
 
-	pointe.y -= 2;
-	pGauche.x += 2; pGauche.y += 2;
-	pDroit.x -= 2; 	pDroit.y = pGauche.y ;
-	dessine_triangle(pointe, pGauche, pDroit, noir);
+		pointe.y -= 2;
+		pGauche.x += 2; pGauche.y += 2;
+		pDroit.x -= 2; 	pDroit.y = pGauche.y ;
+		dessine_triangle(pointe, pGauche, pDroit, noir);
+	}
 }
 
 void affiche_selection_emplacement_triominos(CASE caseS)
