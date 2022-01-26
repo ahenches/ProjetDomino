@@ -488,7 +488,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         plateau[TAILLE_TAB_DOMINOS / 2][TAILLE_TAB_DOMINOS / 2] = *dominoAPlacer;
         direction = DROITE;
         coin = transforme_coord_point(&indiceExtremite2, direction);
-
         mainActive[dominoMain] = pasDom;
 
         printf("** C'est le premier tour, place n'importe quel domino **\n");
@@ -595,10 +594,25 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     }
     else if (direction == GAUCHE)
     {
-        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne + 1]))
+       
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne + 1])){
             (*indiceExtremite)->coin.x -= 36;
+            printf("c'est un doubleGA A COTE colonne+1\n");
+        }
         else
-            (*indiceExtremite)->coin.x -= 71;
+        {
+            printf("GAUCHE[%d,%d]\n", plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne].valeur1, plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne].valeur2);
+            if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne])){
+                (*indiceExtremite)->coin.x -= 36;
+                printf("c'est un doubleGA \n");
+            }
+            else{
+                
+                //(*indiceExtremite)->coin.x -= 71;
+                printf("c'est un hori \n");
+            }
+            
+        }
 
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
@@ -625,11 +639,13 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                 DOMINO *dominoChoisi = &temp;
                 printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
                 dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+
                 printf("\n-----------------------------\n");
                 if (dominoPlace == TRUE)
                 {
                     calcule_score(&infos_joueur->score, *dominoChoisi);
-                    return TRUE;
+                    
+                    return TOUR_FINI;
                 }
             }
         }
@@ -639,7 +655,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
             {
                 printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
                 printf("\n-----------------------------\n");
-                return TRUE;
+                return TOUR_FINI;
             }
             else if (variante == AVEC_PIOCHE)
             {
@@ -655,14 +671,14 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                         if (dominoPlace == TRUE)
                         {
                             calcule_score(&infos_joueur->score, *dominoChoisi);
-                            return TRUE;
+                            return TOUR_FINI;
                         }
                     }
                     else
                     {
                         printf("**** PIOCHE EST VIDE ****\n");
                         printf("\n-----------------------------\n");
-                        return TRUE;
+                        return TOUR_FINI;
                     }
 
                 } while (dominoPlace == FALSE);
@@ -671,7 +687,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
 
     } while (dominoPlace == FALSE);
 
-    return FALSE;
+    return TOUR_NON_FINI;
 }
 
 CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
@@ -704,9 +720,6 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
             if (!est_vide_pioche())
             {
                 pioche_un_domino(infos_joueur);
-                affiche_interface(variante);
-                affiche_main(infos_joueur->mainJoueur);
-                actualise_affichage();
                 *dominoChoisi = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
                 printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
                 printf("\n-----------------------------\n");
