@@ -137,7 +137,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 							caseDuClic.l, caseDuClic.c);
 					if (gainEnScore != 0)
 					{
-						actualise_plateau_triominos(plateau);
+						// actualise_plateau_triominos(plateau);
 					}
 					else
 					{
@@ -150,7 +150,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 		}
 		if(variante == AVEC_SCORE)
 			actualise_score_triominos(nJoueurs, joueurs);
-		actualise_plateau_triominos(plateau);
+		// actualise_plateau_triominos(plateau);
 		actualise_pioche_triominos(laPioche.taille);
 		actualise_affichage();
 		quiJoue = quiJoue+1 % (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
@@ -303,32 +303,32 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 
 BOOL clic_dans_main_triominos(POINT clic)
 {
-	if(clic.x > BORDURE && clic.x < BORDURE + LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) )
-		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+	if(clic.x > BORDURE_T && clic.x < BORDURE_T + LARGEUR_MAIN_T - ( LARGEUR_TUILE_T + 10 ) )
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN_T )
 			return TRUE;
 	return FALSE;
 }
 
 BOOL clic_sur_fleche_triominos(POINT clic)
 {
-	if(clic.x > BORDURE +LARGEUR_MAIN - ( LARGEUR_TUILE + 10 ) && clic.x < BORDURE + LARGEUR_MAIN  )
-		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+	if(clic.x > BORDURE_T +LARGEUR_MAIN_T - ( LARGEUR_TUILE_T + 10 ) && clic.x < BORDURE_T + LARGEUR_MAIN_T  )
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN_T )
 			return TRUE;
 	return FALSE;
 }
 
 BOOL clic_dans_pioche_triominos(POINT clic)
 {
-	if(clic.x > BORDURE+LARGEUR_MAIN+10 && clic.x < BORDURE+LARGEUR_MAIN+LARGEUR_PIOCHE+10)
-		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN )
+	if(clic.x > BORDURE_T+LARGEUR_MAIN_T+10 && clic.x < BORDURE_T+LARGEUR_MAIN_T+LARGEUR_PIOCHE_T+10)
+		if (clic.y > 10 && clic.y < 10 + HAUTEUR_MAIN_T )
 			return TRUE;
 	return FALSE;
 }
 
 BOOL clic_dans_plateau_triominos(POINT clic)
 {
-	if(clic.x > BORDURE && clic.x < BORDURE+LARGEUR_PLATEAU)
-		if (clic.y > BORDURE + HAUTEUR_MAIN && clic.y < BORDURE + HAUTEUR_MAIN + HAUTEUR_PLATEAU)
+	if(clic.x > BORDURE_T && clic.x < BORDURE_T+LARGEUR_PLATEAU_T)
+		if (clic.y > BORDURE_T + HAUTEUR_MAIN_T && clic.y < BORDURE_T + HAUTEUR_MAIN_T + HAUTEUR_PLATEAU_T)
 			return TRUE;
 	return FALSE;
 }
@@ -338,8 +338,8 @@ CASE transforme_point_en_case_triominos(POINT clic)
 {
 	CASE caseClic;
 
-	caseClic.l = (HAUTEUR_PLATEAU - (clic.y - (BORDURE + HAUTEUR_MAIN))) / HAUTEUR_TUILE;
-	caseClic.c = (clic.x -BORDURE) / (LARGEUR_TUILE / 2);
+	caseClic.l = (HAUTEUR_PLATEAU_T - (clic.y - (BORDURE_T + HAUTEUR_MAIN_T))) / HAUTEUR_TUILE_T;
+	caseClic.c = (clic.x -BORDURE_T) / (LARGEUR_TUILE_T / 2);
 
 	return caseClic;
 }
@@ -350,7 +350,7 @@ int transforme_selection_en_indice_main(POINT clic, int partieMain)
 {
 	int indice;
 
-	indice = (clic.x - BORDURE) / (LARGEUR_TUILE + 10);
+	indice = (clic.x - BORDURE_T) / (LARGEUR_TUILE_T + 10);
 
 	if (partieMain == FIN_MAIN)
 		indice += 14;

@@ -6,13 +6,7 @@ typedef struct coup
   int indice_colonne;
 } COUP; // utiliser dans la fonction jeu_ordinateur
 
-typedef enum HEXAGONE
-{
-  AUCUN,
-	SIMPLE,
-	DOUBLE,
-  TRIPLE
-} HEXAGONE;
+
 
 void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs);
 EMPLACEMENT ** initialise_plateau();
