@@ -80,7 +80,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
     {
         if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
         {
-            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
         }
         else if ((domino_a_afficher.valeur1 == domino_a_afficher.valeur2) && direction == DROITE)
         {
