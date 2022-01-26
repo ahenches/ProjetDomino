@@ -143,7 +143,8 @@ void affiche_emplacement_possible_triominos(CASE caseP)
 void actualise_plateau_triominos(EMPLACEMENT **plateau)
 {
 	int i, j;
-	CASE case;
+	CASE caseP ={0,0};
+
 
 	for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++)
 	{
@@ -153,46 +154,46 @@ void actualise_plateau_triominos(EMPLACEMENT **plateau)
 			//Si case du tableau non vide on place un triomino
 			if (plateau[i][j].trio.min != -1)
 			{
-				case.c = j;
-				case.l = i;
-				affiche_triomino(case,plateau[i][j]);
+				caseP.c = j;
+				caseP.l = i;
+				affiche_triomino(caseP,plateau[i][j]);
 
 				//On place les emplacements disponibles autour du triomino
 				// a gauche
-				if (j-1 >= 0 && tabEmplacement[i][j-1].trio.min == -1)
+				if (j-1 >= 0 && plateau[i][j-1].trio.min == -1)
 				{
-					case.c = j-1;
-					case.l = i;
-					affiche_emplacement_possible_triominos(case);
+					caseP.c = j-1;
+					caseP.l = i;
+					affiche_emplacement_possible_triominos(caseP);
 				}
 				// a droite
-				if (j+1 < LARGEUR_PLATEAU_MAX-1 && tabEmplacement[i][j+1].trio.min == -1)
+				if (j+1 < LARGEUR_PLATEAU_MAX-1 && plateau[i][j+1].trio.min == -1)
 				{
-					case.c = j+1;
-					case.l = i;
-					affiche_emplacement_possible_triominos(case);
+					caseP.c = j+1;
+					caseP.l = i;
+					affiche_emplacement_possible_triominos(caseP);
 				}
 				if (plateau[i][j].direction == 'n')
 				// pointe est vers le nord
 				// test bas
 				{
 					// BAS
-					if (i+1 < HAUTEUR_PLATEAU_MAX-1 && tabEmplacement[i+1][j].trio.min == -1)
+					if (i+1 < HAUTEUR_PLATEAU_MAX-1 && plateau[i+1][j].trio.min == -1)
 					{
-						case.c = j;
-						case.l = i+1;
-						affiche_emplacement_possible_triominos(case);
+						caseP.c = j;
+						caseP.l = i+1;
+						affiche_emplacement_possible_triominos(caseP);
 					}
 				}
 				else
 				// pointe est vers le sud
 				// test haut
 				{
-					if (l-1 >= 0 && tabEmplacement[i-1][j].trio.min == -1)
+					if (i-1 >= 0 && plateau[i-1][j].trio.min == -1)
 					{
-						case.c = j;
-						case.l = i-1;
-						affiche_emplacement_possible_triominos(case);
+						caseP.c = j;
+						caseP.l = i-1;
+						affiche_emplacement_possible_triominos(caseP);
 					}
 				}
 			}
