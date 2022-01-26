@@ -301,7 +301,7 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
-/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -338,9 +338,9 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
     } while (choix == gere_clics());
 
     return mainActive[0];
-}*/
+}
 
-DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -367,7 +367,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     }while(choix == -1);
 
     return mainActive[0];
-}
+}*/
 
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
@@ -528,7 +528,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 mainActive[dominoMain] = pasDom;
             }
 
-           
             actualise_affichage();
         }
         else
@@ -569,37 +568,37 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
     {
         for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
         {
-            if ((i != TAILLE_TAB_DOMINOS / 2) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne-1]))
+            if ((i != TAILLE_TAB_DOMINOS / 2) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
             {
                 x += 36;
                 printf("C'est un double donc on decale\n");
             }
-            else{
+            else
+            {
                 x += 71;
                 printf("On decale pas\n");
             }
         }
-        
     }
     if (direction == GAUCHE)
     {
         for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
-            if ((i != indiceExtremite.colonne) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne+1]))
+            if ((i != indiceExtremite.colonne) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
             {
                 x -= 71;
                 printf("C'est un double donc on decale\n");
             }
-            else{
+            else
+            {
                 x -= 71;
                 printf("On decale pas\n");
             }
         }
-        
     }
 
     coin.x = (LARGEUR_PLATEAU / 2) + x;
-    coin.y = 400 + y;
+    coin.y = 470 + y;
 
     return coin;
 }
