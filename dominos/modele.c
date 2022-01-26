@@ -358,7 +358,6 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 =======
     return mainActive[0];
 }*/
->>>>>>> Stashed changes
 
 DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
@@ -591,7 +590,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     y = 0;*/
     if (direction == DROITE)
     {
-<<<<<<< Updated upstream
+
         for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
         {
             if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
@@ -605,7 +604,6 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
                 printf("On decale pas\n");
             }
         }
-=======
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne-1]))
             (*indiceExtremite)->coin.x += 36;
         else
@@ -614,11 +612,11 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
->>>>>>> Stashed changes
+
     }
     else if (direction == GAUCHE)
     {
-<<<<<<< Updated upstream
+
         for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
             if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
@@ -633,12 +631,11 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
             }
         }
     }
-=======
+
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne+1]))
             (*indiceExtremite)->coin.x -= 36;
         else
             (*indiceExtremite)->coin.x -= 71;
->>>>>>> Stashed changes
 
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
