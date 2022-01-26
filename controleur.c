@@ -3,10 +3,12 @@
 #include "controleur.h"
 #include "vue.h"
 #include "triominos/controleur.h"
-#include "./dominos/dominos.h"
 #include "./dominos/modele.h"
-#include "./dominos/controleur.h"
 #include "./dominos/vue.h"
+
+// variables globales
+DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu, [ligne][colonne]
+DOMINO pioche_domino[TAILLE_TAB_DOMINOS];
 
 int main()
 {
@@ -158,11 +160,18 @@ NB_JOUEURS transforme_clic_en_nb_joueurs()
 
 		// Clic sur Confirmer
 		// Clic dans choix nombre joueurs humains
-		if (clic.x > 480 && clic.x < 480 + 400 && clic.y < 230 && clic.y > 230 - 100)
+		if ((clic.x > 480) && (clic.x < 480 + 400) && (clic.y < 230) && (clic.y > 230 - 100))
+		{
 			if (estChoixCorrect)
+			{
+
 				estClicSurConfirme = TRUE;
+			}
 			else
+			{
 				estClicSurConfirme = FALSE;
+			}
+		}
 		actualise_affichage();
 	} while (!estChoixCorrect || !estClicSurConfirme);
 
@@ -237,11 +246,12 @@ CHOIX_JEU transforme_clic_en_choix_jeu()
 		}
 
 		if (clic.x > 500 && clic.x < 500 + 300 && clic.y < 200 && clic.y > 200 - 100)
+		{
 			if (estChoisiVariante)
 				estClicSurJouer = TRUE;
 			else
 				estClicSurJouer = FALSE;
-
+		}
 		actualise_affichage();
 	} while (!estChoisiVariante || !estClicSurJouer);
 

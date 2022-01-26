@@ -1,4 +1,10 @@
-#include "dominos.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "../lib/lib.h"
+#include "../controleur.h"
+//#include "controleur.h"
 #include "modele.h"
 #include "vue.h"
 
@@ -7,7 +13,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Fonction qui initialise le plateau
-void initialise_plateau()
+void initialise_plateau_domino()
 {
     int i;
     int j;
@@ -125,7 +131,7 @@ void genere_pioche()
             dominoCourant.valeur1 = i;
             dominoCourant.valeur2 = j;
 
-            pioche[comptDominos] = dominoCourant;
+            pioche_domino[comptDominos] = dominoCourant;
 
             printf("|%d %d| ", dominoCourant.valeur1, dominoCourant.valeur2);
             comptDominos++;
@@ -180,11 +186,11 @@ DOMINO pioche_un_domino(JOUEUR *infos_joueur) // ajoute le domino pioché à la 
     do
     {
         alea = rand() % TAILLE_TAB_DOMINOS;
-        domChoisi = pioche[alea];
+        domChoisi = pioche_domino[alea];
     } while (domChoisi.valeur1 == -1 && domChoisi.valeur2 == -1);
 
     if (domChoisi.valeur1 != -1 && domChoisi.valeur2 != -1)
-        pioche[alea] = pasDom;
+        pioche_domino[alea] = pasDom;
 
     for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
     {
@@ -210,7 +216,7 @@ int compte_double_pioche()
     compt = 0;
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
-        if (est_double(pioche[i]) && pioche[i].valeur1 != -1)
+        if (est_double(pioche_domino[i]) && pioche_domino[i].valeur1 != -1)
             compt++;
     }
     return compt;
@@ -301,7 +307,7 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
-/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     printf(" on entre dans recupere_choix_domino");
     int choix;
@@ -348,18 +354,10 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
         }
     } while (choix_est_valable == FAUX);
 
-<<<<<<< Updated upstream
-    printf("recupere_choix domino_main bug, il retourne une valeur en fin de fonction (pas normal");
-    DOMINO bug;
-    bug.valeur1 = -1;
-    bug.valeur2 = -1;
-    return bug;
-}
-=======
     return mainActive[0];
-}*/
+}
 
-DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -383,10 +381,10 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
         }
         else
             return mainActive[choix];
-    }while(choix == -1);
+    } while (choix == -1);
 
     return mainActive[0];
-}
+}*/
 
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
@@ -448,10 +446,11 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     else
     {
         a_retourner.compatible = FAUX;
-        a_retourner.extremite = AUCUN;
+        a_retourner.extremite = AUCUN_DOMINO;
     }
     return a_retourner;
 }
+
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino)
 {
     int i;
@@ -475,7 +474,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     POINT coin;
     EXTREMITE_COMPATIBLE direction;
 
-    direction = AUCUN;
+    direction = AUCUN_DOMINO;
     coin.x = 0;
     coin.y = 0;
     pasDom.valeur1 = -1;
@@ -490,9 +489,9 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         indiceExtremite2->colonne++;
         direction = DROITE;
         coin = transforme_coord_point(&indiceExtremite2, direction);
-    
+
         mainActive[dominoMain] = pasDom;
-        
+
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
@@ -535,7 +534,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                     indiceExtremite1->colonne--;
                     direction = GAUCHE;
                     coin = transforme_coord_point(&indiceExtremite1, direction);
-                   
                 }
                 else
                 {
@@ -546,15 +544,12 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 }
                 mainActive[dominoMain] = pasDom;
             }
-
-            
         }
         else
         {
             printf("** DOMINO choisi PAS COMPATIBLE **\n");
             return FALSE;
         }
-
     }
 
     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
@@ -573,7 +568,7 @@ BOOL est_vide_pioche()
 {
     for (int i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
-        if (pioche[i].valeur1 != -1)
+        if (pioche_domino[i].valeur1 != -1)
             return FALSE;
     }
     return TRUE;
@@ -590,21 +585,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     y = 0;*/
     if (direction == DROITE)
     {
-
-        for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
-        {
-            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
-            {
-                x += 36;
-                printf("Le domino précédent est un double donc on decale de 36\n");
-            }
-            else
-            {
-                x += 71;
-                printf("On decale pas\n");
-            }
-        }
-        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne-1]))
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne - 1]))
             (*indiceExtremite)->coin.x += 36;
         else
             (*indiceExtremite)->coin.x += 71;
@@ -612,27 +593,10 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
-
     }
     else if (direction == GAUCHE)
     {
-
-        for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
-        {
-            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
-            {
-                x -= 71;
-                printf("C'est un double donc on decale\n");
-            }
-            else
-            {
-                x -= 71;
-                printf("On decale pas\n");
-            }
-        }
-    }
-
-        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne+1]))
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne + 1]))
             (*indiceExtremite)->coin.x -= 36;
         else
             (*indiceExtremite)->coin.x -= 71;
@@ -640,7 +604,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
-    
+    }
 
     return coin;
 }
@@ -784,7 +748,7 @@ int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
 
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
-        if (pioche[i].valeur1 != -1)
+        if (pioche_domino[i].valeur1 != -1)
         {
             nb_dominos++;
         }

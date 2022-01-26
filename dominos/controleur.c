@@ -1,13 +1,18 @@
-#include "dominos.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "../lib/lib.h"
+#include "../controleur.h"
+//#include "controleur.h"
 #include "modele.h"
-#include "controleur.h"
 #include "vue.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                  Fonction controleur                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
+int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
     int totJoueurs;
     int tour;    // a qui le tour
@@ -24,9 +29,9 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     indiceExtremite2.ligne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite2.colonne = TAILLE_TAB_DOMINOS / 2;
 
-    indiceExtremite1.coin.x = (LARGEUR_PLATEAU / 2)-85;
+    indiceExtremite1.coin.x = (LARGEUR_PLATEAU / 2) - 85;
     indiceExtremite1.coin.y = 470;
-    indiceExtremite2.coin.x = (LARGEUR_PLATEAU / 2)-85;
+    indiceExtremite2.coin.x = (LARGEUR_PLATEAU / 2) - 85;
     indiceExtremite2.coin.y = 470;
 
     totJoueurs = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
@@ -42,16 +47,16 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     affiche_interface(variante);
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
-    initialise_plateau();
+    initialise_plateau_domino();
     initialise_joueurs(infos_joueurs, totJoueurs);
     affiche_plateau();
     genere_pioche();
-    affiche_pioche();
+    affiche_pioche_domino();
     distribue_premiers_dominos(infos_joueurs, totJoueurs);
     affiche_main(infos_joueurs[tour].mainJoueur);
     actualise_affichage();
     affiche_mains(totJoueurs, infos_joueurs);
-    affiche_pioche();
+    affiche_pioche_domino();
     affiche_pseudos(infos_joueurs, totJoueurs);
     definit_premier_joueur(infos_joueurs, determine_nb_dominos_main(totJoueurs));
     printf("**** C'est au tour de %s de jouer ! ****\n\n", infos_joueurs[0].pseudo);
@@ -76,14 +81,14 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 if (choix_joueur == QUITTER)
                 {
                     printf("le jour a voulu quitter");
-                    exit(0);
+                    return 0;
                 }
                 actualise_affichage();
             }
 
         } while (choix_joueur == TOUR_NON_FINI);
 
-        affiche_pioche();
+        affiche_pioche_domino();
         affiche_plateau();
 
         if (tourJeu > 0)
@@ -103,4 +108,5 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         }
         actualise_affichage();
     }
+    return 0;
 }
