@@ -1,14 +1,13 @@
-// Maud et Michel
 #define LARGEUR 1300
 #define HAUTEUR 900
-#define LARGEUR_PLATEAU 1260
-#define HAUTEUR_PLATEAU 700
-#define LARGEUR_MAIN 1050
-#define HAUTEUR_MAIN 100
-#define LARGEUR_PIOCHE 200
-#define LARGEUR_TUILE 60
-#define HAUTEUR_TUILE 50
-#define BORDURE 20
+#define LARGEUR_PLATEAU_T 1260
+#define HAUTEUR_PLATEAU_T 700
+#define LARGEUR_MAIN_T 1050
+#define HAUTEUR_MAIN_T 100
+#define LARGEUR_PIOCHE_T 200
+#define LARGEUR_TUILE_T 60
+#define HAUTEUR_TUILE_T 50
+#define BORDURE_T 20
 
 
 void affiche_plateau_triminos();

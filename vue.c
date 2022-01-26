@@ -112,7 +112,7 @@ void affiche_menu_choix_jeu()
     pDroit.x = 650; pDroit.y = 250;
     dessine_ligne(pGauche,pDroit, noir);
 
-    //Rectangle Dominos
+    //Bouton Dominos
     pGauche.x = 125; pGauche.y = 580;
     pDroit.x = pGauche.x + 400; pDroit.y = pGauche.y - 100;
     dessine_rectangle_plein(pGauche, pDroit, lightgrey);
@@ -121,7 +121,7 @@ void affiche_menu_choix_jeu()
     pTexte.x = pGauche.x + 110; pTexte.y = pGauche.y - 25;
     affiche_texte("Dominos", 35, pTexte, noir);
 
-    //Rectangle Triominos
+    //Bouton Triominos
     pGauche.x += 650;
     pDroit.x = pGauche.x + 400;
     dessine_rectangle_plein(pGauche, pDroit, lightgrey);
@@ -130,7 +130,7 @@ void affiche_menu_choix_jeu()
     pTexte.x = pGauche.x + 110;
     affiche_texte("Triominos", 35, pTexte, noir);
 
-    //Rectangles choix Dominos
+    //Boutons choix Dominos
         //Avec Pioche
     pGauche.x = 155; pGauche.y = 350;
     pDroit.x = pGauche.x + 150; pDroit.y = pGauche.y - 50;
@@ -149,7 +149,7 @@ void affiche_menu_choix_jeu()
     pTexte.x = pGauche.x + 20;
     affiche_texte("Sans Pioche", 20, pTexte, noir);
 
-    //Rectangles choix Triominos
+    //Boutons choix Triominos
         //Avec Score
     pGauche.x += 460;
     pDroit.x = pGauche.x + 150;
@@ -168,7 +168,7 @@ void affiche_menu_choix_jeu()
     pTexte.x = pGauche.x + 20;
     affiche_texte("Sans Score", 20, pTexte, noir);
 
-    //Rectangle jouer
+    //Bouton jouer
     pGauche.x = 500; pGauche.y = 200;
     pDroit.x = pGauche.x + 300; pDroit.y = pGauche.y - 100;
     dessine_rectangle_plein(pGauche, pDroit, lightgrey);
@@ -210,7 +210,7 @@ void affiche_menu_classement()
         fclose(fichier);
     }
 
-    //Bouton Rejouer et Quitter
+    //Boutons Rejouer et Quitter
     pGauche.x = 425; pGauche.y = 200 ;
     pDroit.x = pGauche.x +200 ; pDroit.y = pGauche.y -100 ;
     pTexte.x = pGauche.x + 40 ;pTexte.y = pGauche.y -30 ;
@@ -232,6 +232,7 @@ void affiche_selection_nb_joueurs_humains(int nbHumains)
 {
     POINT pGauche, pDroit;
 
+    //Met en evidence le nombre selectionné, efface la selection precedente
     pGauche.x = 520 ; pGauche.y = 630;
     pDroit.x = pGauche.x + COTE_NB_JOUEUR ; pDroit.y = pGauche.y - COTE_NB_JOUEUR;
     for (int i = 1 ; i <= 4 ; i++)
@@ -249,6 +250,7 @@ void affiche_selection_nb_joueurs_ordi(int nbOrdi)
 {
     POINT pGauche, pDroit;
 
+    //Met en evidence le nombre selectionné, efface la selection precedente
     pGauche.x = 520 ; pGauche.y = 380;
     pDroit.x = pGauche.x + COTE_NB_JOUEUR ; pDroit.y = pGauche.y - COTE_NB_JOUEUR;
     for (int i = 0; i <= 3 ; i++)
@@ -325,6 +327,7 @@ void affiche_selection_variante(VARIANTE varSelect)
     pDroit.x = pGauche.x + 150;
     dessine_rectangle(pGauche, pDroit, noir);
 
+    //Affiche la nouvelle selection
     switch(varSelect)
     {
         case SANS_PIOCHE :

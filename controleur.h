@@ -20,16 +20,14 @@ typedef struct NB_JOUEURS
 
 typedef struct PSEUDO_JOUEUR
 {
-	char pseudo[25];
+	char pseudo[25];	//Pseudo du joueur
 } PSEUDO_JOUEUR;
 
 typedef struct CHOIX_JEU
 {
-	JEU jeu;
-    VARIANTE variante;
+	JEU jeu; 			//Jeu choisi
+    VARIANTE variante;	//Variante choisie
 } CHOIX_JEU;
-
-
 
 BOOL est_clic_sur_jouer_menu_accueil(POINT clic);
 NB_JOUEURS transforme_clic_en_nb_joueurs();

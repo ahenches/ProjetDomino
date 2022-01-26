@@ -49,13 +49,14 @@ int main()
     }
 	printf("\nLes pseudos sont enregistrés !\n");
 
-	//On complete le nom des Ordinateurs si il en a
+	//On complete le nom des Ordinateurs s il en a
 	compt = 0;
     for (i = nbJoueurs.nbJoueurHumain; i < nbJoueurs.nbJoueurIA + nbJoueurs.nbJoueurHumain; i++)
     {
         sprintf(pseudoJoueurs[i].pseudo, "IA%d", compt);
         compt++;
     }
+	
 	rejouer = TRUE;
 	do {
 		//On affiche le menu pour le choix et du jeu et de sa variante
