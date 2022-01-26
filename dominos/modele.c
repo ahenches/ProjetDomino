@@ -225,8 +225,10 @@ int compte_double_pioche()
 // indique si le domino pris en paramètre est un double ou non
 BOOL est_double(DOMINO domino)
 {
-    if (domino.valeur1 == domino.valeur2)
+    if ((domino.valeur1 == domino.valeur2) && (domino.valeur1 > 0))
+    {
         return VRAI;
+    }
 
     return FALSE;
 }
@@ -576,12 +578,6 @@ BOOL est_vide_pioche()
 POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE direction)
 {
     POINT coin;
-    /*int i;
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;*/
     if (direction == DROITE)
     {
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne - 1]))
