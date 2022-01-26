@@ -18,8 +18,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	// strcpy(pseudoJoueurs[0].pseudo, "Jacques");
 	// strcpy(pseudoJoueurs[1].pseudo, "Christine");
 	// strcpy(pseudoJoueurs[2].pseudo, "Omar");
-	// strcpy(pseudoJoueurs[3].pseudo, "Lyu");
-	// NB_JOUEURS nj = {4, 2};
+	// NB_JOUEURS nj = {3, 1};
 	// VARIANTE v = AVEC_SCORE;
 	//
 	// main_triominos(pseudoJoueurs, nj, v);
@@ -69,7 +68,10 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	// Jeu
 	while(!test_fin(nbJoueurs, joueurs, laPioche, plateau))
 	{
-		printf("\nquiJoue : joueur n°%d\n", quiJoue);
+		printf("\nquiJoue : joueur %s\n", joueurs[quiJoue].pseudo);
+		affiche_main_joueur(joueurs[quiJoue].mainJoueur);
+		affiche_plateau_modele(plateau);
+
 		if (joueurs[quiJoue].estHumain == false)
 		{
 			gainEnScore = jeu_ordinateur(joueurs[quiJoue], plateau);
@@ -160,14 +162,16 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 				else if (indiceDansMain != -1 && clic_dans_plateau_triominos(clic))
 				{
 					caseDuClic = transforme_point_en_case_triominos(clic);
-					gainEnScore = placer_trio(trioSelectionne, plateau,
+					printf("LIG : %d COL : %d\n", caseDuClic.l, caseDuClic.c);
+					gainEnScore = placer_trio_bis(trioSelectionne, plateau,
 							caseDuClic.l, caseDuClic.c);
+					printf("SCORE %d\n", gainEnScore);
 					if (gainEnScore > 0)
 					{
 						rearrange_main_joueur(&joueurs[quiJoue].mainJoueur, indiceDansMain);
 						affiche_main_joueur(joueurs[quiJoue].mainJoueur);
 						joueurs[quiJoue].score += gainEnScore;
-						// actualise_plateau_triominos(plateau);
+						actualise_plateau_triominos(plateau);
 						actualise_score_triominos(nJoueurs, joueurs);
 						affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
 						actionSignificative = true;
@@ -183,7 +187,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 		}
 		if(variante == AVEC_SCORE)
 			actualise_score_triominos(nJoueurs, joueurs);
-		// actualise_plateau_triominos(plateau);
+		actualise_plateau_triominos(plateau);
 		actualise_pioche_triominos(laPioche.taille);
 		actualise_affichage();
 		quiJoue = (quiJoue+1) % nJoueurs;
