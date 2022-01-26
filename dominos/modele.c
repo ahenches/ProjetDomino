@@ -529,8 +529,8 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite)
     {
         y += 36;
     }
-    coin.x = ABSCISSE_BOUTON_QUITTER;
-    coin.y = ORDONNEE_BOUTON_QUITTER;
+    coin.x = LARGEUR_PLATEAU/2;
+    coin.y = HAUTEUR_PLATEAU/2;
 
     return coin;
 }
