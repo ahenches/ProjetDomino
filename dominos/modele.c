@@ -569,7 +569,15 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
     {
         for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
         {
-            x += 71;
+            if ((i != TAILLE_TAB_DOMINOS / 2) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne-1]))
+            {
+                x += 36;
+                printf("C'est un double donc on decale\n");
+            }
+            else{
+                x += 71;
+                printf("On decale pas\n");
+            }
         }
         
     }
@@ -577,13 +585,21 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
     {
         for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
-            x -= 71;
+            if ((i != indiceExtremite.colonne) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne+1]))
+            {
+                x -= 71;
+                printf("C'est un double donc on decale\n");
+            }
+            else{
+                x -= 71;
+                printf("On decale pas\n");
+            }
         }
         
     }
 
     coin.x = (LARGEUR_PLATEAU / 2) + x;
-    coin.y = 700 / 2 + y;
+    coin.y = 400 + y;
 
     return coin;
 }
