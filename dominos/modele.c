@@ -640,7 +640,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
-    }
+    
 
     return coin;
 }
