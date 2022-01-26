@@ -60,6 +60,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     affiche_pseudos(infos_joueurs, totJoueurs);
     definit_premier_joueur(infos_joueurs, determine_nb_dominos_main(totJoueurs));
     printf("**** C'est au tour de %s de jouer ! ****\n\n", infos_joueurs[0].pseudo);
+    affiche_victoire(gagnant, infos_joueurs);
 
     while (continuePartie)
     {
@@ -80,7 +81,20 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
                 if (choix_joueur == QUITTER)
                 {
-                    printf("le jour a voulu quitter");
+                    FILE *fichier = NULL;
+
+                    fichier = fopen("./classement.txt", "w");
+
+                    if (fichier != NULL)
+                    {
+
+                        int i;
+                        for (i = 0; i < totJoueurs; i++)
+                        {
+                            fprintf(fichier, "score de %s: %d\n", infos_joueurs[i].pseudo, infos_joueurs[i].score);
+                        }
+                        fclose(fichier);
+                    }
                     return 0;
                 }
                 actualise_affichage();
@@ -99,6 +113,21 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         if (gagnant != -1)
         {
             affiche_victoire(gagnant, infos_joueurs);
+
+            FILE *fichier = NULL;
+
+            fichier = fopen("./classement.txt", "w");
+
+            if (fichier != NULL)
+            {
+
+                int i;
+                for (i = 0; i < totJoueurs; i++)
+                {
+                    fprintf(fichier, "score de %s: %d\n", infos_joueurs[i].pseudo, infos_joueurs[i].score);
+                }
+                fclose(fichier);
+            }
             continuePartie = FALSE;
         }
         else
@@ -107,37 +136,6 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             tourJeu++;
         }
         actualise_affichage();
-    }
-
-    /*FILE *fichier = NULL;
-
-    fichier = fopen("../classement.txt", "w");
-
-    if (fichier != NULL)
-    {
-
-        int i;
-        for (i = 0; i < totJoueurs; i++)
-        {
-            fprintf(fichier, "score de %s: %d", infos_joueurs[i].pseudo, infos_joueurs[i].score);
-        }
-        fclose(fichier);
-    }*/
-
-    FILE *fichier = NULL;
-    int age = 0;
-
-    fichier = fopen("../classement", "w");
-
-    if (fichier != NULL)
-    {
-        // On demande l'âge
-        printf("Quel age avez-vous ? ");
-        scanf("%d", &age);
-
-        // On l'écrit dans le fichier
-        fprintf(fichier, "Le Monsieur qui utilise le programme, il a %d ans", age);
-        fclose(fichier);
     }
 
     return 0;
