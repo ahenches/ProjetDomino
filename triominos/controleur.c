@@ -22,6 +22,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	//
 	// main_triominos(pseudoJoueurs, nj, v);
 
+	ouvre_fenetre(LARGEUR, HAUTEUR);
 	//declarations
 	EMPLACEMENT **plateau;
 	PIOCHE_TRIOMINOS laPioche;
@@ -96,8 +97,8 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 			nFoisPioche = 0;
 			indiceDansMain = -1;
 			partieMainEnCours = DEBUT_MAIN;
-			affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
-			actualise_affichage();
+			// affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+			// actualise_affichage();
 
 			do {
 				clic = attend_clic();
@@ -116,7 +117,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 					if (indiceDansMain < joueurs[quiJoue].mainJoueur.taille)
 					{
 						trioSelectionne = joueurs[quiJoue].mainJoueur.tab[indiceDansMain];
-						affiche_selection_main_triominos(indiceDansMain);
+						// affiche_selection_main_triominos(indiceDansMain);
 					}
 					else
 						indiceDansMain = -1;
@@ -126,9 +127,9 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 					pioche(&joueurs[quiJoue].mainJoueur, &laPioche);
 					joueurs[quiJoue].score -= 5;
 					nFoisPioche ++; // mammamamama
-					actualise_pioche_triominos(laPioche.taille);
-					actualise_score_triominos(nJoueurs, joueurs);
-					affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+					// actualise_pioche_triominos(laPioche.taille);
+					// actualise_score_triominos(nJoueurs, joueurs);
+					// affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
 				}
 				else if (indiceDansMain != -1 && clic_dans_plateau_triominos(clic))
 				{
@@ -144,15 +145,15 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 
 					}
 				}
-				actualise_affichage();
+				// actualise_affichage();
 			}
 			while (!clicSignificatif);
 		}
-		if(variante == AVEC_SCORE)
-			actualise_score_triominos(nJoueurs, joueurs);
+		// if(variante == AVEC_SCORE)
+		// 	actualise_score_triominos(nJoueurs, joueurs);
 		// actualise_plateau_triominos(plateau);
-		actualise_pioche_triominos(laPioche.taille);
-		actualise_affichage();
+		// actualise_pioche_triominos(laPioche.taille);
+		// actualise_affichage();
 		quiJoue = quiJoue+1 % (nbJoueurs.nbJoueurHumain + nbJoueurs.nbJoueurHumain);
 	}
 	// JOUEUR_TRIOMINOS joueurs [4];

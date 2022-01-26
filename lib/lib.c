@@ -10,7 +10,7 @@ Trace_evts trace_evts;
 POINT dernier_clic = {-1, -1};
 int LARGEUR = -1;
 int HAUTEUR = -1;
-char *NOM_POLICE = "../lib/verdana.ttf";
+char *NOM_POLICE = "./lib/verdana.ttf";
 
 #define octets_par_pixel ecran->format->BytesPerPixel
 #define largeur_ecran (ecran->pitch / 4)
@@ -327,7 +327,17 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
         TTF_Init();
         int i;
         for (i = 0; i < 256; i++)
-            polices[i] = TTF_OpenFont(NOM_POLICE, i);
+        {
+          TTF_Font *font = TTF_OpenFont(NOM_POLICE ,i);
+          if(!font){
+            printf("Unable to open font\n");
+            exit(1);
+          }
+          else {
+            polices[i] = font;
+          }
+        }
+
 
         ttf_deja_init = 1;
     }

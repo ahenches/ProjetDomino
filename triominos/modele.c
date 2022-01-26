@@ -180,6 +180,7 @@ void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs)
     joueurs[nb_joueurs.nbJoueurHumain+i].pseudo[4] = i+'0';
     joueurs[nb_joueurs.nbJoueurHumain+i].pseudo[5] = 0;
     joueurs[nb_joueurs.nbJoueurHumain+i].mainJoueur.taille = 0;
+    joueurs[nb_joueurs.nbJoueurHumain+i].score = 0;
     joueurs[nb_joueurs.nbJoueurHumain+i].estHumain = 0;
   }
 }
