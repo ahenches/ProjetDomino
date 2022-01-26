@@ -27,3 +27,4 @@ BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
 // BOOL test_fin();
 // INT calcule_score(JOUEUR j);
 int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement);
+BOOL est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
