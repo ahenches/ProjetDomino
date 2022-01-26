@@ -305,11 +305,10 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
 {
     int choix;
 
-    choix = -1;
     do
     {
-        printf("Choisissez le domino (0, 1, 2, 3, 4, 5, 6) :\n");
-        scanf("%d", &choix);
+
+        choix = gere_clics();
 
         if (choix == -2)
         {
@@ -321,11 +320,15 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
                 return passeTour;
             }
             else
+            {
                 choix = -1;
+            }
         }
         else
+        {
             return mainActive[choix];
-    } while (choix == -1);
+        }
+    } while (choix == gere_clics());
 
     return mainActive[0];
 }
@@ -727,7 +730,7 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
         return -1;
 }
 
-DOMINO gere_clic_domino(DOMINO main_joueur[])
+int gere_clics()
 {
     POINT coordonees_clic = attend_clic();
     BOOL clic_sur_bouton = 0;
@@ -748,12 +751,10 @@ DOMINO gere_clic_domino(DOMINO main_joueur[])
         }
         if ((1130 <= coordonees_clic.x) && (coordonees_clic.x <= 1280) && (10 <= coordonees_clic.y) && (coordonees_clic.y <= 115)) // si on clique sur le bouton piocher ou passer son tour
         {
-            DOMINO piocher_ou_passer_son_tour;
-            piocher_ou_passer_son_tour.valeur1 = -2;
-            piocher_ou_passer_son_tour.valeur1 = -2;
-            return piocher_ou_passer_son_tour;
+            position_domino = -2;
+            return position_domino;
         }
     } while (clic_sur_bouton == 0);
 
-    return main_joueur[position_domino];
+    return position_domino;
 }

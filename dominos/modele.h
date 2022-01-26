@@ -30,5 +30,5 @@ BOOL joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indicesExtremite1, COORDONNE
 int compte_dominos_pioche();
 int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs);
 void calcule_score(int *score, DOMINO dominoPose);
-DOMINO gere_clic_domino(DOMINO main_joueur[]);
+int gere_clics();
 #endif
