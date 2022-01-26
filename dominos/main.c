@@ -24,8 +24,6 @@ int main(int argc, char *argv[])
 	variante = SANS_PIOCHE;
 	variante = choix_variante();
 	main_dominos(infos_joueurs, nbJoueurs, variante);
-
-	attend_clic();
 	ferme_fenetre();
 
 	return 0;

@@ -301,7 +301,7 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
-/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -324,6 +324,13 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
                 choix = -1;
             }
         }
+        else if (choix == -3)
+        {
+            DOMINO quitter;
+            quitter.valeur1 = -3;
+            quitter.valeur2 = -3;
+            return quitter;
+        }
         else
         {
             return mainActive[choix];
@@ -331,9 +338,9 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
     } while (choix == gere_clics());
 
     return mainActive[0];
-}*/
+}
 
-DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -352,7 +359,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
                 passeTour.valeur2 = -2;
                 return passeTour;
             }
-            else 
+            else
                 choix = -1;
         }
         else
@@ -360,7 +367,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     }while(choix == -1);
 
     return mainActive[0];
-}
+}*/
 
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
@@ -575,8 +582,8 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
         }
     }
 
-    coin.x = (LARGEUR_PLATEAU/2)+x;
-    coin.y = 700/2+y;
+    coin.x = (LARGEUR_PLATEAU / 2) + x;
+    coin.y = 700 / 2 + y;
 
     return coin;
 }
@@ -647,14 +654,18 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
     return FALSE;
 }
 
-BOOL joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
+int joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
     BOOL dominoPlace;
     DOMINO *mainActive = infos_joueur->mainJoueur;
     DOMINO temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
     DOMINO *dominoChoisi = &temp;
 
-    if (dominoChoisi->valeur1 == -2)
+    if (dominoChoisi->valeur1 == -3)
+    {
+        return QUITTER;
+    }
+    else if (dominoChoisi->valeur1 == -2)
     {
         if (variante == SANS_PIOCHE)
         {
@@ -778,13 +789,13 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
 
 int gere_clics()
 {
-    POINT coordonees_clic = attend_clic();
+
     BOOL clic_sur_bouton = 0;
     int position_domino = 0;
     int i, j = 0;
     do
     {
-
+        POINT coordonees_clic = attend_clic();
         for (i = 0; i <= 21 * 50; i += 50)
         {
 
@@ -798,8 +809,14 @@ int gere_clics()
         if ((1130 <= coordonees_clic.x) && (coordonees_clic.x <= 1280) && (10 <= coordonees_clic.y) && (coordonees_clic.y <= 115)) // si on clique sur le bouton piocher ou passer son tour
         {
             position_domino = -2;
-            return position_domino;
+            clic_sur_bouton = 1;
         }
+        else if ((1175 <= coordonees_clic.x) && (coordonees_clic.x <= 1255) && (840 <= coordonees_clic.y) && (coordonees_clic.y <= 885)) // si on clique sur quitter
+        {
+            position_domino = -3;
+            clic_sur_bouton = 1;
+        }
+
     } while (clic_sur_bouton == 0);
 
     return position_domino;

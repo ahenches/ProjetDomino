@@ -226,9 +226,9 @@ void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le to
     POINT coordonnees_phrase, p1_rectangle, p2_rectangle;
     coordonnees_phrase.x = 20;
     coordonnees_phrase.y = 850;
-    p1_rectangle.x = coordonnees_phrase.x + 150;
+    p1_rectangle.x = coordonnees_phrase.x;
     p1_rectangle.y = coordonnees_phrase.y;
-    p2_rectangle.x = p1_rectangle.x + 200;
+    p2_rectangle.x = p1_rectangle.x + 350;
     p2_rectangle.y = coordonnees_phrase.y - 26;
     dessine_rectangle_plein(p1_rectangle, p2_rectangle, bleuclair); // on dessine un rectangle pour effacer le nom du joueur précédent
     char phrase_a_afficher[50];

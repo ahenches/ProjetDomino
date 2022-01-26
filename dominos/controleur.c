@@ -33,8 +33,8 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
-    affiche_interface(variante);
     affiche_fonds();
+    affiche_interface(variante);
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
     initialise_plateau();
@@ -56,7 +56,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         do
         {
             affiche_mains(totJoueurs, infos_joueurs);
-            //affiche_interface(variante);
+            affiche_interface(variante);
             affiche_tour(infos_joueurs[tour].pseudo);
             affiche_main(infos_joueurs[tour].mainJoueur);
             actualise_affichage();
@@ -68,9 +68,14 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             else
             {
                 dominoPlace = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
+                if (dominoPlace == QUITTER)
+                {
+                    printf("le jour a voulu quitter");
+                    exit(0);
+                }
             }
-            attend_clic();
-        } while (dominoPlace == FALSE);
+
+        } while (dominoPlace == DOMINO_NON_PLACE);
 
         affiche_pioche();
         affiche_plateau();
