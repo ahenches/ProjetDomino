@@ -24,6 +24,11 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     indiceExtremite2.ligne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite2.colonne = TAILLE_TAB_DOMINOS / 2;
 
+    indiceExtremite1.coin.x = (LARGEUR_PLATEAU / 2)-85;
+    indiceExtremite1.coin.y = 470;
+    indiceExtremite2.coin.x = (LARGEUR_PLATEAU / 2)-85;
+    indiceExtremite2.coin.y = 470;
+
     totJoueurs = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
     tour = 0;
     tourJeu = 1;

@@ -41,6 +41,8 @@ typedef enum EXTREMITE_COMPATIBLE
 	GAUCHE,
 	DROITE,
 	LES_DEUX,
+	HAUT,
+	BAS,
 	AUCUN,
 } EXTREMITE_COMPATIBLE;
 
@@ -74,6 +76,7 @@ typedef struct COORDONNEES
 {
 	int ligne;
 	int colonne;
+	POINT coin;
 } COORDONNEES;
 
 typedef struct AIDE_PLACEMENT // aide la fonction place_domino à placer ou non un domino et à quelle extrémité

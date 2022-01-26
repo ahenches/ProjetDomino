@@ -301,7 +301,7 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
-DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     printf(" on entre dans recupere_choix_domino");
     int choix;
@@ -348,14 +348,19 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
         }
     } while (choix_est_valable == FAUX);
 
+<<<<<<< Updated upstream
     printf("recupere_choix domino_main bug, il retourne une valeur en fin de fonction (pas normal");
     DOMINO bug;
     bug.valeur1 = -1;
     bug.valeur2 = -1;
     return bug;
 }
+=======
+    return mainActive[0];
+}*/
+>>>>>>> Stashed changes
 
-/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
+DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
     int choix;
 
@@ -382,7 +387,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     }while(choix == -1);
 
     return mainActive[0];
-}*/
+}
 
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
@@ -469,7 +474,9 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     DOMINO pasDom;
     int dominoMain;
     POINT coin;
+    EXTREMITE_COMPATIBLE direction;
 
+    direction = AUCUN;
     coin.x = 0;
     coin.y = 0;
     pasDom.valeur1 = -1;
@@ -481,11 +488,12 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     if (tourJeu == 1)
     {
         plateau[TAILLE_TAB_DOMINOS / 2][TAILLE_TAB_DOMINOS / 2] = *dominoAPlacer;
+        indiceExtremite2->colonne++;
+        direction = DROITE;
+        coin = transforme_coord_point(&indiceExtremite2, direction);
+    
         mainActive[dominoMain] = pasDom;
-        coin = transforme_coord_point(*indiceExtremite2, DROITE);
-        printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-        affiche_domino(*dominoAPlacer, coin, DROITE);
-        actualise_affichage();
+        
         printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
@@ -501,11 +509,10 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 {
                     plateau[indiceExtremite1->ligne][indiceExtremite1->colonne - 1] = *dominoAPlacer;
                     indiceExtremite1->colonne--;
+                    direction = GAUCHE;
+                    coin = transforme_coord_point(&indiceExtremite1, direction);
+
                     mainActive[dominoMain] = pasDom;
-                    coin = transforme_coord_point(*indiceExtremite1, GAUCHE);
-                    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-                    printf("** DOMINO choisi COMPATIBLE a GAUCHE **\n");
-                    affiche_domino(*dominoAPlacer, coin, GAUCHE);
                 }
             }
             else if (extremiteCompatible == DROITE)
@@ -514,11 +521,10 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 {
                     plateau[indiceExtremite2->ligne][indiceExtremite2->colonne + 1] = *dominoAPlacer;
                     indiceExtremite2->colonne++;
+                    direction = DROITE;
+                    coin = transforme_coord_point(&indiceExtremite2, direction);
+
                     mainActive[dominoMain] = pasDom;
-                    coin = transforme_coord_point(*indiceExtremite2, DROITE);
-                    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-                    printf("** DOMINO choisi COMPATIBLE a DROITE **\n");
-                    affiche_domino(*dominoAPlacer, coin, DROITE);
                 }
             }
             else if (extremiteCompatible == LES_DEUX)
@@ -528,29 +534,33 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 {
                     plateau[indiceExtremite1->ligne][indiceExtremite1->colonne - 1] = *dominoAPlacer;
                     indiceExtremite1->colonne--;
-                    coin = transforme_coord_point(*indiceExtremite1, GAUCHE);
-                    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-                    affiche_domino(*dominoAPlacer, coin, GAUCHE);
+                    direction = GAUCHE;
+                    coin = transforme_coord_point(&indiceExtremite1, direction);
+                   
                 }
                 else
                 {
                     plateau[indiceExtremite2->ligne][indiceExtremite2->colonne + 1] = *dominoAPlacer;
                     indiceExtremite2->colonne++;
-                    coin = transforme_coord_point(*indiceExtremite2, DROITE);
-                    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-                    affiche_domino(*dominoAPlacer, coin, DROITE);
+                    direction = DROITE;
+                    coin = transforme_coord_point(&indiceExtremite2, direction);
                 }
                 mainActive[dominoMain] = pasDom;
             }
 
-            actualise_affichage();
+            
         }
         else
         {
             printf("** DOMINO choisi PAS COMPATIBLE **\n");
             return FALSE;
         }
+
     }
+
+    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
+    affiche_domino(*dominoAPlacer, coin, direction);
+    actualise_affichage();
 
     return TRUE;
 }
@@ -570,17 +580,18 @@ BOOL est_vide_pioche()
     return TRUE;
 }
 
-POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE direction)
+POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE direction)
 {
     POINT coin;
-    int i;
+    /*int i;
     int x;
     int y;
 
     x = 0;
-    y = 0;
+    y = 0;*/
     if (direction == DROITE)
     {
+<<<<<<< Updated upstream
         for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
         {
             if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
@@ -594,9 +605,20 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
                 printf("On decale pas\n");
             }
         }
+=======
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne-1]))
+            (*indiceExtremite)->coin.x += 36;
+        else
+            (*indiceExtremite)->coin.x += 71;
+
+        coin.x = (*indiceExtremite)->coin.x;
+        coin.y = (*indiceExtremite)->coin.y;
+        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
+>>>>>>> Stashed changes
     }
-    if (direction == GAUCHE)
+    else if (direction == GAUCHE)
     {
+<<<<<<< Updated upstream
         for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
             if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
@@ -611,9 +633,17 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
             }
         }
     }
+=======
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne+1]))
+            (*indiceExtremite)->coin.x -= 36;
+        else
+            (*indiceExtremite)->coin.x -= 71;
+>>>>>>> Stashed changes
 
-    coin.x = (LARGEUR_PLATEAU / 2) + x;
-    coin.y = 470 + y;
+        coin.x = (*indiceExtremite)->coin.x;
+        coin.y = (*indiceExtremite)->coin.y;
+        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
+    }
 
     return coin;
 }
