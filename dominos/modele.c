@@ -303,15 +303,18 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 // recupere le domino que l'utilisateur a choisi (qu'il veut placer)
 DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
+    printf(" on entre dans recupere_choix_domino");
     int choix;
+    BOOL choix_est_valable = FAUX;
 
     do
     {
-
-        choix = gere_clics();
+        printf(" recupere_choix_domino_main appelle gere_clic");
+        choix = gere_clics(mainActive);
 
         if (choix == -2)
         {
+            printf("choix == -2 dans recupere_choix_domino_main");
             if (!verifie_compatibilite_main(mainActive, indicesExtremite1, indicesExtremite2))
             {
                 DOMINO passeTour;
@@ -321,23 +324,35 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
             }
             else
             {
-                choix = -1;
+                printf("choix non valable donc on boucle (normalement)");
+                // choix_est_valable = FAUX;
             }
         }
         else if (choix == -3)
         {
+            printf("choix == -3 dans recupere_choic_domino_main");
             DOMINO quitter;
             quitter.valeur1 = -3;
             quitter.valeur2 = -3;
             return quitter;
         }
+        else if (choix == -1)
+        {
+            // choix_est_valable = FAUX;
+            printf("choix non valable donc on boucle (normalement)");
+        }
         else
         {
+            printf("return mainActive[choix]");
             return mainActive[choix];
         }
-    } while (choix == gere_clics());
+    } while (choix_est_valable == FAUX);
 
-    return mainActive[0];
+    printf("recupere_choix domino_main bug, il retourne une valeur en fin de fonction (pas normal");
+    DOMINO bug;
+    bug.valeur1 = -1;
+    bug.valeur2 = -1;
+    return bug;
 }
 
 /*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
@@ -676,11 +691,17 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
     DOMINO *dominoChoisi = &temp;
     BOOL domino_est_compatible;
 
-    if (dominoChoisi->valeur1 == -3) // si le joueur a appuyé sur le bouton QUITTER
+    if (dominoChoisi->valeur1 == -1)
     {
-        return QUITTER;
+        do
+        {
+            temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
+            dominoChoisi = &temp;
+            printf("\nclic dans le vide\n");
+        } while (dominoChoisi->valeur1 == -1);
     }
-    else if (dominoChoisi->valeur1 == -2) // si le joueur a appuyé sur le bouton piocher/passer son tour
+
+    if (dominoChoisi->valeur1 == -2) // si le joueur a appuyé sur le bouton piocher/passer son tour
     {
         if (variante == SANS_PIOCHE)
         {
@@ -690,7 +711,6 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
         }
         else if (variante == AVEC_PIOCHE)
         {
-
             if (!est_vide_pioche())
             {
                 pioche_un_domino(infos_joueur);
@@ -700,6 +720,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
                 calcule_score(&infos_joueur->score, *dominoChoisi);
                 return TOUR_FINI;
             }
+
             else
             {
                 printf("**** PIOCHE EST VIDE ****\n");
@@ -708,18 +729,23 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
             }
         }
     }
-    else
+    if (dominoChoisi->valeur1 == -3) // si le joueur a appuyé sur le bouton QUITTER
     {
-        printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
-        domino_est_compatible = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-        if (domino_est_compatible)
-            calcule_score(&infos_joueur->score, *dominoChoisi);
+        printf("le joueur veut quitter");
+        return QUITTER;
+    }
+
+    printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
+    domino_est_compatible = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+    if (domino_est_compatible)
+    {
+        calcule_score(&infos_joueur->score, *dominoChoisi);
         printf("\n-----------------------------\n");
         return TOUR_FINI;
     }
 
-    return TOUR_NON_FINI; // si cette fonction renvoie TOUR_NON_FINI, c'est qu'il y a un bug
-                          // recupere_choix_main doit forcément renvoyer une valeur qui rentre dans une des conditions précédentes
+    printf("\nOn a choisi un domino non compatible donc tour non fini\n");
+    return TOUR_NON_FINI;
 }
 
 int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
@@ -745,7 +771,7 @@ int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
  Renvoie -2 s'il y a une egalité,
  Renvoie -1 si personne n'a gagné,
 */
-int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs)
+int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs, VARIANTE variante)
 {
     BOOL compatible;
     BOOL peutEncoreJouer;
@@ -778,10 +804,22 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
 
         if (nbDominosMain == 0) // s'il le joueur n'a plus de domino alors il a gagné
             return i;
-        else if (minMain == nbDominosMain) // sinon on regarde s'il y a une egalité
+        else if ((minMain == nbDominosMain) && (variante == SANS_PIOCHE)) // sinon on regarde s'il y a une egalité
         {
             gagnant = -2;
         }
+        else if ((minMain == nbDominosMain) && (variante == AVEC_PIOCHE))
+        {
+            if (!est_vide_pioche())
+            {
+                peutEncoreJouer = TRUE;
+            }
+            else
+            {
+                peutEncoreJouer = FALSE;
+            }
+        }
+
         else // ou qui en a le moins
         {
             if (nbDominosMain < minMain)
@@ -798,7 +836,7 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
         return -1;
 }
 
-int gere_clics()
+int gere_clics(DOMINO main[])
 {
 
     BOOL clic_sur_bouton = 0;
@@ -807,17 +845,29 @@ int gere_clics()
     do
     {
         POINT coordonees_clic = attend_clic();
+        printf(" gere_clic attend un clic ");
         for (i = 0; i <= 21 * 50; i += 50)
         {
 
             if ((100 + i <= coordonees_clic.x) && (coordonees_clic.x <= 135 + i) && (25 <= coordonees_clic.y) && (coordonees_clic.y <= 95))
             {
-                position_domino = j;
-                clic_sur_bouton = 1;
+
+                if (main[j].valeur1 != -1)
+                {
+                    position_domino = j;
+                    clic_sur_bouton = 1;
+                }
             }
-            j++;
+            if (j < NB_MAX_DOMINO_MAIN)
+            {
+                j++;
+            }
+            else
+            {
+                j = 0;
+            }
         }
-        if ((1130 <= coordonees_clic.x) && (coordonees_clic.x <= 1280) && (10 <= coordonees_clic.y) && (coordonees_clic.y <= 115)) // si on clique sur le bouton piocher ou passer son tour
+        if ((1130 <= coordonees_clic.x) && (coordonees_clic.x <= 1285) && (10 <= coordonees_clic.y) && (coordonees_clic.y <= 115)) // si on clique sur le bouton piocher ou passer son tour
         {
             position_domino = -2;
             clic_sur_bouton = 1;

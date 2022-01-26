@@ -73,6 +73,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                     printf("le jour a voulu quitter");
                     exit(0);
                 }
+                actualise_affichage();
             }
 
         } while (choix_joueur == TOUR_NON_FINI);
@@ -82,7 +83,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
         if (tourJeu > 0)
         {
-            gagnant = verifie_gagnant(infos_joueurs, indiceExtremite1, indiceExtremite2, totJoueurs);
+            gagnant = verifie_gagnant(infos_joueurs, indiceExtremite1, indiceExtremite2, totJoueurs, variante);
         }
 
         if (gagnant != -1)

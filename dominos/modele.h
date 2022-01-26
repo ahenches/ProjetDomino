@@ -28,7 +28,7 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
 BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante);
 CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indicesExtremite1, COORDONNEES *indicesExtremite2, int tourJeu, VARIANTE variante);
 int compte_dominos_pioche();
-int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs);
+int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs, VARIANTE variante);
 void calcule_score(int *score, DOMINO dominoPose);
-int gere_clics();
+int gere_clics(DOMINO main[]);
 #endif
