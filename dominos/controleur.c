@@ -34,6 +34,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
     affiche_interface(variante);
+    affiche_fonds();
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
     initialise_plateau();
