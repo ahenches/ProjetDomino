@@ -140,6 +140,66 @@ void affiche_emplacement_possible_triominos(CASE caseP)
 	}
 }
 
+void actualise_plateau_triominos(EMPLACEMENT **plateau)
+{
+	int i, j;
+	CASE case;
+
+	for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++)
+	{
+		for (j = 0; j < LARGEUR_PLATEAU_MAX; j++)
+		{
+
+			//Si case du tableau non vide on place un triomino
+			if (plateau[i][j].trio.min != -1)
+			{
+				case.c = j;
+				case.l = i;
+				affiche_triomino(case,plateau[i][j]);
+
+				//On place les emplacements disponibles autour du triomino
+				// a gauche
+				if (j-1 >= 0 && tabEmplacement[i][j-1].trio.min == -1)
+				{
+					case.c = j-1;
+					case.l = i;
+					affiche_emplacement_possible_triominos(case);
+				}
+				// a droite
+				if (j+1 < LARGEUR_PLATEAU_MAX-1 && tabEmplacement[i][j+1].trio.min == -1)
+				{
+					case.c = j+1;
+					case.l = i;
+					affiche_emplacement_possible_triominos(case);
+				}
+				if (plateau[i][j].direction == 'n')
+				// pointe est vers le nord
+				// test bas
+				{
+					// BAS
+					if (i+1 < HAUTEUR_PLATEAU_MAX-1 && tabEmplacement[i+1][j].trio.min == -1)
+					{
+						case.c = j;
+						case.l = i+1;
+						affiche_emplacement_possible_triominos(case);
+					}
+				}
+				else
+				// pointe est vers le sud
+				// test haut
+				{
+					if (l-1 >= 0 && tabEmplacement[i-1][j].trio.min == -1)
+					{
+						case.c = j;
+						case.l = i-1;
+						affiche_emplacement_possible_triominos(case);
+					}
+				}
+			}
+		}
+	}
+}
+
 void actualise_pioche_triominos(int nbPioche)
 {
 	POINT p1,p2;
