@@ -80,7 +80,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
     {
         if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
         {
-            sprintf(nom_image, "./img_dominos/bmp_horizontal_inverse/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
         }
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
@@ -88,13 +88,13 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
             coin.y -= 40;
         }
         else
-            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+            sprintf(nom_image, "./img_dominos/bmp_horizontal_inverse/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
     if (domino_a_afficher.orientation == VERTICALE)
     {
         if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
         {
-            sprintf(nom_image, "./img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+            sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
         }
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
@@ -102,7 +102,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
             coin.x -= 40;
         }
         else
-            sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+            sprintf(nom_image, "./img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
 
     affiche_image(nom_image, coin);
