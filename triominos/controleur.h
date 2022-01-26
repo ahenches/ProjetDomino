@@ -53,6 +53,6 @@ BOOL clic_sur_fleche_triominos(POINT clic);
 BOOL clic_dans_pioche_triominos(POINT clic);
 BOOL clic_dans_plateau_triominos(POINT clic);
 CASE transforme_point_en_case_triominos(POINT clic);
-TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant, int partieMain);
+int transforme_selection_en_indice_main(POINT clic, int partieMain);
 int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
 BOOL est_clic_sur_quitter(POINT clic);
