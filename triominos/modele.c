@@ -323,9 +323,11 @@ BOOL pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
 
 void rearrange_main_joueur(MAIN_J_TRIOMINOS main, int indice_main)
 {
+  affiche_main_joueur(main);
   if (indice_main != main.taille - 1)
     main.tab[indice_main] = main.tab[main.taille-1];
   main.taille --;
+  affiche_main_joueur(main);
 }
 
 BOOL est_plateau_vide(EMPLACEMENT **tabEmplacement)
@@ -352,7 +354,9 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
     tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio =
       trio_joue;
     rearrange_main_joueur(ordi.mainJoueur, random_number);
+    printf("TAILLE : %d\n", ordi.mainJoueur.taille);
     affiche_triomino_modele(trio_joue);
+    return (trio_joue.min + trio_joue.sec + trio_joue.der);
   }
   else
   {
@@ -369,6 +373,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
       tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].trio =
         trio_joue;
       rearrange_main_joueur(ordi.mainJoueur, coup_joue.indice_trio_dans_main);
+      affiche_triomino_modele(trio_joue);
       return (trio_joue.min + trio_joue.sec + trio_joue.der);
     }
     else
@@ -756,7 +761,8 @@ int est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
     {
       for(int deltaC = -1; deltaC<=1; deltaC++)
       {
-        if (tabEmpl[l+deltaL][c+deltaC].trio.min == -1)
+        if (tabEmpl[l+deltaL][c+deltaC].trio.min == -1 &&
+           deltaL == 0 && deltaC == 0)
           hexagoneEstForme = false;
       }
     }
