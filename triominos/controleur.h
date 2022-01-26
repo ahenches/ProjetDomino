@@ -46,12 +46,7 @@ typedef struct joueur_triominos
     BOOL estHumain;
 } JOUEUR_TRIOMINOS;
 
-typedef struct coup
-{
-  int indice_trio_dans_main;
-  int indice_ligne;
-  int indice_colonne;
-} COUP; // utiliser dans la fonction jeu_ordinateur
+
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
@@ -61,3 +56,4 @@ BOOL clic_dans_plateau_triominos(POINT clic);
 CASE transforme_point_en_case_triominos(POINT clic);
 TRIOMINO transforme_selection_en_triominos(POINT clic, MAIN_J_TRIOMINOS mainJoueurCourant, int partieMain);
 int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
+BOOL est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
