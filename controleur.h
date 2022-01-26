@@ -40,7 +40,7 @@ BOOL veut_rejouer();
 #define CONTROLEUR_H_DOMINOS*/
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//                             	   Header du jeu Domino               	                //
+//                             	   Jeu Domino               	                //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // defines
@@ -110,6 +110,6 @@ extern DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu
 extern DOMINO pioche_domino[TAILLE_TAB_DOMINOS];
 
 // Prototype Contôleur
-void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE pioche);
+int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE pioche);
 
 //#endif

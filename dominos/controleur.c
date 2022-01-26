@@ -12,7 +12,7 @@
 //                                  Fonction controleur                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
+int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
     int totJoueurs;
     int tour;    // a qui le tour
@@ -81,7 +81,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 if (choix_joueur == QUITTER)
                 {
                     printf("le jour a voulu quitter");
-                    exit(0);
+                    return 0;
                 }
                 actualise_affichage();
             }
@@ -108,4 +108,5 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         }
         actualise_affichage();
     }
+    return 0;
 }
