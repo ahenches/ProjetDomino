@@ -8,6 +8,8 @@
 
 int main_second();
 
+
+
 int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	VARIANTE variante)
 {
@@ -128,7 +130,8 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 					if (indiceDansMain < joueurs[quiJoue].mainJoueur.taille)
 					{
 						trioSelectionne = joueurs[quiJoue].mainJoueur.tab[indiceDansMain];
-						affiche_selection_main_triominos(indiceDansMain);
+						affiche_selection_main_triominos(indiceDansMain, partieMainEnCours,
+							joueurs[quiJoue].mainJoueur.taille);
 					}
 					else
 						indiceDansMain = -1;
@@ -159,9 +162,10 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 					caseDuClic = transforme_point_en_case_triominos(clic);
 					gainEnScore = placer_trio(trioSelectionne, plateau,
 							caseDuClic.l, caseDuClic.c);
-					if (gainEnScore != 0)
+					if (gainEnScore > 0)
 					{
-						rearrange_main_joueur(joueurs[quiJoue].mainJoueur, indiceDansMain);
+						rearrange_main_joueur(&joueurs[quiJoue].mainJoueur, indiceDansMain);
+						affiche_main_joueur(joueurs[quiJoue].mainJoueur);
 						joueurs[quiJoue].score += gainEnScore;
 						// actualise_plateau_triominos(plateau);
 						actualise_score_triominos(nJoueurs, joueurs);

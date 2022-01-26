@@ -1,4 +1,6 @@
 #define N_COUPS_MAXIMAL 20
+void affiche_triomino_modele(TRIOMINO t);
+void affiche_main_joueur(MAIN_J_TRIOMINOS mj);
 typedef struct coup
 {
   int indice_trio_dans_main;
@@ -28,7 +30,7 @@ BOOL pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche);
 BOOL est_plateau_vide(EMPLACEMENT **tabEmplacement);
 int trouve_coups_legaux(JOUEUR_TRIOMINOS j, EMPLACEMENT **tabEmplacement,
   COUP *coups_legaux[N_COUPS_MAXIMAL]);
-void rearrange_main_joueur(MAIN_J_TRIOMINOS main, int indice_main);
+void rearrange_main_joueur(MAIN_J_TRIOMINOS *main, int indice_main);
 
 int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);

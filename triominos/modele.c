@@ -92,20 +92,20 @@ int main_second()
     affiche_joueurs(nb_joueurs, joueurs);
     affiche_pioche(jeuPioche);
 
-    for(int deltal=-1; deltal<1;deltal++){
-      for(int deltac=-1; deltac<2;deltac++){
-        TRIOMINO t = {0,2+deltal,2+deltac};
-        tabEmplacement[7+deltal][24+deltac].pointe='m';
-        tabEmplacement[7+deltal][24+deltac].trio = t;
-      }
-    }
-    for(int deltal=0; deltal<2;deltal++){
-      for(int deltac=-2; deltac<3;deltac++){
-        TRIOMINO t = {0,3+deltal,2+deltac};
-        tabEmplacement[7+deltal][24+deltac].pointe='m';
-        tabEmplacement[7+deltal][24+deltac].trio = t;
-      }
-    }
+    // for(int deltal=-1; deltal<1;deltal++){
+    //   for(int deltac=-1; deltac<2;deltac++){
+    //     TRIOMINO t = {0,2+deltal,2+deltac};
+    //     tabEmplacement[7+deltal][24+deltac].pointe='m';
+    //     tabEmplacement[7+deltal][24+deltac].trio = t;
+    //   }
+    // }
+    // for(int deltal=0; deltal<2;deltal++){
+    //   for(int deltac=-2; deltac<3;deltac++){
+    //     TRIOMINO t = {0,3+deltal,2+deltac};
+    //     tabEmplacement[7+deltal][24+deltac].pointe='m';
+    //     tabEmplacement[7+deltal][24+deltac].trio = t;
+    //   }
+    // }
     TRIOMINO t = {1,2,4};
     printf("DIRECTION TEST BOBOU\n%c\n",
       tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].direction);
@@ -113,28 +113,29 @@ int main_second()
     tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].pointe = 'm';
     tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio = t;
     affiche_plateau_modele(tabEmplacement);
-    TRIOMINO triom = {2,2,2};
-    TRIOMINO nul = {-1,-1,-1};
-    tabEmplacement[8][25].pointe='m';
-    affiche_triomino_modele(tabEmplacement[8][25].trio);
+    TRIOMINO triom = {2,4,4};
+    printf("Placer TRIO : (%d %d %d) à la coordonnée res = %d", 2, 4, 4, placer_trio(triom)
+    // TRIOMINO nul = {-1,-1,-1};
+    // tabEmplacement[8][25].pointe='m';
+    // affiche_triomino_modele(tabEmplacement[8][25].trio);
     // tabEmplacement[8][25].trio = nul;
-    affiche_triomino_modele(tabEmplacement[8][25].trio);
+    // affiche_triomino_modele(tabEmplacement[8][25].trio);
     affiche_plateau_modele(tabEmplacement);
     // if(est_hexagone(triom, tabEmplacement, 8, 25)) printf("VRAI");
     // else printf("FAUX");
     // affiche_plateau_modele(tabEmplacement);
 
-    for(int deltal=0; deltal<2;deltal++){
-      for(int deltac=0; deltac<3;deltac++){
-        TRIOMINO t = {2,2,2};
-        tabEmplacement[7+deltal][24+deltac].pointe='m';
-        int r = est_hexagone(t, tabEmplacement, 7+deltal, 24+deltac);
-        if(r==0) printf("AUCUN");
-        else if (r==1) printf("SIMPLE");
-        else if (r==2) printf("DOUBLE");
-        else if (r==3) printf("TRIPLE");
-      }
-    }
+    // for(int deltal=0; deltal<2;deltal++){
+      // for(int deltac=0; deltac<3;deltac++){
+      //   TRIOMINO t = {2,2,2};
+      //   tabEmplacement[7+deltal][24+deltac].pointe='m';
+      //   int r = est_hexagone(t, tabEmplacement, 7+deltal, 24+deltac);
+      //   if(r==0) printf("AUCUN");
+      //   else if (r==1) printf("SIMPLE");
+      //   else if (r==2) printf("DOUBLE");
+      //   else if (r==3) printf("TRIPLE");
+      // }
+    // }
 
     // TRIOMINO tt = {1,5,5};
     // printf("Score %d\n", placer_trio(tt, tabEmplacement, HAUTEUR_PLATEAU_MAX/2, LARGEUR_PLATEAU_MAX/2 + 1));
@@ -200,9 +201,9 @@ EMPLACEMENT ** initialise_plateau()
       plateau[i][j].trio = t;
       plateau[i][j].pointe = 'm';
       if ((i + j) % 2)
-        plateau[i][j].direction = 'n';
-      else
         plateau[i][j].direction = 's';
+      else
+        plateau[i][j].direction = 'n';
     }
 
   }
@@ -321,13 +322,13 @@ BOOL pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
   }
 }
 
-void rearrange_main_joueur(MAIN_J_TRIOMINOS main, int indice_main)
+void rearrange_main_joueur(MAIN_J_TRIOMINOS *main, int indice_main)
 {
-  affiche_main_joueur(main);
-  if (indice_main != main.taille - 1)
-    main.tab[indice_main] = main.tab[main.taille-1];
-  main.taille --;
-  affiche_main_joueur(main);
+  affiche_main_joueur(*main);
+  if (indice_main != main->taille - 1)
+    main->tab[indice_main] = main->tab[main->taille-1];
+  main->taille --;
+
 }
 
 BOOL est_plateau_vide(EMPLACEMENT **tabEmplacement)
@@ -353,7 +354,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
     TRIOMINO trio_joue = ordi.mainJoueur.tab[random_number];
     tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio =
       trio_joue;
-    rearrange_main_joueur(ordi.mainJoueur, random_number);
+    rearrange_main_joueur(&ordi.mainJoueur, random_number);
     printf("TAILLE : %d\n", ordi.mainJoueur.taille);
     affiche_triomino_modele(trio_joue);
     return (trio_joue.min + trio_joue.sec + trio_joue.der);
@@ -372,7 +373,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
       TRIOMINO trio_joue = ordi.mainJoueur.tab[coup_joue.indice_trio_dans_main];
       tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].trio =
         trio_joue;
-      rearrange_main_joueur(ordi.mainJoueur, coup_joue.indice_trio_dans_main);
+      rearrange_main_joueur(&ordi.mainJoueur, coup_joue.indice_trio_dans_main);
       affiche_triomino_modele(trio_joue);
       return (trio_joue.min + trio_joue.sec + trio_joue.der);
     }
