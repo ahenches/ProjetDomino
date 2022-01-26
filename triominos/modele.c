@@ -65,32 +65,32 @@ int main_second()
 {
     //declarations
 
-    JOUEUR_TRIOMINOS joueurs[15];
-    int tailleJoueurs;
-    MAIN_J_TRIOMINOS mainJoueur;
-    PIOCHE_TRIOMINOS jeuPioche;
-    EMPLACEMENT **tabEmplacement;
-
-    // initialisation
-    NB_JOUEURS nb_joueurs = {3, 7};
-    for (int i=0;i<3;i++){
-      scanf("%s", joueurs[i].pseudo);
-      joueurs[i].mainJoueur.taille = 0;
-      joueurs[i].estHumain = 1;
-    }
-    initialise_ordis(nb_joueurs, joueurs);
-    tabEmplacement = initialise_plateau();
-    jeuPioche = initialise_pioche();
-    jeuPioche.taille = TAILLE_PIOCHE_INITIALE;
-    mainJoueur.taille = 0;
-
-    affiche_joueurs(nb_joueurs, joueurs);
-    affiche_pioche(jeuPioche);
-
-    distribution(nb_joueurs, joueurs, &jeuPioche);
-
-    affiche_joueurs(nb_joueurs, joueurs);
-    affiche_pioche(jeuPioche);
+    // JOUEUR_TRIOMINOS joueurs[15];
+    // int tailleJoueurs;
+    // MAIN_J_TRIOMINOS mainJoueur;
+    // PIOCHE_TRIOMINOS jeuPioche;
+    // EMPLACEMENT **tabEmplacement;
+    //
+    // // initialisation
+    // NB_JOUEURS nb_joueurs = {3, 7};
+    // for (int i=0;i<3;i++){
+    //   scanf("%s", joueurs[i].pseudo);
+    //   joueurs[i].mainJoueur.taille = 0;
+    //   joueurs[i].estHumain = 1;
+    // }
+    // initialise_ordis(nb_joueurs, joueurs);
+    // tabEmplacement = initialise_plateau();
+    // jeuPioche = initialise_pioche();
+    // jeuPioche.taille = TAILLE_PIOCHE_INITIALE;
+    // mainJoueur.taille = 0;
+    //
+    // affiche_joueurs(nb_joueurs, joueurs);
+    // affiche_pioche(jeuPioche);
+    //
+    // distribution(nb_joueurs, joueurs, &jeuPioche);
+    //
+    // affiche_joueurs(nb_joueurs, joueurs);
+    // affiche_pioche(jeuPioche);
 
     // for(int deltal=-1; deltal<1;deltal++){
     //   for(int deltac=-1; deltac<2;deltac++){
@@ -106,21 +106,21 @@ int main_second()
     //     tabEmplacement[7+deltal][24+deltac].trio = t;
     //   }
     // }
-    TRIOMINO t = {1,2,4};
-    printf("DIRECTION TEST BOBOU\n%c\n",
-      tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].direction);
-
-    tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].pointe = 'm';
-    tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio = t;
-    affiche_plateau_modele(tabEmplacement);
-    TRIOMINO triom = {2,4,4};
-    printf("Placer TRIO : (%d %d %d) à la coordonnée res = %d", 2, 4, 4, placer_trio(triom)
-    // TRIOMINO nul = {-1,-1,-1};
-    // tabEmplacement[8][25].pointe='m';
-    // affiche_triomino_modele(tabEmplacement[8][25].trio);
-    // tabEmplacement[8][25].trio = nul;
-    // affiche_triomino_modele(tabEmplacement[8][25].trio);
-    affiche_plateau_modele(tabEmplacement);
+    // TRIOMINO t = {1,2,4};
+    // printf("DIRECTION TEST BOBOU\n%c\n",
+    //   tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].direction);
+    //
+    // tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].pointe = 'm';
+    // tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio = t;
+    // affiche_plateau_modele(tabEmplacement);
+    // TRIOMINO triom = {2,4,4};
+    // printf("Placer TRIO : (%d %d %d) à la coordonnée res = %d", 2, 4, 4, placer_trio(triom)
+    // // TRIOMINO nul = {-1,-1,-1};
+    // // tabEmplacement[8][25].pointe='m';
+    // // affiche_triomino_modele(tabEmplacement[8][25].trio);
+    // // tabEmplacement[8][25].trio = nul;
+    // // affiche_triomino_modele(tabEmplacement[8][25].trio);
+    // affiche_plateau_modele(tabEmplacement);
     // if(est_hexagone(triom, tabEmplacement, 8, 25)) printf("VRAI");
     // else printf("FAUX");
     // affiche_plateau_modele(tabEmplacement);
@@ -373,6 +373,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
       TRIOMINO trio_joue = ordi.mainJoueur.tab[coup_joue.indice_trio_dans_main];
       tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].trio =
         trio_joue;
+      tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].pointe =
       rearrange_main_joueur(&ordi.mainJoueur, coup_joue.indice_trio_dans_main);
       affiche_triomino_modele(trio_joue);
       return (trio_joue.min + trio_joue.sec + trio_joue.der);
