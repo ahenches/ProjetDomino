@@ -31,4 +31,5 @@ int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int c, int l);
 BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
 // INT verifie_figure();
 int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement);
-BOOL est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
+HEXAGONE est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);
+BOOL est_pont(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c);

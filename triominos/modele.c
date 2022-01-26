@@ -687,7 +687,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
   }
 }
 
-BOOL est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
+HEXAGONE est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
 {
   HEXAGONE resultat = AUCUN;
   if (tabEmpl[l][c].direction == 'n')
@@ -764,6 +764,174 @@ BOOL est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
     return resultat;
   }
   return false;
+}
+
+BOOL est_pont(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
+{
+  int bas, gauche, haut, droite;
+  int valeur_pointe_pont_origine, valeur_pointe_pont_destination;
+  BOOL estPont;
+  if (tabEmpl[l][c].direction == 'n')
+  {
+    bas = (l+1<= HAUTEUR_PLATEAU_MAX-1 && tabEmpl[l+1][c].triomino.min != -1);
+    gauche = (c-1>= 0 && tabEmpl[l][c-1].triomino.min != -1);
+    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].triomino.min != -1);
+    if ((bas + gauche + droite) != 1)
+    {
+      return false;
+    }
+    else
+    {
+      if (bas == 1) return false ;
+      else if (gauche == 1)
+      {
+        estPont = true;
+        for(int deltaL = -1; deltaL<=0; deltaL++)
+        {
+          for (int deltaC = -1; deltaC<4; deltaC++)
+          {
+            if (!(deltaL == 0 && deltaC == 1))
+            {
+              if (l+deltaL>= 0 && l+deltaL<= HAUTEUR_PLATEAU_MAX-1 &&
+                  c+deltaC>= 0 && c+deltaC<= LARGEUR_PLATEAU_MAX-1 &&
+                tabEmpl[l+deltaL][c+deltaC].trio.min == -1) estPont = false;
+            }
+
+            if (tabEmpl[l][c].pointe == 'm')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.sec;
+            else if (tabEmpl[l][c].pointe == 's')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.der;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.min;
+
+            if (tabEmpl[l][c+2].pointe == 'm')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.der;
+            else if (tabEmpl[l][c+2].pointe == 's')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.min;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.sec;
+            if (valeur_pointe_pont_origine != valeur_pointe_pont_destination)
+              estPont = false;
+          }
+        }
+        return estPont;
+      }
+      else // if (droite == 1)
+      {
+        estPont = true;
+        for(int deltaL = -1; deltaL<=0; deltaL++)
+        {
+          for (int deltaC = -3; deltaC<2; deltaC++)
+          {
+            if (!(deltaL == 0 && deltaC == -1))
+            {
+              if (l+deltaL>= 0 && l+deltaL<= HAUTEUR_PLATEAU_MAX-1 &&
+                  c+deltaC>= 0 && c+deltaC<= LARGEUR_PLATEAU_MAX-1 &&
+                tabEmpl[l+deltaL][c+deltaC].trio.min == -1) estPont = false;
+            }
+
+            if (tabEmpl[l][c].pointe == 'm')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.der;
+            else if (tabEmpl[l][c].pointe == 's')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.min;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.sec;
+
+            if (tabEmpl[l][c+2].pointe == 'm')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.sec;
+            else if (tabEmpl[l][c+2].pointe == 's')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.der;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.min;
+            if (valeur_pointe_pont_origine != valeur_pointe_pont_destination)
+              estPont = false;
+          }
+        }
+        return estPont;
+      }
+    }
+  }
+  else // if (tabEmpl[l][c].direction == 's')
+  {
+    haut = (l-1>= 0 && tabEmpl[l-1][c].triomino.min != -1);
+    gauche = (c-1>= 0 && tabEmpl[l][c-1].triomino.min != -1);
+    droite = (c+1<= LARGEUR_PLATEAU_MAX && tabEmpl[l][c+1].triomino.min != -1);
+    if ((haut + gauche + droite) != 1)
+    {
+      return false;
+    }
+    else
+    {
+      if (haut == 1) return false ;
+      else if (gauche == 1)
+      {
+        estPont = true;
+        for(int deltaL = 0; deltaL<=0; deltaL++)
+        {
+          for (int deltaC = -1; deltaC<4; deltaC++)
+          {
+            if (!(deltaL == 0 && deltaC == 1))
+            {
+              if (l+deltaL>= 0 && l+deltaL<= HAUTEUR_PLATEAU_MAX-1 &&
+                  c+deltaC>= 0 && c+deltaC<= LARGEUR_PLATEAU_MAX-1 &&
+                tabEmpl[l+deltaL][c+deltaC].trio.min == -1) estPont = false;
+            }
+
+            if (tabEmpl[l][c].pointe == 'm')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.der;
+            else if (tabEmpl[l][c].pointe == 's')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.min;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.sec;
+
+            if (tabEmpl[l][c+2].pointe == 'm')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.sec;
+            else if (tabEmpl[l][c+2].pointe == 's')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.der;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.min;
+            if (valeur_pointe_pont_origine != valeur_pointe_pont_destination)
+              estPont = false;
+
+          }
+        }
+        return estPont;
+      }
+      else // if (droite == 1)
+      {
+        estPont = true;
+        for(int deltaL = 0; deltaL<=1; deltaL++)
+        {
+          for (int deltaC = -3; deltaC<2; deltaC++)
+          {
+            if (!(deltaL == 0 && deltaC == -1))
+            {
+              if (l+deltaL>= 0 && l+deltaL<= HAUTEUR_PLATEAU_MAX-1 &&
+                  c+deltaC>= 0 && c+deltaC<= LARGEUR_PLATEAU_MAX-1 &&
+                tabEmpl[l+deltaL][c+deltaC].trio.min == -1) estPont = false;
+            }
+
+            if (tabEmpl[l][c].pointe == 'm')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.sec;
+            else if (tabEmpl[l][c].pointe == 's')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.der;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_origine = tabEmpl[l][c].trio.min;
+
+            if (tabEmpl[l][c+2].pointe == 'm')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.der;
+            else if (tabEmpl[l][c+2].pointe == 's')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.min;
+            else // if (tabEmpl[l][c+2].pointe == 'd')
+              valeur_pointe_pont_destination = tabEmpl[l][c+2].trio.sec;
+            if (valeur_pointe_pont_origine != valeur_pointe_pont_destination)
+              estPont = false;
+          }
+        }
+        return estPont;
+      }
+    }
+  }
 }
 
 BOOL verif_coup_valide(int v1 , int v2 , TRIOMINO trio)
