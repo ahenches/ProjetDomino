@@ -80,7 +80,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
     {
         if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
         {
-            sprintf(nom_image, "./img_dominos/bmp_horizontal_inverse/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
         }
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
@@ -88,13 +88,13 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
             coin.y -= 40;
         }
         else
-            sprintf(nom_image, "./img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+            sprintf(nom_image, "./img_dominos/bmp_horizontal_inverse/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
     if (domino_a_afficher.orientation == VERTICALE)
     {
         if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
         {
-            sprintf(nom_image, "./img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+            sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
         }
         else if (domino_a_afficher.valeur1 == domino_a_afficher.valeur2)
         {
@@ -102,19 +102,28 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin)
             coin.x -= 40;
         }
         else
-            sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+            sprintf(nom_image, "./img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
 
     affiche_image(nom_image, coin);
     printf("///////Le domino a ete affiche avec SUCCES///////\n");
+}
+void affiche_fonds()
+{
+    rempli_ecran(bleuclair); // affiche un fond bleu
+    POINT p1, p2;
+    p1.x = BORDURE;
+    p1.y = 20 + HAUTEUR_MAIN;
+    p2.x = p1.x + LARGEUR_PLATEAU;
+    p2.y = p1.y + HAUTEUR_PLATEAU;
+    dessine_rectangle_plein(p1, p2, blanc);
+    dessine_rectangle(p1, p2, gris);
 }
 
 void affiche_interface(VARIANTE variante)
 {
 
     POINT p1, p2;
-
-    rempli_ecran(bleuclair); // affiche un fond bleu
 
     // Affiche la case qui contient la main du joueur
     p1.x = BORDURE;
@@ -151,7 +160,7 @@ void affiche_interface(VARIANTE variante)
         // affiche un domino décoratif pour représenter la pioche
         POINT coordonnees_image;
         coordonnees_image.x = 1220;
-        coordonnees_image.y = 805;
+        coordonnees_image.y = HAUTEUR - 805;
         affiche_image("./img_dominos/bmp_vertical/pioche.bmp", coordonnees_image);
     }
     else // affiche "Passer son tour"
@@ -164,13 +173,13 @@ void affiche_interface(VARIANTE variante)
         affiche_texte("son tour", 18, p1, noir);
     }
 
-    // Affiche plateau
+    /*// Affiche plateau
     p1.x = BORDURE;
     p1.y = 20 + HAUTEUR_MAIN;
     p2.x = p1.x + LARGEUR_PLATEAU;
     p2.y = p1.y + HAUTEUR_PLATEAU;
     dessine_rectangle_plein(p1, p2, blanc);
-    dessine_rectangle(p1, p2, gris);
+    dessine_rectangle(p1, p2, gris);*/
 
     // affiche bouton quitter
     p1.x = ABSCISSE_BOUTON_QUITTER;
@@ -213,9 +222,15 @@ void affiche_main(DOMINO main_a_afficher[])
 
 void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le tour en haut à gauche de l'écran
 {
-    POINT coordonnees_phrase;
+
+    POINT coordonnees_phrase, p1_rectangle, p2_rectangle;
     coordonnees_phrase.x = 20;
     coordonnees_phrase.y = 850;
+    p1_rectangle.x = coordonnees_phrase.x + 150;
+    p1_rectangle.y = coordonnees_phrase.y;
+    p2_rectangle.x = p1_rectangle.x + 200;
+    p2_rectangle.y = coordonnees_phrase.y - 26;
+    dessine_rectangle_plein(p1_rectangle, p2_rectangle, bleuclair); // on dessine un rectangle pour effacer le nom du joueur précédent
     char phrase_a_afficher[50];
     sprintf(phrase_a_afficher, "C'est au tour de: %s", pseudo);
     affiche_texte(phrase_a_afficher, 18, coordonnees_phrase, noir);
