@@ -486,7 +486,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     if (tourJeu == 1)
     {
         plateau[TAILLE_TAB_DOMINOS / 2][TAILLE_TAB_DOMINOS / 2] = *dominoAPlacer;
-        indiceExtremite2->colonne++;
         direction = DROITE;
         coin = transforme_coord_point(&indiceExtremite2, direction);
 
