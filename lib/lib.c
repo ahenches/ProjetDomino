@@ -3,7 +3,6 @@
 #include <time.h>
 #include "lib.h"
 
-
 SDL_Surface *ecran = NULL;
 SDL_Event lastevent;
 Trace_evts trace_evts;
@@ -29,7 +28,6 @@ int dans_ecran(int x, int y)
 #define ajout_pix(x, y, couleur) \
     if (dans_ecran((x), (y)))    \
     *((COULEUR *)ecran->pixels + (HAUTEUR - (y)-1) * LARGEUR + (x)) = (couleur)
-
 
 // ouvre une fenêtre de taille largeur , hauteur
 void ouvre_fenetre(int largeur, int hauteur)
@@ -80,7 +78,7 @@ void change_pixel(POINT pix, COULEUR couleur)
     }
 }
 
-//dessine le contour d un rectangle, p1 est le coin haut gauche, p2 le coin bas droit
+// dessine le contour d un rectangle, p1 est le coin haut gauche, p2 le coin bas droit
 void dessine_rectangle(POINT p1, POINT p2, COULEUR couleur)
 {
     int xmin, xmax;
@@ -186,7 +184,7 @@ void dessine_ligne(POINT p1, POINT p2, COULEUR couleur)
     }
 }
 
-//dessine un rectangle rempli,  p1 est le coin haut gauche, p2 le coin bas droit
+// dessine un rectangle rempli,  p1 est le coin haut gauche, p2 le coin bas droit
 void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
 {
     int xmin, xmax;
@@ -219,7 +217,7 @@ void dessine_rectangle_plein(POINT p1, POINT p2, COULEUR couleur)
             ajout_pix(i, j, couleur);
 }
 
-//dessine le contour d un triangle, p1,p2,p3 sont ses sommets
+// dessine le contour d un triangle, p1,p2,p3 sont ses sommets
 void dessine_triangle(POINT p1, POINT p2, POINT p3, COULEUR couleur)
 {
     dessine_ligne(p1, p2, couleur);
@@ -247,7 +245,7 @@ int max3(int a, int b, int c)
     return c;
 }
 
-//dessine un triangle rempli, p1, p2 et p3 sont ses sommets
+// dessine un triangle rempli, p1, p2 et p3 sont ses sommets
 void dessine_triangle_plein(POINT p1, POINT p2, POINT p3, COULEUR couleur)
 {
     float a12, b12, a23, b23, a31, b31;
@@ -290,7 +288,7 @@ void dessine_triangle_plein(POINT p1, POINT p2, POINT p3, COULEUR couleur)
         }
 }
 
-//affiche l'image qui se trouve a l'adresse nom, point est le coin haut gauche de l'emplacement de l'image
+// affiche l'image qui se trouve a l'adresse nom, point est le coin haut gauche de l'emplacement de l'image
 void affiche_image(char *nom, POINT coin)
 {
     SDL_Surface *img = SDL_LoadBMP(nom);
@@ -328,16 +326,17 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
         int i;
         for (i = 0; i < 256; i++)
         {
-          TTF_Font *font = TTF_OpenFont(NOM_POLICE ,i);
-          if(!font){
-            printf("Unable to open font\n");
-            exit(1);
-          }
-          else {
-            polices[i] = font;
-          }
+            TTF_Font *font = TTF_OpenFont(NOM_POLICE, i);
+            if (!font)
+            {
+                printf("Unable to open font\n");
+                exit(1);
+            }
+            else
+            {
+                polices[i] = font;
+            }
         }
-
 
         ttf_deja_init = 1;
     }
@@ -357,7 +356,7 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur)
     }
 }
 
-//affiche un entier de taille taille, coin est le coint haut gauche
+// affiche un entier de taille taille, coin est le coint haut gauche
 void affiche_entier(int n, int taille, POINT coin, COULEUR couleur)
 {
     char s[32];
@@ -365,7 +364,7 @@ void affiche_entier(int n, int taille, POINT coin, COULEUR couleur)
     affiche_texte(s, taille, coin, couleur);
 }
 
-//Colorie l ecran entier de la couleur donnée
+// Colorie l ecran entier de la couleur donnée
 void rempli_ecran(COULEUR couleur)
 {
     int i, j;

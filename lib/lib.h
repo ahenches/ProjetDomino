@@ -1,3 +1,6 @@
+/*#ifndef LIB_H
+#define LIB_H*/
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "couleur.h"
@@ -40,3 +43,5 @@ void affiche_texte(char *texte, int taille, POINT coin, COULEUR couleur);
 void affiche_entier(int n, int taille, POINT coin, COULEUR couleur);
 void rempli_ecran(COULEUR couleur);
 COULEUR fabrique_couleur(int r, int g, int b);
+
+//#endif

@@ -1,3 +1,6 @@
+/*#ifndef CONTROLEUR_H_TRIOMINO
+#define CONTROLEUR_H_TRIOMINO*/
+
 #define TAILLE_PIOCHE_INITIALE 56
 #define HAUTEUR_PLATEAU_MAX 14
 #define LARGEUR_PLATEAU_MAX 48
@@ -6,19 +9,18 @@
 #define DEBUT_MAIN 0
 #define FIN_MAIN 1
 
-
 typedef struct triomino
 {
-    int min ;
-    int sec ;
-    int der ;
+    int min;
+    int sec;
+    int der;
 } TRIOMINO;
 
 typedef struct emplacement
 {
     TRIOMINO trio;
-    char pointe ; // valeur possible : m, s, d
-    char direction ; // direction de la pointe
+    char pointe;    // valeur possible : m, s, d
+    char direction; // direction de la pointe
     // valeur possible : n, s (nord, sud)
 } EMPLACEMENT;
 
@@ -34,10 +36,11 @@ typedef struct pioche_triominos
     int taille;
 } PIOCHE_TRIOMINOS;
 
-typedef struct {
-    int l ;
-    int c ;
-} CASE ;
+typedef struct
+{
+    int l;
+    int c;
+} CASE;
 
 typedef struct joueur_triominos
 {
@@ -46,8 +49,6 @@ typedef struct joueur_triominos
     int score;
     BOOL estHumain;
 } JOUEUR_TRIOMINOS;
-
-
 
 int main_triominos();
 BOOL clic_dans_main_triominos(POINT clic);
@@ -58,3 +59,5 @@ CASE transforme_point_en_case_triominos(POINT clic);
 int transforme_selection_en_indice_main(POINT clic, int partieMain);
 int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
 BOOL est_clic_sur_quitter(POINT clic);
+
+//#endif

@@ -1,12 +1,12 @@
-#ifndef MODELE_H
-#define MODELE_H
+/*#ifndef MODELE_H_DOMINOS
+#define MODELE_H_DOMINOS*/
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                             	   Header du jeu Domino               	                //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // Prototypes Modèle
-void initialise_plateau();
+void initialise_plateau_domino();
 void initialise_joueurs(JOUEUR infos_joueurs[], int totJoueurs);
 NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs);
 void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs);
@@ -31,4 +31,5 @@ int compte_dominos_pioche();
 int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs, VARIANTE variante);
 void calcule_score(int *score, DOMINO dominoPose);
 int gere_clics(DOMINO main[]);
-#endif
+
+//#endif

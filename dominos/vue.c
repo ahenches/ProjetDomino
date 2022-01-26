@@ -1,6 +1,11 @@
-#include "dominos.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include "../lib/lib.h"
+#include "../controleur.h"
+//#include "controleur.h"
 #include "modele.h"
-#include "controleur.h"
 #include "vue.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -59,15 +64,15 @@ void affiche_mains(int totJoueur, JOUEUR infos_joueurs[])
 }
 
 // affiche la pioche en parcourant le tableau pioche
-void affiche_pioche()
+void affiche_pioche_domino()
 {
     int i;
 
     printf("---------  La pioche : ----------\n");
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
-        if (pioche[i].valeur1 != -1)
-            printf("|%d %d| ", pioche[i].valeur1, pioche[i].valeur2);
+        if (pioche_domino[i].valeur1 != -1)
+            printf("|%d %d| ", pioche_domino[i].valeur1, pioche_domino[i].valeur2);
     }
     printf("\n---------------------------------\n");
 }
@@ -87,7 +92,7 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
             sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
             coin.y += 20;
         }
-        else if (est_double(domino_a_afficher)  && direction == GAUCHE)
+        else if (est_double(domino_a_afficher) && direction == GAUCHE)
         {
             sprintf(nom_image, "./img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
             coin.y += 20;

@@ -3,10 +3,12 @@
 #include "controleur.h"
 #include "vue.h"
 #include "triominos/controleur.h"
-#include "./dominos/dominos.h"
 #include "./dominos/modele.h"
-#include "./dominos/controleur.h"
 #include "./dominos/vue.h"
+
+// variables globales
+DOMINO plateau[TAILLE_TAB_DOMINOS][TAILLE_TAB_DOMINOS]; // Plateau de jeu, [ligne][colonne]
+DOMINO pioche_domino[TAILLE_TAB_DOMINOS];
 
 int main()
 {
