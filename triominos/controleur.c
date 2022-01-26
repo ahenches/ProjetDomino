@@ -31,6 +31,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	int gainEnScore, partieMainEnCours, indiceDansMain;
 	int nFoisPioche;
 	POINT clic;
+	BOOL aPioche;
 	BOOL clicSignificatif;
 	CASE caseDuClic;
 	TRIOMINO trioSelectionne;
@@ -125,12 +126,15 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 				}
 				else if (clic_dans_pioche_triominos(clic))
 				{
-					pioche(&joueurs[quiJoue].mainJoueur, &laPioche);
-					joueurs[quiJoue].score -= 5;
-					nFoisPioche ++; // mammamamama
-					actualise_pioche_triominos(laPioche.taille);
-					actualise_score_triominos(nJoueurs, joueurs);
-					affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+					aPioche = pioche(&joueurs[quiJoue].mainJoueur, &laPioche);
+					if (aPioche)
+					{
+						joueurs[quiJoue].score -= 5;
+						nFoisPioche ++; // mammamamama
+						actualise_pioche_triominos(laPioche.taille);
+						actualise_score_triominos(nJoueurs, joueurs);
+						affiche_main_triominos(joueurs[quiJoue], partieMainEnCours);
+					}
 				}
 				else if (indiceDansMain != -1 && clic_dans_plateau_triominos(clic))
 				{

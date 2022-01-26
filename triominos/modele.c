@@ -185,6 +185,8 @@ void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs)
   }
 }
 
+
+
 EMPLACEMENT ** initialise_plateau()
 {
   EMPLACEMENT **plateau;
@@ -290,45 +292,89 @@ BOOL test_fin(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
   }
 }
 
-void pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
+BOOL pioche(MAIN_J_TRIOMINOS *main, PIOCHE_TRIOMINOS *pioche)
 {
   // affiche_pioche(*pioche);
   if (pioche->taille > 0)
   {
-    srand ( time(NULL) );
-    int random_number = rand() % pioche->taille;
-    TRIOMINO triomino = pioche->tab[random_number];
-    // affiche_triomino_modele(triomino);
-    // printf("ATTENTION :%d\n",main->taille);
-    main->tab[main->taille] = triomino;
-    main->taille ++;
-    pioche->tab[random_number] = pioche->tab[pioche->taille-1];
-    pioche->taille --;
+    if (main->taille < MAX_TAILLE_MAIN)
+    {
+      srand ( time(NULL) );
+      int random_number = rand() % pioche->taille;
+      TRIOMINO triomino = pioche->tab[random_number];
+      // affiche_triomino_modele(triomino);
+      // printf("ATTENTION :%d\n",main->taille);
+      main->tab[main->taille] = triomino;
+      main->taille ++;
+      pioche->tab[random_number] = pioche->tab[pioche->taille-1];
+      pioche->taille --;
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
+  else
+  {
+    return false;
+  }
+}
+
+void rearrange_main_joueur(MAIN_J_TRIOMINOS main, int indice_main)
+{
+  if (indice_main != main.taille - 1)
+    main.tab[indice_main] = main.tab[main.taille-1];
+  main.taille --;
+}
+
+BOOL est_plateau_vide(EMPLACEMENT **tabEmplacement)
+{
+  BOOL est_vide = true;
+  int i, j;
+
+  for (i = 0; i < HAUTEUR_PLATEAU_MAX; i++){
+    for (j = 0; j < LARGEUR_PLATEAU_MAX; j++){
+      if (tabEmplacement[i][j].trio.min != -1)
+        est_vide = false;
+    }
+  }
+  return est_vide;
 }
 
 int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement)
 {
-  COUP *coups;
-  int taille_coups;
-
-  taille_coups = trouve_coups_legaux(ordi, tabEmplacement, &coups);
-  if (taille_coups > 0)
+  if (est_plateau_vide(tabEmplacement))
   {
     srand ( time(NULL) );
-    int random_number = rand() % taille_coups;
-    COUP coup_joue = coups[random_number];
-    TRIOMINO trio_joue = ordi.mainJoueur.tab[coup_joue.indice_trio_dans_main];
-    tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].trio =
+    int random_number = rand() % ordi.mainJoueur.taille;
+    TRIOMINO trio_joue = ordi.mainJoueur.tab[random_number];
+    tabEmplacement[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio =
       trio_joue;
-    if (coup_joue.indice_trio_dans_main != ordi.mainJoueur.taille - 1)
-      ordi.mainJoueur.tab[coup_joue.indice_trio_dans_main] =
-        ordi.mainJoueur.tab[ordi.mainJoueur.taille-1];
-    ordi.mainJoueur.taille --;
-    return (trio_joue.min + trio_joue.sec + trio_joue.der);
+    rearrange_main_joueur(ordi.mainJoueur, random_number);
+    affiche_triomino_modele(trio_joue);
   }
-  else {
-    return 0;
+  else
+  {
+    COUP *coups;
+    int taille_coups;
+
+    taille_coups = trouve_coups_legaux(ordi, tabEmplacement, &coups);
+    if (taille_coups > 0)
+    {
+      srand ( time(NULL) );
+      int random_number = rand() % taille_coups;
+      COUP coup_joue = coups[random_number];
+      TRIOMINO trio_joue = ordi.mainJoueur.tab[coup_joue.indice_trio_dans_main];
+      tabEmplacement[coup_joue.indice_ligne][coup_joue.indice_colonne].trio =
+        trio_joue;
+      rearrange_main_joueur(ordi.mainJoueur, coup_joue.indice_trio_dans_main);
+      return (trio_joue.min + trio_joue.sec + trio_joue.der);
+    }
+    else
+    {
+      return 0;
+    }
   }
 }
 
@@ -700,7 +746,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
   }
 }
 
-HEXAGONE est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
+int est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c)
 {
   HEXAGONE resultat = AUCUN;
   if (tabEmpl[l][c].direction == 'n')
@@ -774,6 +820,13 @@ HEXAGONE est_hexagone(TRIOMINO TrioAPlacer , EMPLACEMENT **tabEmpl, int l, int c
       }
     }
     if (hexagoneEstForme) resultat++;
+    switch (resultat) {
+      case AUCUN: resultat = 0;break;
+      case SIMPLE: resultat = 50;break;
+      case DOUBLE: resultat = 60;break;
+      case TRIPLE: resultat = 70;break;
+      default : resultat = 0;break;
+    }
     return resultat;
   }
   return false;

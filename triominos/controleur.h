@@ -2,8 +2,10 @@
 #define HAUTEUR_PLATEAU_MAX 14
 #define LARGEUR_PLATEAU_MAX 48
 #define MAX_TAILLE_PSEUDO 48
+#define MAX_TAILLE_MAIN 25
 #define DEBUT_MAIN 0
 #define FIN_MAIN 1
+
 
 typedef struct triomino
 {
@@ -22,7 +24,7 @@ typedef struct emplacement
 
 typedef struct main_j_triominos
 {
-    TRIOMINO tab[25];
+    TRIOMINO tab[MAX_TAILLE_MAIN];
     int taille;
 } MAIN_J_TRIOMINOS;
 
