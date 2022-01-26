@@ -28,6 +28,14 @@ void affiche_plateau_triminos()
 	dessine_rectangle_plein(p1, p2, blanc);
 	dessine_rectangle(p1,p2,gris);
 
+	//Bouton quitter
+	p1.x = 1150; p1.y = 885;
+	p2.x = p1.x + 100 ; p2.y= p1.y - 50;
+	dessine_rectangle_plein(p1, p2, lightgrey);
+	dessine_rectangle(p1,p2,noir);
+
+	p1.x += 20; p1.y -= 10;
+	affiche_texte("Quitter", 18, p1, noir);
 
 	//Textes a afficher
 	p1.x = BORDURE_T + 5; p1.y = HAUTEUR_MAIN_T + 5;

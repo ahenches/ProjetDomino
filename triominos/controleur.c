@@ -230,3 +230,9 @@ int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain)
 		return DEBUT_MAIN;
 	}
 }
+BOOL est_clic_sur_quitter(POINT clic)
+{
+	if(clic.x > 1150  && clic.x < 1150 + 100 && clic.y < 885 && clic.y > 885 - 50)
+		return TRUE;
+	return FALSE;
+}
