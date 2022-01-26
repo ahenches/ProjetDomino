@@ -1,9 +1,11 @@
+#define MAX_TAILLE_PSEUDO 48
+
 typedef enum VARIANTE
 {
 	SANS_PIOCHE,
 	AVEC_PIOCHE,
-    SANS_SCORE,
-    AVEC_SCORE,
+  SANS_SCORE,
+  AVEC_SCORE,
 } VARIANTE;
 
 typedef enum JEU
@@ -26,7 +28,7 @@ typedef struct PSEUDO_JOUEUR
 typedef struct CHOIX_JEU
 {
 	JEU jeu; 			//Jeu choisi
-    VARIANTE variante;	//Variante choisie
+  VARIANTE variante;	//Variante choisie
 } CHOIX_JEU;
 
 BOOL est_clic_sur_jouer_menu_accueil(POINT clic);

@@ -10,7 +10,6 @@ typedef struct triomino
     int min ;
     int sec ;
     int der ;
-
 } TRIOMINO;
 
 typedef struct emplacement
