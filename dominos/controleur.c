@@ -16,7 +16,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
     COORDONNEES indiceExtremite1;
     COORDONNEES indiceExtremite2;
-    BOOL dominoPlace;
+    BOOL choix_joueur;
     BOOL continuePartie;
 
     indiceExtremite1.ligne = TAILLE_TAB_DOMINOS / 2;
@@ -28,7 +28,7 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     tour = 0;
     tourJeu = 1;
     gagnant = -1;
-    dominoPlace = FALSE;
+    choix_joueur = FALSE;
     continuePartie = TRUE;
 
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
@@ -63,20 +63,19 @@ void main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
             if (strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA3") == 0)
             {
-                dominoPlace = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
+                choix_joueur = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
             }
             else
             {
-                dominoPlace = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
-                if (dominoPlace == QUITTER)
+                choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
+                if (choix_joueur == QUITTER)
                 {
                     printf("le jour a voulu quitter");
                     exit(0);
                 }
             }
 
-
-        } while (dominoPlace == DOMINO_NON_PLACE);
+        } while (choix_joueur == TOUR_NON_FINI);
 
         affiche_pioche();
         affiche_plateau();

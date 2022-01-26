@@ -23,11 +23,10 @@
 #define FAUX 0
 
 // Structures et enums
-
 typedef enum CHOIX_JOUEUR
 {
-	DOMINO_NON_PLACE,
-	DOMINO_PLACE,
+	TOUR_NON_FINI,
+	TOUR_FINI,
 	QUITTER
 } CHOIX_JOUEUR;
 typedef enum ORIENTATION

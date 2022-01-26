@@ -166,7 +166,7 @@ void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
     }
 }
 
-DOMINO pioche_un_domino(JOUEUR *infos_joueur)
+DOMINO pioche_un_domino(JOUEUR *infos_joueur) // ajoute le domino pioché à la main du joueur, renvoie le domino choisi pour que l'IA le joue directement
 {
     int alea;
     int i;
@@ -568,10 +568,10 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
     {
         for (i = TAILLE_TAB_DOMINOS / 2; i < indiceExtremite.colonne; i++)
         {
-            if ((i != TAILLE_TAB_DOMINOS / 2) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
+            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne - 1]))
             {
                 x += 36;
-                printf("C'est un double donc on decale\n");
+                printf("Le domino précédent est un double donc on decale de 36\n");
             }
             else
             {
@@ -584,7 +584,7 @@ POINT transforme_coord_point(COORDONNEES indiceExtremite, EXTREMITE_COMPATIBLE d
     {
         for (i = indiceExtremite.colonne; i < TAILLE_TAB_DOMINOS / 2; i++)
         {
-            if ((i != indiceExtremite.colonne) && est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
+            if (est_double(plateau[indiceExtremite.ligne][indiceExtremite.colonne + 1]))
             {
                 x -= 71;
                 printf("C'est un double donc on decale\n");
@@ -669,61 +669,57 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
     return FALSE;
 }
 
-int joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
+CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
-    BOOL dominoPlace;
     DOMINO *mainActive = infos_joueur->mainJoueur;
     DOMINO temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
     DOMINO *dominoChoisi = &temp;
+    BOOL domino_est_compatible;
 
-    if (dominoChoisi->valeur1 == -3)
+    if (dominoChoisi->valeur1 == -3) // si le joueur a appuyé sur le bouton QUITTER
     {
         return QUITTER;
     }
-    else if (dominoChoisi->valeur1 == -2)
+    else if (dominoChoisi->valeur1 == -2) // si le joueur a appuyé sur le bouton piocher/passer son tour
     {
         if (variante == SANS_PIOCHE)
         {
             printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
             printf("\n-----------------------------\n");
-            return TRUE;
+            return TOUR_FINI;
         }
         else if (variante == AVEC_PIOCHE)
         {
-            do
+
+            if (!est_vide_pioche())
             {
-                if (!est_vide_pioche())
-                {
-                    DOMINO temp = pioche_un_domino(infos_joueur);
-                    DOMINO *dominoChoisi = &temp;
-                    dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-                    printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
-                    printf("\n-----------------------------\n");
-                    if (dominoPlace == TRUE)
-                    {
-                        calcule_score(&infos_joueur->score, *dominoChoisi);
-                        return TRUE;
-                    }
-                }
-                else
-                {
-                    printf("**** PIOCHE EST VIDE ****\n");
-                    printf("\n-----------------------------\n");
-                    return TRUE;
-                }
-            } while (dominoPlace == FALSE);
+                pioche_un_domino(infos_joueur);
+                *dominoChoisi = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
+                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
+                printf("\n-----------------------------\n");
+                calcule_score(&infos_joueur->score, *dominoChoisi);
+                return TOUR_FINI;
+            }
+            else
+            {
+                printf("**** PIOCHE EST VIDE ****\n");
+                printf("\n-----------------------------\n");
+                return TOUR_FINI;
+            }
         }
     }
     else
     {
         printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
-        dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-        if (dominoPlace)
+        domino_est_compatible = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
+        if (domino_est_compatible)
             calcule_score(&infos_joueur->score, *dominoChoisi);
         printf("\n-----------------------------\n");
+        return TOUR_FINI;
     }
 
-    return dominoPlace;
+    return TOUR_NON_FINI; // si cette fonction renvoie TOUR_NON_FINI, c'est qu'il y a un bug
+                          // recupere_choix_main doit forcément renvoyer une valeur qui rentre dans une des conditions précédentes
 }
 
 int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
