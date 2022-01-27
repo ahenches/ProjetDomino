@@ -121,13 +121,6 @@ void affiche_fond()
 {
     rempli_ecran(blanc); // affiche un fond blanc
     POINT p1;
-    /*POINT p2;
-    p1.x = BORDURE;
-    p1.y = 20 + HAUTEUR_MAIN;
-    p2.x = p1.x + LARGEUR_PLATEAU;
-    p2.y = p1.y + HAUTEUR_PLATEAU;
-    dessine_rectangle_plein(p1, p2, 0x50D3D0);
-    dessine_rectangle(p1, p2, gris);*/
     p1.x = 1;
     p1.y = 20 + HAUTEUR_MAIN + HAUTEUR_PLATEAU;
 
@@ -192,9 +185,9 @@ void affiche_interface(VARIANTE variante)
 
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
 {
-    if (gagnant == -2)
+    if (gagnant == -2) // s'il y a égalité
         printf("*** EGALITE Personne n'a gagne ***\n");
-    else
+    else // si quelqu'un est vainqueur
     {
         printf("*** C'est le JOUEUR n %d : %s qui a gagne !!! ***\n", gagnant, infos_joueurs[gagnant].pseudo);
         printf("*** SCORE : %d ***\n", infos_joueurs[gagnant].score);

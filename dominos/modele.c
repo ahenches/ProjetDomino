@@ -510,7 +510,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 
                 if (indiceExtremite1->colonne >= 0) ///!\j'ai changé le != en >=
                 {
-                    if ((indiceExtremite1->coin.x+71 >= 1125) || (indiceExtremite1->coin.x-71 <= 65)) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                    if ((indiceExtremite1->coin.x + 71 >= 1125) || (indiceExtremite1->coin.x - 71 <= 65)) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
                     {
                         printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
                         dominoAPlacer->orientation = VERTICALE;
@@ -546,7 +546,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                         printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
                         dominoAPlacer->orientation = VERTICALE;
 
-                     
                         if (alea == 0)
                         {
                             indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
@@ -657,19 +656,18 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     {
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne]))
         {
-          (*indiceExtremite)->coin.x -= 18; 
-          (*indiceExtremite)->coin.y += 36; 
+            (*indiceExtremite)->coin.x -= 18;
+            (*indiceExtremite)->coin.y += 36;
         }
         else
         {
-            if (est_double(plateau[(*indiceExtremite)->ligne-1][(*indiceExtremite)->colonne]))
+            if (est_double(plateau[(*indiceExtremite)->ligne - 1][(*indiceExtremite)->colonne]))
             {
-               (*indiceExtremite)->coin.x += 18; 
+                (*indiceExtremite)->coin.x += 18;
             }
             (*indiceExtremite)->coin.y += 71;
         }
 
-        
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
@@ -684,7 +682,6 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
 
     return coin;
 }
-
 
 BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
@@ -785,7 +782,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
                 affiche_interface(variante);
                 affiche_main(infos_joueur, tour);
                 actualise_affichage();
-                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, domPioche.valeur1, domPioche.valeur2);    
+                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, domPioche.valeur1, domPioche.valeur2);
                 printf("\n-----------------------------\n");
                 return TOUR_NON_FINI;
             }
@@ -816,7 +813,6 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
     printf("\nOn a choisi un domino non compatible donc tour non fini\n");
     return TOUR_NON_FINI;
 }
-
 
 int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
 {
@@ -870,7 +866,7 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
                     peutEncoreJouer = TRUE;
                     gagnant = -1;
                     printf("-!! Domino compatible !!-");
-                }    
+                }
 
                 nbDominosMain++; // on compte le nombre de domino dans la main
             }
@@ -880,7 +876,7 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
             return i;
         else if (minMain == nbDominosMain && !compatible) // sinon on regarde s'il y a une egalité
         {
-            if(variante == SANS_PIOCHE)
+            if (variante == SANS_PIOCHE)
             {
                 gagnant = -2;
                 peutEncoreJouer = FALSE;
@@ -922,8 +918,6 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
                     gagnant = i;
                     minMain = nbDominosMain;
                 }
-
-               
             }
         }
     }
@@ -981,3 +975,21 @@ int gere_clics(DOMINO main[])
     return position_domino;
 }
 
+void ecrit_scores_fichier(JOUEUR infos_joueurs[], int totJoueurs)
+{
+
+    FILE *fichier = NULL;
+
+    fichier = fopen("./classement.txt", "w");
+
+    if (fichier != NULL)
+    {
+
+        int i;
+        for (i = 0; i < totJoueurs; i++)
+        {
+            fprintf(fichier, "score de %s: %d\n", infos_joueurs[i].pseudo, infos_joueurs[i].score);
+        }
+        fclose(fichier);
+    }
+}

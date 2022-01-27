@@ -28,5 +28,6 @@ int compte_dominos_pioche();
 int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs, VARIANTE variante);
 void calcule_score(int *score, DOMINO dominoPose);
 int gere_clics(DOMINO main[]);
+void ecrit_scores_fichier(JOUEUR infos_joueurs[], int totJoueurs);
 
 //#endif

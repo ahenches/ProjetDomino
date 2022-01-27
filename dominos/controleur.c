@@ -111,24 +111,36 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             gagnant = verifie_gagnant(infos_joueurs, indiceExtremite1, indiceExtremite2, totJoueurs, variante);
         }
 
-        if (gagnant != -1)
+        if (gagnant != -1) // si la partie est terminée
         {
             affiche_victoire(gagnant, infos_joueurs);
+            POINT p1;
+            p1.x = 1;
+            p1.y = 100;
+            affiche_image("./dominos/img_dominos/cache_main.bmp", p1);
+            actualise_affichage();
+            SDL_Delay(3000);
+            p1.x = 1;
+            p1.y = 20 + HAUTEUR_MAIN + HAUTEUR_PLATEAU;
+            affiche_image("./dominos/img_dominos/tapis.bmp", p1);
+            p1.x = 430;
+            p1.y = HAUTEUR / 2;
 
-            FILE *fichier = NULL;
-
-            fichier = fopen("./classement.txt", "w");
-
-            if (fichier != NULL)
+            if (gagnant == -2)
             {
-
-                int i;
-                for (i = 0; i < totJoueurs; i++)
-                {
-                    fprintf(fichier, "score de %s: %d\n", infos_joueurs[i].pseudo, infos_joueurs[i].score);
-                }
-                fclose(fichier);
+                affiche_texte("Personne ne gagne il y egalite", 25, p1, lightgoldenrodyellow);
+                actualise_affichage();
             }
+            else
+            {
+                char phrase_gagnant[100];
+                sprintf(phrase_gagnant, "%s a pose tous ses dominos", infos_joueurs[gagnant].pseudo);
+                affiche_texte(phrase_gagnant, 25, p1, lightgoldenrodyellow);
+                actualise_affichage();
+            }
+
+            ecrit_scores_fichier(infos_joueurs, totJoueurs);
+
             SDL_Delay(3000);
             continuePartie = FALSE;
         }
