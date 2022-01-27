@@ -475,7 +475,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     int dominoMain;
     POINT coin;
     EXTREMITE_COMPATIBLE direction;
-    BOOL vientDeChangeDirection = FALSE;
 
     direction = AUCUN_DOMINO;
     coin.x = 0;
@@ -510,19 +509,27 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 
                 if (indiceExtremite1->colonne >= 0) ///!\j'ai changé le != en >=
                 {
-                    if ((indiceExtremite1->coin.x + 71 >= 1125) || (indiceExtremite1->coin.x - 71 <= 65)) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                    if (indiceExtremite1->coin.x-71 <= 65) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
                     {
                         printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
-                        dominoAPlacer->orientation = VERTICALE;
-                        if (plateau[indiceExtremite1->ligne][indiceExtremite1->colonne].valeur1 == dominoAPlacer->valeur2)
+                        if (indiceExtremite1->coin.y+71 <= 770)
                         {
-                            indiceExtremite1->ligne = indiceExtremite1->ligne - 1;
-                            direction = HAUT;
+                            dominoAPlacer->orientation = VERTICALE;
+                            if (plateau[indiceExtremite1->ligne][indiceExtremite1->colonne].valeur1 == dominoAPlacer->valeur2)
+                            {
+                                indiceExtremite1->ligne = indiceExtremite1->ligne - 1;
+                                direction = HAUT;
+                            }
+                            else
+                            {
+                                indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
+                                direction = BAS;
+                            }
                         }
                         else
                         {
-                            indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
-                            direction = BAS;
+                           direction = DROITE; 
+                           indiceExtremite1->colonne++;
                         }
                     }
                     else
@@ -541,25 +548,39 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             {
                 if (indiceExtremite2->colonne <= TAILLE_TAB_DOMINOS - 1) // j'ai modifié le =! en <
                 {
-                    if ((indiceExtremite2->coin.x >= 1125) || (indiceExtremite2->coin.x <= 65)) // pour haut /bas : if ((coin.y >= 750) || (coin.y <= 180))
+                    if (indiceExtremite2->coin.x >= 1225) // pour haut /bas : if ((coin.y >= 750) || (coin.y <= 180))
                     {                                                                           // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
                         printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
                         dominoAPlacer->orientation = VERTICALE;
 
-                        if (alea == 0)
+                        if (indiceExtremite2->coin.y+71 <= 770)
                         {
-                            indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
-                            indiceExtremite1->coin.y += 36;
+                            dominoAPlacer->orientation = VERTICALE;
+                            if (plateau[indiceExtremite2->ligne][indiceExtremite2->colonne].valeur1 == dominoAPlacer->valeur2)
+                            {
+                                indiceExtremite2->ligne = indiceExtremite2->ligne - 1;
+                                direction = HAUT;
+                            }
+                            else
+                            {
+                                indiceExtremite2->ligne = indiceExtremite2->ligne + 1;
+                                direction = BAS;
+                            }
                         }
                         else
                         {
-                            indiceExtremite1->ligne = indiceExtremite1->ligne - 1;
-                            indiceExtremite1->coin.y -= 36;
+                           direction = GAUCHE; 
+                           indiceExtremite2->colonne--;
                         }
+
                     }
-                    plateau[indiceExtremite2->ligne][indiceExtremite2->colonne + 1] = *dominoAPlacer;
-                    indiceExtremite2->colonne++;
-                    direction = DROITE;
+                    else
+                    {
+                        indiceExtremite2->colonne += 1;
+                        direction = DROITE;
+                    }
+
+                    plateau[indiceExtremite2->ligne][indiceExtremite2->colonne] = *dominoAPlacer;
                     coin = transforme_coord_point(&indiceExtremite2, direction, tourJeu);
 
                     mainActive[dominoMain] = pasDom;
@@ -656,18 +677,40 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     {
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne]))
         {
-            (*indiceExtremite)->coin.x -= 18;
-            (*indiceExtremite)->coin.y += 36;
+          (*indiceExtremite)->coin.x -= 18; 
+          (*indiceExtremite)->coin.y += 36; 
         }
         else
         {
-            if (est_double(plateau[(*indiceExtremite)->ligne - 1][(*indiceExtremite)->colonne]))
+            if (est_double(plateau[(*indiceExtremite)->ligne+1][(*indiceExtremite)->colonne]))
             {
-                (*indiceExtremite)->coin.x += 18;
+               (*indiceExtremite)->coin.x += 18; 
             }
             (*indiceExtremite)->coin.y += 71;
         }
 
+        
+        coin.x = (*indiceExtremite)->coin.x;
+        coin.y = (*indiceExtremite)->coin.y;
+        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
+    }
+    else if (direction == BAS)
+    {
+        if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne]))
+        {
+          (*indiceExtremite)->coin.x -= 18; 
+          (*indiceExtremite)->coin.y += 36; 
+        }
+        else
+        {
+            if (est_double(plateau[(*indiceExtremite)->ligne+1][(*indiceExtremite)->colonne]))
+            {
+               (*indiceExtremite)->coin.x += 18; 
+            }
+            (*indiceExtremite)->coin.y += 71;
+        }
+
+        
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
