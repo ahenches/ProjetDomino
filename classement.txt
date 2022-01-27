@@ -1,3 +1,2 @@
-score de IA0: 4
-score de daaa: 0
-score de dz: 0
+score de Rayane: 32
+score de IA0: 17

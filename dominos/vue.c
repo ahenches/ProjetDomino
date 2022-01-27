@@ -142,61 +142,41 @@ void affiche_interface(VARIANTE variante)
     p1.y = 100;
     affiche_image("./dominos/img_dominos/bas_tapis.bmp", p1);
 
-    // Affiche la case qui contient la main du joueur
-    p1.x = BORDURE;
-    p1.y = 10;
-    p2.x = p1.x + LARGEUR_MAIN;
-    p2.y = p1.y + HAUTEUR_MAIN;
-    /*dessine_rectangle_plein(p1, p2, lightgrey);
-    dessine_rectangle(p1, p2, gris);*/
-
-    // affiche la case qui contient le bouton pour piocher ou passer son tour
-    p1.x = p2.x + 10;
-    p2.x = p1.x + LARGEUR_PIOCHE;
-    // dessine_rectangle_plein(p1, p2, lightgrey);
-    dessine_rectangle(p1, p2, gris);
-
-    // affiche le mot "main"
-    p1.x = BORDURE + 5;
-    p1.y = HAUTEUR_MAIN + 5;
-    /*affiche_texte("Main", 18, p1, noir);*/
+    p1.x += LARGEUR_MAIN + 10;
 
     if (variante == AVEC_PIOCHE)
     {
         // affiche le mot "Pioche"
-        p1.x += LARGEUR_MAIN + 10;
-        affiche_texte("Pioche", 18, p1, noir);
+        p1.y = HAUTEUR_MAIN + 5;
+        // affiche_texte("Pioche", 18, p1, lightgoldenrodyellow);
 
         // affiche le nombre de dominos dans la pioche
-        p1.x = p1.x + 10;
-        p1.y = p1.y - 20;
+        /*p1.x = p1.x + 10;
+        p1.y = p1.y - 20;*/
+        p1.x = 1265;
+        p1.y = 75;
         char nombre_dominos_pioche[4];
-        sprintf(nombre_dominos_pioche, "(%d)", compte_dominos_pioche()); //écrit le nombre de dominos restant dans la pioche dans un tableau de char
-        affiche_texte(nombre_dominos_pioche, 18, p1, noir);              // affiche le nombre contenu dans ce tableau
+        sprintf(nombre_dominos_pioche, "%d", compte_dominos_pioche());      //écrit le nombre de dominos restant dans la pioche dans un tableau de char
+        affiche_texte(nombre_dominos_pioche, 18, p1, lightgoldenrodyellow); // affiche le nombre contenu dans ce tableau
 
         // affiche un domino décoratif pour représenter la pioche
-        POINT coordonnees_image;
-        coordonnees_image.x = 1220;
-        coordonnees_image.y = HAUTEUR - 805;
-        affiche_image("./dominos/img_dominos/verso_domino.bmp", coordonnees_image);
+        p1.x = 1220;
+        p1.y = HAUTEUR - 805;
+        affiche_image("./dominos/img_dominos/verso_domino.bmp", p1);
     }
     else // affiche "Passer son tour"
     {
-        p1.x += LARGEUR_MAIN + 50;
-        p1.y = p1.y - 18;
-        affiche_texte("Passer", 18, p1, noir);
+        p1.y = BORDURE;
+        p2.x = p1.x + LARGEUR_PIOCHE;
+        p2.y = p1.y + HAUTEUR_MAIN;
+        dessine_rectangle(p1, p2, lightgoldenrodyellow);
+        p1.x += 50;
+        p1.y = HAUTEUR_MAIN / 2 + 50;
+        affiche_texte("Passer", 18, p1, lightgoldenrodyellow);
         p1.y = p1.y - 30;
         p1.x = p1.x - 8;
-        affiche_texte("son tour", 18, p1, noir);
+        affiche_texte("son tour", 18, p1, lightgoldenrodyellow);
     }
-
-    /*// Affiche plateau
-    p1.x = BORDURE;
-    p1.y = 20 + HAUTEUR_MAIN;
-    p2.x = p1.x + LARGEUR_PLATEAU;
-    p2.y = p1.y + HAUTEUR_PLATEAU;
-    dessine_rectangle_plein(p1, p2, blanc);
-    dessine_rectangle(p1, p2, gris);*/
 
     // affiche bouton quitter
     p1.x = ABSCISSE_BOUTON_QUITTER;
