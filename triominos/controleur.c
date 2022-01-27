@@ -104,7 +104,28 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 			{
 				clic = attend_clic();
 				if (est_clic_sur_quitter(clic))
+				{
+					FILE *fichier = NULL;
+					fichier = fopen("./classement.txt", "w");
+
+					if (fichier != NULL)
+					{
+						int i;
+						for (i = 0; i < nJoueurs; i++)
+						{
+							if (variante == AVEC_SCORE)
+								fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo,
+									joueurs[i].score);
+							else
+							{
+								fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 0);
+							}
+						}
+						fclose(fichier);
+					}
 					return 0;
+				}
+
 				else if (clic_sur_fleche_triominos(clic))
 				{
 					partieMainEnCours = change_partie_main_triominos(joueurs[quiJoue],
@@ -177,6 +198,30 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 		printf("FIN JEU : %s\n", joueurs[quiJoue].pseudo);
 		printf("\n\n\n");
 		quiJoue = (quiJoue + 1) % nJoueurs;
+	}
+	FILE *fichier = NULL;
+
+	fichier = fopen("./classement.txt", "w");
+
+	if (fichier != NULL)
+	{
+
+			int i;
+			for (i = 0; i < nJoueurs; i++)
+			{
+				if (variante == AVEC_SCORE)
+					fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo,
+						joueurs[i].score);
+				else
+				{
+					if(quiJoue == i)
+						fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 1);
+					else
+						fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 0);
+				}
+			}
+
+			fclose(fichier);
 	}
 	return 0;
 }
