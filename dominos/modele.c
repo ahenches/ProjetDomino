@@ -4,7 +4,6 @@
 #include <time.h>
 #include "../lib/lib.h"
 #include "../controleur.h"
-//#include "controleur.h"
 #include "modele.h"
 #include "vue.h"
 
@@ -22,6 +21,7 @@ void initialise_plateau_domino()
     emplacementVide.valeur1 = -1;
     emplacementVide.valeur2 = -1;
     emplacementVide.orientation = RIEN;
+    //parcours le tableau 2D en donnant a chaque case le domino |-1 -1|
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
         for (j = 0; j < TAILLE_TAB_DOMINOS; j++)
@@ -31,6 +31,7 @@ void initialise_plateau_domino()
     }
 }
 
+//Fonction qui initialise les joueurs, en mettant les score a 0 et en mettant des dominos |-1 -1| dans leurs mains 
 void initialise_joueurs(JOUEUR infos_joueurs[], int totJoueurs)
 {
     int i;
@@ -48,68 +49,6 @@ void initialise_joueurs(JOUEUR infos_joueurs[], int totJoueurs)
         }
         infos_joueurs[i].score = 0;
     }
-}
-
-NB_JOUEURS entre_nb_joueurs(NB_JOUEURS joueurs)
-{
-    do
-    {
-        printf("Choisissez le nombre de joueurs Humain :\n");
-        scanf("%d", &joueurs.nbJoueurHumain);
-    } while (joueurs.nbJoueurHumain > 4 || joueurs.nbJoueurHumain < 0);
-
-    do
-    {
-        printf("Choisissez le nombre de joueurs Ordinateur :\n");
-        scanf("%d", &joueurs.nbJoueurIA);
-    } while (joueurs.nbJoueurIA > 3 || joueurs.nbJoueurIA < 0);
-
-    printf("-------------------------\n");
-    return joueurs;
-}
-
-void entre_pseudos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs)
-{
-    int i;
-    int compt;
-    int totJoueurs;
-
-    totJoueurs = joueurs.nbJoueurHumain + joueurs.nbJoueurIA;
-    compt = 1;
-
-    for (i = 0; i < joueurs.nbJoueurHumain; i++)
-    {
-        printf("Choisissez votre pseudo :\n");
-        // infos_joueurs[i].pseudo = (char *)malloc(25);
-        scanf("%s", infos_joueurs[i].pseudo);
-
-        if (strlen(infos_joueurs[i].pseudo) > 25)
-        {
-            do
-            {
-                printf("\nVeillez respecter la limite maximale de 25 charactères.\n");
-                scanf("%s", infos_joueurs[i].pseudo);
-            } while (strlen(infos_joueurs[i].pseudo) > 25);
-        }
-    }
-
-    for (i = joueurs.nbJoueurHumain; i < totJoueurs; i++)
-    {
-        // tabPseudos[i] = (char *)malloc(25);
-        sprintf(infos_joueurs[i].pseudo, "IA%d", compt);
-        compt++;
-    }
-
-    printf("-------------------------\n");
-}
-
-VARIANTE choix_variante()
-{
-    int choix;
-    printf("Choisissez la variante : 0 SANS Pioche, 1 AVEC Pioche : \n");
-    scanf("%d", &choix);
-
-    return choix;
 }
 
 // Fonction qui genère les 28 dominos qui constituent la pioche
@@ -133,11 +72,9 @@ void genere_pioche()
 
             pioche_domino[comptDominos] = dominoCourant;
 
-            printf("|%d %d| ", dominoCourant.valeur1, dominoCourant.valeur2);
             comptDominos++;
         }
         compt++;
-        printf("\n");
     }
 }
 
@@ -172,7 +109,8 @@ void distribue_premiers_dominos(JOUEUR infos_joueurs[], int totJoueur)
     }
 }
 
-DOMINO pioche_un_domino(JOUEUR *infos_joueur) // ajoute le domino pioché à la main du joueur, renvoie le domino choisi pour que l'IA le joue directement
+// ajoute le domino pioché à la main du joueur, renvoie le domino choisi
+DOMINO pioche_un_domino(JOUEUR *infos_joueur)
 {
     int alea;
     int i;
@@ -207,7 +145,7 @@ DOMINO pioche_un_domino(JOUEUR *infos_joueur) // ajoute le domino pioché à la 
 
 /*compte le nombre de double dans la pioche pour déterminer si un joueur a au moins
 un double. Cette information est nécessaire pour determine le joueur qui commence.
-est appele par la fonction definit_premier_joueurT */
+est appele par la fonction definit_premier_joueur */
 int compte_double_pioche()
 {
     int compt;
@@ -233,8 +171,8 @@ BOOL est_double(DOMINO domino)
     return FALSE;
 }
 
-/* définit le joueur qui commence, et place les mains des joueurs dans l'ordre dans tabPseudos.
-  Celui qui a le plus grand double commence, sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
+/* définit le joueur qui commence, et place les mains des joueurs dans l'ordre dans infosjoueurs.
+  Celui qui a le plus grand double commence par exemple 6 6, 5 5, 4 4..., sinon celui qui a le domino le plus fort : 6 5, 6 4, 6 3 ... commence*/
 void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
 {
     int i;
@@ -269,9 +207,8 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le plus grand double est %s, il a |%d %d|\n\n\n", infos_joueurs[joueurChoisi].pseudo, grandDouble, grandDouble);
     }
-    else
+    else//si personne a de double, on choisit le domino le plus fort
     {
         for (i = 0; i < TOT_JOUEURS; i++)
         {
@@ -285,7 +222,7 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
                 }
             }
         }
-        printf("Le joueur qui a le domino le plus fort est %s, il a |%d %d|\n\n\n", infos_joueurs[joueurChoisi].pseudo, grandDomino.valeur1, grandDomino.valeur2);
+       
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
@@ -297,32 +234,30 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
     }
 }
 
-// determine qui doit jouer.
+// determine qui doit jouer au tour suivant.
 int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
 {
     tour++;
     if (tour >= totJoueur)
         tour = 0;
 
-    printf("**** [%d] C'est au tour de %s de jouer ! ****\n", tour, infos_joueurs[tour].pseudo);
     return tour;
 }
 
-// recupere le domino que l'utilisateur a choisi (qu'il veut placer)
+/* recupere le domino que l'utilisateur a choisi 
+    cette fonction prend
+*/
 DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
 {
-    printf(" on entre dans recupere_choix_domino");
     int choix;
     BOOL choix_est_valable = FAUX;
 
     do
     {
-        printf(" recupere_choix_domino_main appelle gere_clic");
         choix = gere_clics(mainActive);
 
-        if (choix == -2)
+        if (choix == -2)// l'utilisateur a appuyer sur le bouton pioche ou passer le tour
         {
-            printf("choix == -2 dans recupere_choix_domino_main");
             if (!verifie_compatibilite_main(mainActive, indicesExtremite1, indicesExtremite2))
             {
                 DOMINO passeTour;
@@ -330,28 +265,17 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
                 passeTour.valeur2 = -2;
                 return passeTour;
             }
-            else
-            {
-                printf("choix non valable donc on boucle (normalement)");
-                // choix_est_valable = FAUX;
-            }
+            
         }
-        else if (choix == -3)
+        else if (choix == -3) // l'utilisateur a appuyer sur le bouton quitter
         {
-            printf("choix == -3 dans recupere_choic_domino_main");
             DOMINO quitter;
             quitter.valeur1 = -3;
             quitter.valeur2 = -3;
             return quitter;
         }
-        else if (choix == -1)
-        {
-            // choix_est_valable = FAUX;
-            printf("choix non valable donc on boucle (normalement)");
-        }
         else
         {
-            printf("return mainActive[choix]");
             return mainActive[choix];
         }
     } while (choix_est_valable == FAUX);
@@ -359,34 +283,6 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     return mainActive[0];
 }
 
-/*DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
-{
-    int choix;
-
-    choix = -1;
-    do
-    {
-        printf("Choisissez le domino (0, 1, 2, 3, 4, 5, 6) :\n");
-        scanf("%d", &choix);
-
-        if (choix == -2)
-        {
-            if (!verifie_compatibilite_main(mainActive, indicesExtremite1, indicesExtremite2))
-            {
-                DOMINO passeTour;
-                passeTour.valeur1 = -2;
-                passeTour.valeur2 = -2;
-                return passeTour;
-            }
-            else
-                choix = -1;
-        }
-        else
-            return mainActive[choix];
-    } while (choix == -1);
-
-    return mainActive[0];
-}*/
 
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
@@ -402,8 +298,13 @@ BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite
     return FALSE;
 }
 
-// renvoie vrai si le domino choisi peut être joué
-// indicesExtremite1: domino le plus en bas ou à gauche du plateau
+/* cette fonction verifie si le domino recuperer en entré est compatible avec l'une des extremites. 
+renvoie vrai si le domino choisi peut être joué
+ prend en parametre: 
+ indicesExtremite1: domino le plus en bas ou à gauche du plateau
+ indicesExtremite2: domino le plus en haut ou à droite du plateau
+ inverse pour empecher d'inverse le domino si voulu
+*/
 AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2, int inverse)
 {
     AIDE_PLACEMENT a_retourner;
@@ -423,7 +324,6 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     {
         if (inverse == 1)
         {
-            printf("YOUHOU on inverse\n");
             copie = domino->valeur1;
             domino->valeur1 = domino->valeur2;
             domino->valeur2 = copie;
@@ -436,7 +336,6 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     {
         if (inverse == 1)
         {
-            printf("YOUHOU on inverse\n");
             copie = domino->valeur1;
             domino->valeur1 = domino->valeur2;
             domino->valeur2 = copie;
@@ -453,6 +352,8 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     return a_retourner;
 }
 
+//Fonction qui trouve la position du domino dans la main
+// elle prend en parametre la main du joueur et le domino que l'on veut trouver l'indice
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino)
 {
     int i;
@@ -466,6 +367,13 @@ int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino)
     return -1;
 }
 
+/*fonction qui placer le domino, en appelant verifie_compatibilite_domino, pour verifier si le domino que l'on veut placer
+est compatible. elle appele aussi transforme_coord_point pour pouvoir afficher le domino que l'on veut placer a des coordonnees precise.
+Et enfin, appele affiche_domino pour afficher le domino que l'on veut placer.
+
+Cette fonction prend en parametre le domino a placer, les coordonnees des 2 extremites, le nombre de tour actuel du jeu, et la main du joueur
+placer le domino
+*/
 BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, DOMINO mainActive[])
 {
     int alea;
@@ -485,20 +393,19 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 
     dominoMain = trouve_indice_domino_main(mainActive, *dominoAPlacer);
 
-    if (tourJeu == 1)
+    if (tourJeu == 1)// au premier tour on place toujours le domino a droite
     {
         plateau[TAILLE_TAB_DOMINOS / 2][TAILLE_TAB_DOMINOS / 2] = *dominoAPlacer;
         direction = DROITE;
         *indiceExtremite1 = *indiceExtremite2;
-        printf("indiceExtremite1 = %d et indiceExtremite2 = %d\n", indiceExtremite1->coin.x, indiceExtremite2->coin.x);
         coin = transforme_coord_point(&indiceExtremite2, direction, tourJeu);
 
         mainActive[dominoMain] = pasDom;
 
-        printf("** C'est le premier tour, place n'importe quel domino **\n");
     }
     else
     {
+        //on verifie si le domino est compatible avant de le placer
         dominoCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2, 1);
         extremiteCompatible = dominoCompatible.extremite;
 
@@ -507,12 +414,11 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             if (extremiteCompatible == GAUCHE)
             {
 
-                if (indiceExtremite1->colonne >= 0) ///!\j'ai changé le != en >=
+                if (indiceExtremite1->colonne >= 0) 
                 {
                     if (indiceExtremite1->coin.x-71 <= 65) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
                     {
-                        printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
-                        if (indiceExtremite1->coin.y+71 <= 770)
+                        if (indiceExtremite1->coin.y+71 <= 770 && direction != DROITE)
                         {
                             dominoAPlacer->orientation = VERTICALE;
                             if (plateau[indiceExtremite1->ligne][indiceExtremite1->colonne].valeur1 == dominoAPlacer->valeur2)
@@ -528,8 +434,29 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                         }
                         else
                         {
-                           direction = DROITE; 
-                           indiceExtremite1->colonne++;
+                            if (!est_double(plateau[indiceExtremite1->ligne][indiceExtremite1->colonne]))
+                                indiceExtremite1->coin.x-=36;
+                            else
+                                indiceExtremite1->coin.x+=18;
+
+                            if (direction == DROITE)
+                            {
+                                indiceExtremite1->colonne++;
+                                plateau[indiceExtremite1->ligne][indiceExtremite1->colonne] = *dominoAPlacer;
+
+                                coin = transforme_coord_point(&indiceExtremite1, direction, tourJeu);
+
+                                mainActive[dominoMain] = pasDom;
+                                affiche_domino(*dominoAPlacer, coin, direction);
+                                actualise_affichage();
+
+                                return TRUE;
+                            }
+                            else
+                            {
+                                direction = DROITE; 
+                                indiceExtremite1->colonne++;
+                            }
                         }
                     }
                     else
@@ -549,8 +476,8 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 if (indiceExtremite2->colonne <= TAILLE_TAB_DOMINOS - 1) // j'ai modifié le =! en <
                 {
                     if (indiceExtremite2->coin.x >= 1225) // pour haut /bas : if ((coin.y >= 750) || (coin.y <= 180))
-                    {                                                                           // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
-                        printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
+                    { // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                        
                         dominoAPlacer->orientation = VERTICALE;
 
                         if (indiceExtremite2->coin.y+71 <= 770)
@@ -588,7 +515,6 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             }
             else if (extremiteCompatible == LES_DEUX)
             {
-                printf("** DOMINO choisi COMPATIBLE a DROITE et a GAUCHE **\n");
                 if (alea == 0)
                 {
                     plateau[indiceExtremite1->ligne][indiceExtremite1->colonne - 1] = *dominoAPlacer;
@@ -608,23 +534,24 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         }
         else
         {
-            printf("** DOMINO choisi PAS COMPATIBLE **\n");
             return FALSE;
         }
     }
-
-    printf("coord du domino[%d,%d]\n", coin.x, coin.y);
-    // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop bas ou trop haut)
+    //on affiche le domino que l'on veut placer
     affiche_domino(*dominoAPlacer, coin, direction);
     actualise_affichage();
 
     return TRUE;
 }
+
+// fonction qui calcule le score en fonction des valeurs des dominos que chaque joueur a placé
+// elle prend en entre, le score du joueur, et le domino qu'il a posé, la fonction ne renvoie rien
 void calcule_score(int *score, DOMINO dominoPose)
 {
     *score += dominoPose.valeur1 + dominoPose.valeur2;
 }
 
+// fonction qui determine si la pioche est vide
 BOOL est_vide_pioche()
 {
     for (int i = 0; i < TAILLE_TAB_DOMINOS; i++)
@@ -634,7 +561,8 @@ BOOL est_vide_pioche()
     }
     return TRUE;
 }
-
+//Cette fonction est utilise pour pouvoir afficher le domino que l'on veut placer a des coordonnees precise.
+// prend en parametre les indices des coordonneé et le numero du tour actuel
 POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE direction, int tourJeu)
 {
     POINT coin;
@@ -650,7 +578,6 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
 
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
-        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
     else if (direction == GAUCHE)
     {
@@ -671,7 +598,6 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
 
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
-        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
     else if (direction == HAUT)
     {
@@ -692,7 +618,6 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
-        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
     else if (direction == BAS)
     {
@@ -713,19 +638,23 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
-        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
     else
     {
         (*indiceExtremite)->coin.y -= 71;
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
-        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
 
     return coin;
 }
 
+/* Cette fonction permet a l'ia de jouer,
+elle prend en parametre les infos du joueur courant (IA), les coordonnees des extremites des dominos, le nombre de tour actuel, ainsi
+que la variante choisi en debut de partie.
+L'ia pioche ou passe son tour (en fonction de la variante) des qu'elle ne peut plus jouer
+et choisit elle meme le domino a placer
+*/
 BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
     BOOL dominoPlace;
@@ -735,15 +664,14 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
 
     do
     {
-        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // on parcours la main de l'ia et des lors que l'on trouve un domino compatible on le place
+        // on parcours la main de l'ia et des lors que l'on trouve un domino compatible on le place
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
         {
             temp = mainActive[i];
             if (temp.valeur1 != -1)
             {
                 DOMINO *dominoChoisi = &temp;
-                printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
                 dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-                printf("\n-----------------------------\n");
                 if (dominoPlace == TRUE)
                 {
                     calcule_score(&infos_joueur->score, *dominoChoisi);
@@ -751,12 +679,10 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                 }
             }
         }
-        if (i >= NB_MAX_DOMINO_MAIN) // Si pas de domino compatible on passe le tour
+        if (i >= NB_MAX_DOMINO_MAIN) // Si pas de domino compatible on passe le tour ou on pioche
         {
             if (variante == SANS_PIOCHE)
             {
-                printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
-                printf("\n-----------------------------\n");
                 return TRUE;
             }
             else if (variante == AVEC_PIOCHE)
@@ -768,8 +694,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                         DOMINO temp = pioche_un_domino(infos_joueur);
                         DOMINO *dominoChoisi = &temp;
                         dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-                        printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
-                        printf("\n-----------------------------\n");
+                        
                         if (dominoPlace == TRUE)
                         {
                             calcule_score(&infos_joueur->score, *dominoChoisi);
@@ -778,8 +703,6 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                     }
                     else
                     {
-                        printf("**** PIOCHE EST VIDE ****\n");
-                        printf("\n-----------------------------\n");
                         return TRUE;
                     }
 
@@ -792,6 +715,12 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
     return FALSE;
 }
 
+/* Cette fonction permet au joueur de jouer,
+elle prend en parametre les infos du joueur courant , les coordonnees des extremites des dominos, le nombre de tour actuel, ainsi
+que la variante choisi en debut de partie.
+Le joueur va choisir le domino qu'il souhaite jouer, pioche ou passe son tour (en fonction de la variante) des qu'il ne peut plus jouer
+Cette fonction renvoie le choix fait par le joueur
+*/
 CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante, int tour)
 {
     DOMINO *mainActive = infos_joueur->mainJoueur;
@@ -805,59 +734,48 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
         {
             temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
             dominoChoisi = &temp;
-            printf("\nclic dans le vide\n");
-        } while (dominoChoisi->valeur1 == -1);
+        } while (dominoChoisi->valeur1 == -1);// on boucle tant que l'utilisateur n'a pas fait un choix
     }
 
     if (dominoChoisi->valeur1 == -2) // si le joueur a appuyé sur le bouton piocher/passer son tour
     {
         if (variante == SANS_PIOCHE)
         {
-            printf("**** %s passe son tour ****\n", infos_joueur->pseudo);
-            printf("\n-----------------------------\n");
             return TOUR_FINI;
         }
         else if (variante == AVEC_PIOCHE)
         {
             if (!est_vide_pioche())
             {
-                DOMINO domPioche = pioche_un_domino(infos_joueur);
+                pioche_un_domino(infos_joueur);
                 affiche_interface(variante);
                 affiche_main(infos_joueur, tour);
                 actualise_affichage();
-                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, domPioche.valeur1, domPioche.valeur2);
-                printf("\n-----------------------------\n");
                 return TOUR_NON_FINI;
             }
-
             else
             {
-                printf("**** PIOCHE EST VIDE ****\n");
-                printf("\n-----------------------------\n");
                 return TOUR_FINI;
             }
         }
     }
     if (dominoChoisi->valeur1 == -3) // si le joueur a appuyé sur le bouton QUITTER
     {
-        printf("le joueur veut quitter");
         return QUITTER;
     }
 
-    printf("**** Le domino |%d %d| a ete choisi ****\n", dominoChoisi->valeur1, dominoChoisi->valeur2);
     domino_est_compatible = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
     if (domino_est_compatible)
     {
         calcule_score(&infos_joueur->score, *dominoChoisi);
-        printf("\n-----------------------------\n");
         return TOUR_FINI;
     }
 
-    printf("\nOn a choisi un domino non compatible donc tour non fini\n");
     return TOUR_NON_FINI;
 }
 
-int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
+//Cette fonction compte le nombre de domino qu'il y a dans la pioche et renvoie son nombre
+int compte_dominos_pioche()
 {
     int nb_dominos;
     int i;
@@ -879,6 +797,8 @@ int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
  Renvoie le numero du joueur gagnant s'il y en a un,
  Renvoie -2 s'il y a une egalité,
  Renvoie -1 si personne n'a gagné,
+ Cette fonction prend en parametre les infos de tout les joueurs, les coordonnes des extremites des dominos, le nombre total de joueur
+ et la variante choisi
 */
 int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2, int totJoueurs, VARIANTE variante)
 {
@@ -908,7 +828,6 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
                 {
                     peutEncoreJouer = TRUE;
                     gagnant = -1;
-                    printf("-!! Domino compatible !!-");
                 }
 
                 nbDominosMain++; // on compte le nombre de domino dans la main
@@ -971,6 +890,10 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
         return -1;
 }
 
+
+//Cette fonction gere le clic de l'utilisateur pour qu'il puisse effectuer des actions (comme choisir son domino) s'il clique a des coordonnes precises
+// elle prend en parametre la main du joueur
+// et renvoie la position du domino choisi dans la main
 int gere_clics(DOMINO main[])
 {
 
@@ -980,10 +903,9 @@ int gere_clics(DOMINO main[])
     do
     {
         POINT coordonees_clic = attend_clic();
-        printf(" gere_clic attend un clic ");
         for (i = 0; i <= 21 * 50; i += 50)
         {
-
+            // tout les dominos
             if ((100 + i <= coordonees_clic.x) && (coordonees_clic.x <= 135 + i) && (25 <= coordonees_clic.y) && (coordonees_clic.y <= 95))
             {
 
@@ -1018,6 +940,8 @@ int gere_clics(DOMINO main[])
     return position_domino;
 }
 
+// fonction qui ecrit le score dans un fichier
+// elle prend en parametre les infos de tout les joueurs ainsi que le nombre total de joueur
 void ecrit_scores_fichier(JOUEUR infos_joueurs[], int totJoueurs)
 {
 

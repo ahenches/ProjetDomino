@@ -4,7 +4,6 @@
 #include <time.h>
 #include "../lib/lib.h"
 #include "../controleur.h"
-//#include "controleur.h"
 #include "modele.h"
 #include "vue.h"
 
@@ -12,71 +11,8 @@
 //                                  Fonctions de la vue                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-// Fonction qui parcourt le tableau des pseudos et qui affiche les pseudos des joueurs
-void affiche_pseudos(JOUEUR infos_joueurs[], int totJoueur)
-{
-    int i;
 
-    for (i = 0; i < totJoueur; i++)
-    {
-        printf("%s\n", infos_joueurs[i].pseudo);
-    }
-}
-
-// Fonction qui affiche le plateau de jeu en parcourant le tableau de jeu
-void affiche_plateau()
-{
-    int i;
-    int j;
-    printf("\n\n         ");
-    for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
-    {
-        for (j = 0; j < TAILLE_TAB_DOMINOS; j++)
-        {
-            /*if (plateau[i][j].valeur1 == -1 && plateau[i][j].valeur2 == -1)
-                printf("|-1|");*/
-            if (plateau[i][j].valeur1 != -1 && plateau[i][j].valeur2 != -1)
-                printf("|%d %d| ", plateau[i][j].valeur1, plateau[i][j].valeur2);
-        }
-        if (plateau[i][j].valeur1 != -1 && plateau[i][j].valeur2 != -1)
-            printf("\n\n");
-    }
-}
-
-// affiche la main des joueurs en parcourant le tableau des mainsJoueurs
-void affiche_mains(int totJoueur, JOUEUR infos_joueurs[])
-{
-    int i;
-    int j;
-
-    for (i = 0; i < totJoueur; i++)
-    {
-        printf("%s = ", infos_joueurs[i].pseudo);
-        for (j = 0; j < NB_MAX_DOMINO_MAIN; j++)
-        {
-            if (infos_joueurs[i].mainJoueur[j].valeur1 != -1)
-            {
-                printf("(%d)|%d %d| ", j, infos_joueurs[i].mainJoueur[j].valeur1, infos_joueurs[i].mainJoueur[j].valeur2);
-            }
-        }
-        printf("\n");
-    }
-}
-
-// affiche la pioche en parcourant le tableau pioche
-void affiche_pioche_domino()
-{
-    int i;
-
-    printf("---------  La pioche : ----------\n");
-    for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
-    {
-        if (pioche_domino[i].valeur1 != -1)
-            printf("|%d %d| ", pioche_domino[i].valeur1, pioche_domino[i].valeur2);
-    }
-    printf("\n---------------------------------\n");
-}
-
+// Cette fonction affiche le domino, elle prend en entree le domino a afficher, les coordonnee où l'afficher, et dans quel direction l'afficher
 void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE direction)
 {
     char nom_image[100];
@@ -119,9 +55,9 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
     }
 
     affiche_image(nom_image, coin);
-    printf("///////Le domino a ete affiche avec SUCCES///////\n");
 }
 
+// cette fonction affiche le fond
 void affiche_fond()
 {
     rempli_ecran(blanc); // affiche un fond blanc
@@ -132,6 +68,7 @@ void affiche_fond()
     affiche_image("./dominos/img_dominos/tapis.bmp", p1);
 }
 
+// cette fonction affiche l'interface en fonction de la variante choisi
 void affiche_interface(VARIANTE variante)
 {
 
@@ -149,8 +86,6 @@ void affiche_interface(VARIANTE variante)
         // affiche_texte("Pioche", 18, p1, lightgoldenrodyellow);
 
         // affiche le nombre de dominos dans la pioche
-        /*p1.x = p1.x + 10;
-        p1.y = p1.y - 20;*/
         p1.x = 1265;
         p1.y = 75;
         char nombre_dominos_pioche[4];
@@ -188,17 +123,7 @@ void affiche_interface(VARIANTE variante)
     affiche_texte("Quitter", 17, p1, noir);
 }
 
-void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
-{
-    if (gagnant == -2) // s'il y a égalité
-        printf("*** EGALITE Personne n'a gagne ***\n");
-    else // si quelqu'un est vainqueur
-    {
-        printf("*** C'est le JOUEUR n %d : %s qui a gagne !!! ***\n", gagnant, infos_joueurs[gagnant].pseudo);
-        printf("*** SCORE : %d ***\n", infos_joueurs[gagnant].score);
-    }
-}
-
+// Cette fonction affiche la main du joueur, elle prend en paramettre les infos des joueur, et le tour pour determiné de quel joueur on parle
 void affiche_main(JOUEUR *infos_joueurs, int tour)
 {
     int i;

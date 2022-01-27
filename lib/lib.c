@@ -309,7 +309,7 @@ POINT attend_clic()
     POINT p;
     p.x = lastevent.button.x;
     p.y = HAUTEUR - lastevent.button.y;
-    printf("%cClic en %4d %4d \n", 13, p.x, p.y);
+
     return p;
 }
 
