@@ -1,6 +1,3 @@
-/*#ifndef MODELE_H_TRIOMINOS
-#define MODELE_H_TRIOMINOS*/
-
 #define N_COUPS_MAXIMAL 20
 #define POINTE_MIN 0
 #define POINTE_SEC 1
@@ -25,8 +22,6 @@ typedef enum HEXAGONE
   TRIPLE
 } HEXAGONE;
 
-
-
 void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs);
 EMPLACEMENT **initialise_plateau();
 PIOCHE_TRIOMINOS initialise_pioche();
@@ -49,5 +44,3 @@ BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
 int jeu_ordinateur(JOUEUR_TRIOMINOS *ordi, EMPLACEMENT **tabEmplacement);
 int est_hexagone(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 BOOL est_pont(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
-
-//#endif

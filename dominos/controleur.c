@@ -4,7 +4,6 @@
 #include <time.h>
 #include "../lib/lib.h"
 #include "../controleur.h"
-//#include "controleur.h"
 #include "modele.h"
 #include "vue.h"
 
@@ -16,8 +15,8 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
 
     int totJoueurs;
-    int tour;    // a qui le tour
-    int tourJeu; // nombre de tour jouer
+    int tour;    // à qui le tour (numéro du joueur)
+    int tourJeu; // nombre de tour joués
     int gagnant;
 
     COORDONNEES indiceExtremite1;
@@ -44,7 +43,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
-    affiche_fonds();
+    affiche_fond();
     affiche_interface(variante);
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
@@ -54,7 +53,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     genere_pioche();
     affiche_pioche_domino();
     distribue_premiers_dominos(infos_joueurs, totJoueurs);
-    affiche_main(infos_joueurs[tour].mainJoueur);
+    affiche_main(infos_joueurs, tour);
     actualise_affichage();
     affiche_mains(totJoueurs, infos_joueurs);
     affiche_pioche_domino();
@@ -70,16 +69,17 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             affiche_mains(totJoueurs, infos_joueurs);
             affiche_interface(variante);
             affiche_tour(infos_joueurs[tour].pseudo);
-            affiche_main(infos_joueurs[tour].mainJoueur);
+            affiche_main(infos_joueurs, tour);
             actualise_affichage();
 
             if (strcmp(infos_joueurs[tour].pseudo, "IA0") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0)
             {
+                SDL_Delay(3000);
                 choix_joueur = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
-                        }
+            }
             else
             {
-                choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
+                choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante, tour);
                 if (choix_joueur == QUITTER)
                 {
                     FILE *fichier = NULL;
@@ -129,7 +129,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 }
                 fclose(fichier);
             }
-            SDL_Delay(2000);
+            SDL_Delay(3000);
             continuePartie = FALSE;
         }
         else

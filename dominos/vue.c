@@ -117,41 +117,49 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
     affiche_image(nom_image, coin);
     printf("///////Le domino a ete affiche avec SUCCES///////\n");
 }
-void affiche_fonds()
+void affiche_fond()
 {
-    rempli_ecran(bleuclair); // affiche un fond bleu
-    POINT p1, p2;
+    rempli_ecran(blanc); // affiche un fond blanc
+    POINT p1;
+    /*POINT p2;
     p1.x = BORDURE;
     p1.y = 20 + HAUTEUR_MAIN;
     p2.x = p1.x + LARGEUR_PLATEAU;
     p2.y = p1.y + HAUTEUR_PLATEAU;
-    dessine_rectangle_plein(p1, p2, blanc);
-    dessine_rectangle(p1, p2, gris);
+    dessine_rectangle_plein(p1, p2, 0x50D3D0);
+    dessine_rectangle(p1, p2, gris);*/
+    p1.x = 1;
+    p1.y = 20 + HAUTEUR_MAIN + HAUTEUR_PLATEAU;
+
+    affiche_image("./dominos/img_dominos/tapis.bmp", p1);
 }
 
 void affiche_interface(VARIANTE variante)
 {
 
     POINT p1, p2;
+    p1.x = 1;
+    p1.y = 100;
+    affiche_image("./dominos/img_dominos/bas_tapis.bmp", p1);
 
     // Affiche la case qui contient la main du joueur
     p1.x = BORDURE;
     p1.y = 10;
     p2.x = p1.x + LARGEUR_MAIN;
     p2.y = p1.y + HAUTEUR_MAIN;
-    dessine_rectangle_plein(p1, p2, lightgrey);
-    dessine_rectangle(p1, p2, gris);
+    /*dessine_rectangle_plein(p1, p2, lightgrey);
+    dessine_rectangle(p1, p2, gris);*/
 
     // affiche la case qui contient le bouton pour piocher ou passer son tour
     p1.x = p2.x + 10;
     p2.x = p1.x + LARGEUR_PIOCHE;
-    dessine_rectangle_plein(p1, p2, lightgrey);
+    // dessine_rectangle_plein(p1, p2, lightgrey);
     dessine_rectangle(p1, p2, gris);
 
     // affiche le mot "main"
     p1.x = BORDURE + 5;
     p1.y = HAUTEUR_MAIN + 5;
-    affiche_texte("Main", 18, p1, noir);
+    /*affiche_texte("Main", 18, p1, noir);*/
 
     if (variante == AVEC_PIOCHE)
     {
@@ -170,7 +178,7 @@ void affiche_interface(VARIANTE variante)
         POINT coordonnees_image;
         coordonnees_image.x = 1220;
         coordonnees_image.y = HAUTEUR - 805;
-        affiche_image("./dominos/img_dominos/bmp_vertical/pioche.bmp", coordonnees_image);
+        affiche_image("./dominos/img_dominos/verso_domino.bmp", coordonnees_image);
     }
     else // affiche "Passer son tour"
     {
@@ -213,19 +221,53 @@ void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
     }
 }
 
-void affiche_main(DOMINO main_a_afficher[])
+void affiche_main(JOUEUR *infos_joueurs, int tour)
 {
     int i;
     POINT coordonnees_domino;
     coordonnees_domino.y = HAUTEUR_MAIN - 5;
+    POINT p1_rectangle, p2_rectangle; // on efface le message "l'IA choisit son meilleur coup"
+    p1_rectangle.x = 500;
+    p1_rectangle.y = 850;
+    p2_rectangle.x = p1_rectangle.x + 350;
+    p2_rectangle.y = 850 - 26;
+    dessine_rectangle_plein(p1_rectangle, p2_rectangle, blanc); // on dessine un rectangle pour effacer le nom du joueur précédent
 
-    for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
-    {
-        coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
-        if (main_a_afficher[i].valeur1 != -1)
+    if ((strcmp(infos_joueurs[tour].pseudo, "IA0") != 0) && (strcmp(infos_joueurs[tour].pseudo, "IA1") != 0) && (strcmp(infos_joueurs[tour].pseudo, "IA2") != 0))
+    { // si le joueur n'est pas une IA
+
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main
         {
-            affiche_domino_main(main_a_afficher[i], coordonnees_domino);
-            actualise_affichage();
+            coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+            if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+            {
+                affiche_domino_main(infos_joueurs[tour].mainJoueur[i], coordonnees_domino);
+                actualise_affichage();
+            }
+        }
+    }
+    else // si est une IA
+    {
+        POINT coordonnees_phrase;
+        coordonnees_phrase.x = 500;
+        coordonnees_phrase.y = 850;
+        affiche_texte("l'IA choisit son meilleur coup...", 18, coordonnees_phrase, noir);
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main retournés
+        {
+            coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+            if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+            {
+                for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main
+                {
+                    coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+                    if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+                    {
+                        affiche_image("./dominos/img_dominos/verso_domino.bmp", coordonnees_domino);
+                        actualise_affichage();
+                    }
+                }
+                actualise_affichage();
+            }
         }
     }
 }
@@ -240,13 +282,13 @@ void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le to
     p1_rectangle.y = coordonnees_phrase.y;
     p2_rectangle.x = p1_rectangle.x + 350;
     p2_rectangle.y = coordonnees_phrase.y - 26;
-    dessine_rectangle_plein(p1_rectangle, p2_rectangle, bleuclair); // on dessine un rectangle pour effacer le nom du joueur précédent
+    dessine_rectangle_plein(p1_rectangle, p2_rectangle, blanc); // on dessine un rectangle pour effacer le nom du joueur précédent
     char phrase_a_afficher[50];
     sprintf(phrase_a_afficher, "C'est au tour de: %s", pseudo);
     affiche_texte(phrase_a_afficher, 18, coordonnees_phrase, noir);
 }
 
-void affiche_domino_main(DOMINO domino_a_afficher, POINT coin)
+void affiche_domino_main(DOMINO domino_a_afficher, POINT coin) // affiche un domino dans la main d'un joueur humain
 {
     char nom_image[100];
 
