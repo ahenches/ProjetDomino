@@ -8,6 +8,7 @@
 void affiche_triomino_modele(TRIOMINO t);
 void affiche_main_joueur(MAIN_J_TRIOMINOS mj);
 void affiche_plateau_modele(EMPLACEMENT **tabEmplacement);
+void affiche_pioche(PIOCHE_TRIOMINOS mj);
 typedef struct coup
 {
   int indice_trio_dans_main;
@@ -42,10 +43,10 @@ int trouve_coups_legaux(JOUEUR_TRIOMINOS j, EMPLACEMENT **tabEmplacement,
                         COUP *coups_legaux[N_COUPS_MAXIMAL]);
 void rearrange_main_joueur(MAIN_J_TRIOMINOS *main, int indice_main);
 
-int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
+// int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 int placer_trio_bis(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 BOOL verif_coup_valide(int v1, int v2, TRIOMINO trio);
-int jeu_ordinateur(JOUEUR_TRIOMINOS ordi, EMPLACEMENT **tabEmplacement);
+int jeu_ordinateur(JOUEUR_TRIOMINOS *ordi, EMPLACEMENT **tabEmplacement);
 int est_hexagone(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 BOOL est_pont(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c);
 
