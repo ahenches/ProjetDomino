@@ -1,6 +1,3 @@
-/*#ifndef VUE_H
-#define VUE_H*/
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //                             	   Header du jeu Domino               	                //
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -25,8 +22,6 @@ void affiche_pioche_domino();
 void affiche_pseudos(JOUEUR infos_joueurs[], int totJoueur);
 void affiche_interface(VARIANTE variante);
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[]);
-void affiche_main(DOMINO main_a_afficher[]);
+void affiche_main(JOUEUR infos_joueurs[], int tour);
 void affiche_tour(char pseudo[]);
 void affiche_fonds();
-
-//#endif

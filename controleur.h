@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+//                          		Commun aux deux jeux                           		//
+//////////////////////////////////////////////////////////////////////////////////////////
 #define MAX_TAILLE_PSEUDO 48
 
 typedef enum VARIANTE
@@ -36,11 +39,8 @@ NB_JOUEURS transforme_clic_en_nb_joueurs();
 CHOIX_JEU transforme_clic_en_choix_jeu();
 BOOL veut_rejouer();
 
-/*#ifndef CONTROLEUR_H_DOMINOS
-#define CONTROLEUR_H_DOMINOS*/
-
 //////////////////////////////////////////////////////////////////////////////////////////
-//                             	   Jeu Domino               	                //
+//                             	   Jeu Domino               	                		//
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // defines
@@ -111,5 +111,3 @@ extern DOMINO pioche_domino[TAILLE_TAB_DOMINOS];
 
 // Prototype Contôleur
 int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE pioche);
-
-//#endif

@@ -1,6 +1,3 @@
-/*#ifndef CONTROLEUR_H_TRIOMINO
-#define CONTROLEUR_H_TRIOMINO*/
-
 #define TAILLE_PIOCHE_INITIALE 56
 #define HAUTEUR_PLATEAU_MAX 14
 #define LARGEUR_PLATEAU_MAX 48
@@ -59,5 +56,3 @@ CASE transforme_point_en_case_triominos(POINT clic);
 int transforme_selection_en_indice_main(POINT clic, int partieMain);
 int change_partie_main_triominos(JOUEUR_TRIOMINOS joueur, int partieMain);
 BOOL est_clic_sur_quitter(POINT clic);
-
-//#endif

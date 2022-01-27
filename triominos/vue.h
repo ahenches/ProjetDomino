@@ -1,6 +1,3 @@
-#ifndef VUE_H_TRIOMINOS
-#define VUE_H_TRIOMINOS
-
 #define LARGEUR 1300
 #define HAUTEUR 900
 #define LARGEUR_PLATEAU_T 1260
@@ -25,5 +22,3 @@ void affiche_joueur_main_triominos(JOUEUR_TRIOMINOS joueur);
 void affiche_selection_main_triominos(int trioSelect, int partieMain, int tailleMain);
 void efface_selection_main_triominos(int tailleMain, int partieMain);
 void affiche_selection_emplacement_triominos(CASE caseS);
-
-#endif

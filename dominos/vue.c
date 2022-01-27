@@ -213,20 +213,37 @@ void affiche_victoire(int gagnant, JOUEUR infos_joueurs[])
     }
 }
 
-void affiche_main(DOMINO main_a_afficher[])
+void affiche_main(JOUEUR *infos_joueurs, int tour)
 {
     int i;
     POINT coordonnees_domino;
     coordonnees_domino.y = HAUTEUR_MAIN - 5;
+    POINT p1_rectangle, p2_rectangle; // on efface le message "l'IA choisit son meilleur coup"
+    p1_rectangle.x = 500;
+    p1_rectangle.y = 850;
+    p2_rectangle.x = p1_rectangle.x + 350;
+    p2_rectangle.y = 850 - 26;
+    dessine_rectangle_plein(p1_rectangle, p2_rectangle, bleuclair); // on dessine un rectangle pour effacer le nom du joueur précédent
 
-    for (i = 0; i < NB_MAX_DOMINO_MAIN; i++)
-    {
-        coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
-        if (main_a_afficher[i].valeur1 != -1)
+    if ((strcmp(infos_joueurs[tour].pseudo, "IA0") != 0) && (strcmp(infos_joueurs[tour].pseudo, "IA1") != 0) && (strcmp(infos_joueurs[tour].pseudo, "IA2") != 0))
+    { // si le joueur n'est pas une IA
+
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main
         {
-            affiche_domino_main(main_a_afficher[i], coordonnees_domino);
-            actualise_affichage();
+            coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+            if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+            {
+                affiche_domino_main(infos_joueurs[tour].mainJoueur[i], coordonnees_domino);
+                actualise_affichage();
+            }
         }
+    }
+    else
+    {
+        POINT coordonnees_phrase;
+        coordonnees_phrase.x = 500;
+        coordonnees_phrase.y = 850;
+        affiche_texte("l'IA choisit son meilleur coup...", 18, coordonnees_phrase, noir);
     }
 }
 

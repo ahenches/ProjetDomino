@@ -506,11 +506,35 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         {
             if (extremiteCompatible == GAUCHE)
             {
-                if (indiceExtremite1->colonne != 0)
+
+                if (indiceExtremite1->colonne >= 0) ///!\j'ai changé le != en >=
                 {
+                    if ((indiceExtremite1->coin.x >= 1125) || (indiceExtremite1->coin.x <= 65)) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                    {
+                        printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
+                        dominoAPlacer->orientation = VERTICALE;
+                        indiceExtremite1->coin.x += 36;
+                        if (plateau[indiceExtremite1->ligne][indiceExtremite1->colonne].valeur1 = dominoAPlacer->valeur2)
+                        {
+                            indiceExtremite1->ligne = indiceExtremite1->ligne - 1;
+                            indiceExtremite1->coin.y -= 36;
+                            direction = BAS;
+                        }
+                        else
+                        {
+                            indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
+                            indiceExtremite1->coin.y += 36;
+                            direction = HAUT;
+                        }
+                    }
+                    else
+                    {
+                        direction = GAUCHE;
+                    }
+
                     plateau[indiceExtremite1->ligne][indiceExtremite1->colonne - 1] = *dominoAPlacer;
                     indiceExtremite1->colonne--;
-                    direction = GAUCHE;
+
                     coin = transforme_coord_point(&indiceExtremite1, direction, tourJeu);
 
                     mainActive[dominoMain] = pasDom;
@@ -518,8 +542,25 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             }
             else if (extremiteCompatible == DROITE)
             {
-                if (indiceExtremite2->colonne != TAILLE_TAB_DOMINOS - 1)
+                if (indiceExtremite2->colonne <= TAILLE_TAB_DOMINOS - 1) // j'ai modifié le =! en <
                 {
+                    if ((indiceExtremite2->coin.x >= 1125) || (indiceExtremite2->coin.x <= 65)) // pour haut /bas : if ((coin.y >= 750) || (coin.y <= 180))
+                    {                                                                           // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                        printf("\n\n\n ATTENTION ON SORT DU CADRE DONC CHANGEMENT ORIENTATION!!!!\n\n\n");
+                        dominoAPlacer->orientation = VERTICALE;
+
+                        indiceExtremite2->coin.x -= 36;
+                        if (alea == 0)
+                        {
+                            indiceExtremite1->ligne = indiceExtremite1->ligne + 1;
+                            indiceExtremite2->coin.y += 36;
+                        }
+                        else
+                        {
+                            indiceExtremite1->ligne = indiceExtremite1->ligne - 1;
+                            indiceExtremite2->coin.y -= 36;
+                        }
+                    }
                     plateau[indiceExtremite2->ligne][indiceExtremite2->colonne + 1] = *dominoAPlacer;
                     indiceExtremite2->colonne++;
                     direction = DROITE;
@@ -556,6 +597,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
     }
 
     printf("coord du domino[%d,%d]\n", coin.x, coin.y);
+    // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop bas ou trop haut)
     affiche_domino(*dominoAPlacer, coin, direction);
     actualise_affichage();
 
@@ -604,7 +646,7 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         {
             (*indiceExtremite)->coin.x -= 36;
         }
-        else if (!est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne+1]))
+        else if (!est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne + 1]))
         {
             (*indiceExtremite)->coin.x -= 71;
         }
@@ -615,10 +657,23 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
         coin.y = (*indiceExtremite)->coin.y;
         printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
     }
+    else if (direction == HAUT)
+    {
+        (*indiceExtremite)->coin.y += 71;
+        coin.x = (*indiceExtremite)->coin.x;
+        coin.y = (*indiceExtremite)->coin.y;
+        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
+    }
+    else
+    {
+        (*indiceExtremite)->coin.y -= 71;
+        coin.x = (*indiceExtremite)->coin.x;
+        coin.y = (*indiceExtremite)->coin.y;
+        printf("APRES INDICE EXTREMITE COIN  = [%d,%d]\n", (*indiceExtremite)->coin.x, (*indiceExtremite)->coin.y);
+    }
 
     return coin;
 }
-
 
 BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
 {
@@ -686,7 +741,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
     return FALSE;
 }
 
-CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante)
+CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *indiceExtremite2, int tourJeu, VARIANTE variante, int tour)
 {
     DOMINO *mainActive = infos_joueur->mainJoueur;
     DOMINO temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
@@ -717,7 +772,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
             {
                 pioche_un_domino(infos_joueur);
                 affiche_interface(variante);
-                affiche_main(infos_joueur->mainJoueur);
+                affiche_main(infos_joueur, tour);
                 actualise_affichage();
                 *dominoChoisi = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
                 printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
