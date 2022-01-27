@@ -178,7 +178,7 @@ void affiche_interface(VARIANTE variante)
         POINT coordonnees_image;
         coordonnees_image.x = 1220;
         coordonnees_image.y = HAUTEUR - 805;
-        affiche_image("./dominos/img_dominos/pioche.bmp", coordonnees_image);
+        affiche_image("./dominos/img_dominos/verso_domino.bmp", coordonnees_image);
     }
     else // affiche "Passer son tour"
     {
@@ -246,12 +246,29 @@ void affiche_main(JOUEUR *infos_joueurs, int tour)
             }
         }
     }
-    else
+    else // si est une IA
     {
         POINT coordonnees_phrase;
         coordonnees_phrase.x = 500;
         coordonnees_phrase.y = 850;
         affiche_texte("l'IA choisit son meilleur coup...", 18, coordonnees_phrase, noir);
+        for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main retournés
+        {
+            coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+            if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+            {
+                for (i = 0; i < NB_MAX_DOMINO_MAIN; i++) // alors on affiche tous les dominos de sa main
+                {
+                    coordonnees_domino.x = LARGEUR_PIOCHE - 50 + i * 50;
+                    if (infos_joueurs[tour].mainJoueur[i].valeur1 != -1)
+                    {
+                        affiche_image("./dominos/img_dominos/verso_domino.bmp", coordonnees_domino);
+                        actualise_affichage();
+                    }
+                }
+                actualise_affichage();
+            }
+        }
     }
 }
 
@@ -271,7 +288,7 @@ void affiche_tour(char pseudo[]) // affiche le pseudo du joueur dont c'est le to
     affiche_texte(phrase_a_afficher, 18, coordonnees_phrase, noir);
 }
 
-void affiche_domino_main(DOMINO domino_a_afficher, POINT coin)
+void affiche_domino_main(DOMINO domino_a_afficher, POINT coin) // affiche un domino dans la main d'un joueur humain
 {
     char nom_image[100];
 
