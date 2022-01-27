@@ -1,2 +1,2 @@
-score de Rayane: 57
-score de IA0: 59
+score de IA0: 6
+score de Rayane: 3

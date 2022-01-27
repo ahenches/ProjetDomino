@@ -116,7 +116,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             affiche_victoire(gagnant, infos_joueurs);
             POINT p1;
             p1.x = 1;
-            p1.y = 100;
+            p1.y = 133;
             affiche_image("./dominos/img_dominos/cache_main.bmp", p1);
             actualise_affichage();
             SDL_Delay(3000);
