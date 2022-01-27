@@ -128,13 +128,13 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
             if (gagnant == -2)
             {
-                affiche_texte("Personne ne gagne il y egalite", 25, p1, lightgoldenrodyellow);
+                affiche_texte("Personne ne gagne,  il y egalite !", 25, p1, lightgoldenrodyellow);
                 actualise_affichage();
             }
             else
             {
                 char phrase_gagnant[100];
-                sprintf(phrase_gagnant, "%s a pose tous ses dominos", infos_joueurs[gagnant].pseudo);
+                sprintf(phrase_gagnant, "%s a pose tous ses dominos !", infos_joueurs[gagnant].pseudo);
                 affiche_texte(phrase_gagnant, 25, p1, lightgoldenrodyellow);
                 actualise_affichage();
             }
