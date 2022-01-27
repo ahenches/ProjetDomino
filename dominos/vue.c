@@ -11,7 +11,6 @@
 //                                  Fonctions de la vue                                 //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-
 // Cette fonction affiche le domino, elle prend en entree le domino a afficher, les coordonnee où l'afficher, et dans quel direction l'afficher
 void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE direction)
 {
@@ -57,7 +56,6 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
     affiche_image(nom_image, coin);
 }
 
-// cette fonction affiche le fond
 void affiche_fond()
 {
     rempli_ecran(blanc); // affiche un fond blanc
@@ -65,7 +63,7 @@ void affiche_fond()
     p1.x = 1;
     p1.y = 20 + HAUTEUR_MAIN + HAUTEUR_PLATEAU;
 
-    affiche_image("./dominos/img_dominos/tapis.bmp", p1);
+    affiche_image("./dominos/img_dominos/tapis.bmp", p1); // affiche le tapis de jeu
 }
 
 // cette fonction affiche l'interface en fonction de la variante choisi
@@ -83,7 +81,6 @@ void affiche_interface(VARIANTE variante)
     {
         // affiche le mot "Pioche"
         p1.y = HAUTEUR_MAIN + 5;
-        // affiche_texte("Pioche", 18, p1, lightgoldenrodyellow);
 
         // affiche le nombre de dominos dans la pioche
         p1.x = 1265;
