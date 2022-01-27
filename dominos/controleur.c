@@ -15,14 +15,14 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 {
 
     int totJoueurs; // nombre total de joueur
-    int tour;    // à qui le tour (numéro du joueur)
-    int tourJeu; // nombre de tour joués
-    int gagnant; // variable qui sert a definir le gagnant
+    int tour;       // à qui le tour (numéro du joueur)
+    int tourJeu;    // nombre de tour joués
+    int gagnant;    // variable qui sert a definir le gagnant
 
     COORDONNEES indiceExtremite1; // les coordonnées de l'extremite gauche
     COORDONNEES indiceExtremite2; // les coordonnées de l'extremite Droite
-    BOOL choix_joueur; // variable qui indique si le joueur a chosis ce qu'il voulait faire
-    BOOL continuePartie; // variable qui va permettre d'arreter/continuer une partie
+    BOOL choix_joueur;            // variable qui indique si le joueur a chosis ce qu'il voulait faire
+    BOOL continuePartie;          // variable qui va permettre d'arreter/continuer une partie
 
     indiceExtremite1.ligne = TAILLE_TAB_DOMINOS / 2;
     indiceExtremite1.colonne = TAILLE_TAB_DOMINOS / 2;
@@ -41,13 +41,13 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     choix_joueur = FALSE;
     continuePartie = TRUE;
 
-    //affichage de l'interface
+    // affichage de l'interface
     affiche_fond();
     affiche_interface(variante);
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
 
-    //initialisation du jeu
+    // initialisation du jeu
     initialise_plateau_domino();
     initialise_joueurs(infos_joueurs, totJoueurs);
 
@@ -57,7 +57,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
     actualise_affichage();
     definit_premier_joueur(infos_joueurs, determine_nb_dominos_main(totJoueurs));
 
-    //deroulement d'une partie
+    // deroulement d'une partie
     while (continuePartie)
     {
         do
@@ -67,7 +67,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             affiche_main(infos_joueurs, tour);
             actualise_affichage();
 
-            //cette condition sert a definir qui va jouer entre l'ia et le joueur humain
+            // cette condition sert a definir qui va jouer entre l'ia et le joueur humain
             if (strcmp(infos_joueurs[tour].pseudo, "IA0") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA1") == 0 || strcmp(infos_joueurs[tour].pseudo, "IA2") == 0)
             {
                 SDL_Delay(3000);
@@ -78,20 +78,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante, tour);
                 if (choix_joueur == QUITTER) // on ecrit dans un fichier le classement
                 {
-                    FILE *fichier = NULL;
-
-                    fichier = fopen("./classement.txt", "w");
-
-                    if (fichier != NULL)
-                    {
-
-                        int i;
-                        for (i = 0; i < totJoueurs; i++)
-                        {
-                            fprintf(fichier, "score de %s: %d\n", infos_joueurs[i].pseudo, infos_joueurs[i].score);
-                        }
-                        fclose(fichier);
-                    }
+                    ecrit_scores_fichier(infos_joueurs, totJoueurs);
                     return 0;
                 }
                 actualise_affichage();
@@ -99,8 +86,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
         } while (choix_joueur == TOUR_NON_FINI); // on continue de bouclé jusqu'a ce que le joueur ait fait son choix
 
-
-        if (tourJeu > 0)// on ne gagne pas au premier tour
+        if (tourJeu > 0) // on ne gagne pas au premier tour
         {
             gagnant = verifie_gagnant(infos_joueurs, indiceExtremite1, indiceExtremite2, totJoueurs, variante);
         }
@@ -124,7 +110,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
                 affiche_texte("Personne ne gagne,  il y egalite !", 25, p1, lightgoldenrodyellow);
                 actualise_affichage();
             }
-            else// s'il y a un gagnant
+            else // s'il y a un gagnant
             {
                 char phrase_gagnant[100];
                 sprintf(phrase_gagnant, "%s a pose tous ses dominos !", infos_joueurs[gagnant].pseudo);
@@ -139,7 +125,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
         }
         else
         {
-            tour = determine_joueur_suivant(tour, totJoueurs, infos_joueurs);// on passe au tour suivant
+            tour = determine_joueur_suivant(tour, totJoueurs, infos_joueurs); // on passe au tour suivant
             tourJeu++;
         }
         actualise_affichage();
