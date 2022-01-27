@@ -770,15 +770,13 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
         {
             if (!est_vide_pioche())
             {
-                pioche_un_domino(infos_joueur);
+                DOMINO domPioche = pioche_un_domino(infos_joueur);
                 affiche_interface(variante);
                 affiche_main(infos_joueur, tour);
                 actualise_affichage();
-                *dominoChoisi = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
-                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, dominoChoisi->valeur1, dominoChoisi->valeur2);
+                printf("**** Le joueur %s pioche le domino |%d %d| ****\n", infos_joueur->pseudo, domPioche.valeur1, domPioche.valeur2);    
                 printf("\n-----------------------------\n");
-                calcule_score(&infos_joueur->score, *dominoChoisi);
-                return TOUR_FINI;
+                return TOUR_NON_FINI;
             }
 
             else
@@ -807,6 +805,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
     printf("\nOn a choisi un domino non compatible donc tour non fini\n");
     return TOUR_NON_FINI;
 }
+
 
 int compte_dominos_pioche() // compte le nombre de dominos dans la pioche
 {
@@ -856,7 +855,11 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
             {
                 compatible = verifie_compatibilite_domino(&infos_joueurs[i].mainJoueur[j], indiceExtremite1, indiceExtremite2, 0).compatible;
                 if (compatible) // si au moin un domino est compatible, on peut toujours jouer
+                {
                     peutEncoreJouer = TRUE;
+                    gagnant = -1;
+                    printf("-!! Domino compatible !!-");
+                }    
 
                 nbDominosMain++; // on compte le nombre de domino dans la main
             }
@@ -864,28 +867,52 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
 
         if (nbDominosMain == 0) // s'il le joueur n'a plus de domino alors il a gagné
             return i;
-        else if ((minMain == nbDominosMain) && (variante == SANS_PIOCHE)) // sinon on regarde s'il y a une egalité
+        else if (minMain == nbDominosMain && !compatible) // sinon on regarde s'il y a une egalité
         {
-            gagnant = -2;
-        }
-        else if ((minMain == nbDominosMain) && (variante == AVEC_PIOCHE))
-        {
-            if (!est_vide_pioche())
+            if(variante == SANS_PIOCHE)
             {
-                peutEncoreJouer = TRUE;
-            }
-            else
-            {
+                gagnant = -2;
                 peutEncoreJouer = FALSE;
             }
+            else if (variante == AVEC_PIOCHE && !compatible)
+            {
+                if (!est_vide_pioche())
+                {
+                    peutEncoreJouer = TRUE;
+                    gagnant = -1;
+                }
+                else
+                {
+                    peutEncoreJouer = FALSE;
+                    gagnant = -2;
+                }
+            }
         }
-
         else // ou qui en a le moins
         {
-            if (nbDominosMain < minMain)
+            if (nbDominosMain < minMain && !compatible)
             {
-                gagnant = i;
-                minMain = nbDominosMain;
+                if (variante == AVEC_PIOCHE)
+                {
+                    if (!est_vide_pioche())
+                    {
+                        peutEncoreJouer = TRUE;
+                        gagnant = -1;
+                    }
+                    else
+                    {
+                        peutEncoreJouer = FALSE;
+                        gagnant = i;
+                        minMain = nbDominosMain;
+                    }
+                }
+                else if (variante == SANS_PIOCHE)
+                {
+                    gagnant = i;
+                    minMain = nbDominosMain;
+                }
+
+               
             }
         }
     }
@@ -942,3 +969,4 @@ int gere_clics(DOMINO main[])
 
     return position_domino;
 }
+
