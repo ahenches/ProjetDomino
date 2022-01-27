@@ -7,7 +7,6 @@
 void affiche_plateau_triminos()
 {
 	POINT p1, p2;
-	int i, j;
 
 	rempli_ecran(bleuclair);
 
