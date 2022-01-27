@@ -39,7 +39,6 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	laPioche = initialise_pioche();
 	laPioche.taille = TAILLE_PIOCHE_INITIALE;
 	quiJoue = joueur_qui_commence(nbJoueurs, joueurs, laPioche);
-	affiche_pioche(laPioche);
 	distribution(nbJoueurs, joueurs, &laPioche);
 
 	// vue
@@ -56,9 +55,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	while (!test_fin(nbJoueurs, joueurs, laPioche, plateau))
 	{
 		printf("DEBUT JEU : %s\n", joueurs[quiJoue].pseudo);
-		affiche_main_joueur(joueurs[quiJoue].mainJoueur);
 		// printf("\nPIOCHE: \n\n");
-		// affiche_pioche(laPioche);
 
 		if (joueurs[quiJoue].estHumain == false)
 		{
@@ -151,7 +148,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 				{
 					caseDuClic = transforme_point_en_case_triominos(clic);
 					printf("LIG : %d COL : %d\n", caseDuClic.l, caseDuClic.c);
-					gainEnScore = placer_trio_bis(trioSelectionne, plateau,
+					gainEnScore = placer_trio(trioSelectionne, plateau,
 							caseDuClic.l, caseDuClic.c);
 					printf("SCORE %d\n", gainEnScore);
 					if (gainEnScore > 0)
@@ -178,10 +175,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 		actualise_affichage();
 
 		printf("FIN JEU : %s\n", joueurs[quiJoue].pseudo);
-		affiche_main_joueur(joueurs[quiJoue].mainJoueur);
 		printf("\n\n\n");
-		// printf("\nPIOCHE: \n\n");
-		// affiche_pioche(laPioche);
 		quiJoue = (quiJoue + 1) % nJoueurs;
 	}
 	return 0;

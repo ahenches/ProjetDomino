@@ -18,7 +18,6 @@ typedef struct emplacement
     TRIOMINO trio;
     char pointe;    // valeur possible : m, s, d
     char direction; // direction de la pointe
-    // valeur possible : n, s (nord, sud)
 } EMPLACEMENT;
 
 typedef struct main_j_triominos
