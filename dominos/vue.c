@@ -102,21 +102,26 @@ void affiche_domino(DOMINO domino_a_afficher, POINT coin, EXTREMITE_COMPATIBLE d
     }
     if (domino_a_afficher.orientation == VERTICALE)
     {
-        if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2)
+        if (domino_a_afficher.valeur1 > domino_a_afficher.valeur2 && direction == HAUT)
         {
             sprintf(nom_image, "./dominos/img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
+        }
+        else if (domino_a_afficher.valeur1 < domino_a_afficher.valeur2 && direction == HAUT)
+        {
+            sprintf(nom_image, "./dominos/img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur2, domino_a_afficher.valeur1);
         }
         else if (est_double(domino_a_afficher))
         {
             sprintf(nom_image, "./dominos/img_dominos/bmp_horizontal/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
         }
         else
-            sprintf(nom_image, "./dominos/img_dominos/bmp_vertical_inverse/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
+            sprintf(nom_image, "./dominos/img_dominos/bmp_vertical/%d%d.bmp", domino_a_afficher.valeur1, domino_a_afficher.valeur2);
     }
 
     affiche_image(nom_image, coin);
     printf("///////Le domino a ete affiche avec SUCCES///////\n");
 }
+
 void affiche_fond()
 {
     rempli_ecran(blanc); // affiche un fond blanc
