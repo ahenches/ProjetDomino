@@ -24,4 +24,4 @@ void affiche_interface(VARIANTE variante);
 void affiche_victoire(int gagnant, JOUEUR infos_joueurs[]);
 void affiche_main(JOUEUR infos_joueurs[], int tour);
 void affiche_tour(char pseudo[]);
-void affiche_fonds();
+void affiche_fond();

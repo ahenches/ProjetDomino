@@ -1,3 +1,2 @@
-score de dzaadaz: 9
-score de dazdza: 8
-score de IA0: 10
+score de IA0: 20
+score de dzzdz: 11

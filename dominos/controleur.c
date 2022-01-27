@@ -43,7 +43,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
 
     printf("%d Joueurs Humains \n%d IA \n", joueurs.nbJoueurHumain, joueurs.nbJoueurIA);
 
-    affiche_fonds();
+    affiche_fond();
     affiche_interface(variante);
     affiche_tour(infos_joueurs[1].pseudo);
     actualise_affichage();
@@ -76,7 +76,7 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             {
                 SDL_Delay(3000);
                 choix_joueur = joue_IA(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante);
-                        }
+            }
             else
             {
                 choix_joueur = joue_joueur(&infos_joueurs[tour], &indiceExtremite1, &indiceExtremite2, tourJeu, variante, tour);
