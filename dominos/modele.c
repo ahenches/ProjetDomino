@@ -21,7 +21,7 @@ void initialise_plateau_domino()
     emplacementVide.valeur1 = -1;
     emplacementVide.valeur2 = -1;
     emplacementVide.orientation = RIEN;
-    //parcours le tableau 2D en donnant a chaque case le domino |-1 -1|
+    // parcours le tableau 2D en donnant a chaque case le domino |-1 -1|
     for (i = 0; i < TAILLE_TAB_DOMINOS; i++)
     {
         for (j = 0; j < TAILLE_TAB_DOMINOS; j++)
@@ -31,7 +31,7 @@ void initialise_plateau_domino()
     }
 }
 
-//Fonction qui initialise les joueurs, en mettant les score a 0 et en mettant des dominos |-1 -1| dans leurs mains 
+// Fonction qui initialise les joueurs, en mettant les score a 0 et en mettant des dominos |-1 -1| dans leurs mains
 void initialise_joueurs(JOUEUR infos_joueurs[], int totJoueurs)
 {
     int i;
@@ -208,7 +208,7 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
             }
         }
     }
-    else//si personne a de double, on choisit le domino le plus fort
+    else // si personne a de double, on choisit le domino le plus fort
     {
         for (i = 0; i < TOT_JOUEURS; i++)
         {
@@ -222,7 +222,6 @@ void definit_premier_joueur(JOUEUR infos_joueurs[], int nbDominosMain)
                 }
             }
         }
-       
     }
 
     // change l'ordre des pseudos dans le tableau des pseudos et l'ordre des mains dans le tableau des mains.
@@ -244,7 +243,7 @@ int determine_joueur_suivant(int tour, int totJoueur, JOUEUR infos_joueurs[])
     return tour;
 }
 
-/* recupere le domino que l'utilisateur a choisi 
+/* recupere le domino que l'utilisateur a choisi
     cette fonction prend
 */
 DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtremite1, COORDONNEES indicesExtremite2)
@@ -256,7 +255,7 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     {
         choix = gere_clics(mainActive);
 
-        if (choix == -2)// l'utilisateur a appuyer sur le bouton pioche ou passer le tour
+        if (choix == -2) // l'utilisateur a appuyer sur le bouton pioche ou passer le tour
         {
             if (!verifie_compatibilite_main(mainActive, indicesExtremite1, indicesExtremite2))
             {
@@ -265,7 +264,6 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
                 passeTour.valeur2 = -2;
                 return passeTour;
             }
-            
         }
         else if (choix == -3) // l'utilisateur a appuyer sur le bouton quitter
         {
@@ -283,7 +281,6 @@ DOMINO recupere_choix_domino_main(DOMINO mainActive[], COORDONNEES indicesExtrem
     return mainActive[0];
 }
 
-
 // Cette fonction verifie si le joueur a encore la possibilité de jouer.
 BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite1, COORDONNEES indiceExtremite2)
 {
@@ -298,9 +295,9 @@ BOOL verifie_compatibilite_main(DOMINO mainActive[], COORDONNEES indiceExtremite
     return FALSE;
 }
 
-/* cette fonction verifie si le domino recuperer en entré est compatible avec l'une des extremites. 
+/* cette fonction verifie si le domino recuperer en entré est compatible avec l'une des extremites.
 renvoie vrai si le domino choisi peut être joué
- prend en parametre: 
+ prend en parametre:
  indicesExtremite1: domino le plus en bas ou à gauche du plateau
  indicesExtremite2: domino le plus en haut ou à droite du plateau
  inverse pour empecher d'inverse le domino si voulu
@@ -352,8 +349,8 @@ AIDE_PLACEMENT verifie_compatibilite_domino(DOMINO *domino, COORDONNEES indicesE
     return a_retourner;
 }
 
-//Fonction qui trouve la position du domino dans la main
-// elle prend en parametre la main du joueur et le domino que l'on veut trouver l'indice
+// Fonction qui trouve la position du domino dans la main
+//  elle prend en parametre la main du joueur et le domino que l'on veut trouver l'indice
 int trouve_indice_domino_main(DOMINO mainActive[], DOMINO domino)
 {
     int i;
@@ -393,7 +390,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
 
     dominoMain = trouve_indice_domino_main(mainActive, *dominoAPlacer);
 
-    if (tourJeu == 1)// au premier tour on place toujours le domino a droite
+    if (tourJeu == 1) // au premier tour on place toujours le domino a droite
     {
         plateau[TAILLE_TAB_DOMINOS / 2][TAILLE_TAB_DOMINOS / 2] = *dominoAPlacer;
         direction = DROITE;
@@ -401,11 +398,10 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
         coin = transforme_coord_point(&indiceExtremite2, direction, tourJeu);
 
         mainActive[dominoMain] = pasDom;
-
     }
     else
     {
-        //on verifie si le domino est compatible avant de le placer
+        // on verifie si le domino est compatible avant de le placer
         dominoCompatible = verifie_compatibilite_domino(dominoAPlacer, *indiceExtremite1, *indiceExtremite2, 1);
         extremiteCompatible = dominoCompatible.extremite;
 
@@ -414,11 +410,11 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             if (extremiteCompatible == GAUCHE)
             {
 
-                if (indiceExtremite1->colonne >= 0) 
+                if (indiceExtremite1->colonne >= 0)
                 {
-                    if (indiceExtremite1->coin.x-71 <= 65) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+                    if (indiceExtremite1->coin.x - 71 <= 65) // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
                     {
-                        if (indiceExtremite1->coin.y+71 <= 770 && direction != DROITE)
+                        if (indiceExtremite1->coin.y + 71 <= 770 && direction != DROITE)
                         {
                             dominoAPlacer->orientation = VERTICALE;
                             if (plateau[indiceExtremite1->ligne][indiceExtremite1->colonne].valeur1 == dominoAPlacer->valeur2)
@@ -435,9 +431,9 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                         else
                         {
                             if (!est_double(plateau[indiceExtremite1->ligne][indiceExtremite1->colonne]))
-                                indiceExtremite1->coin.x-=36;
+                                indiceExtremite1->coin.x -= 36;
                             else
-                                indiceExtremite1->coin.x+=18;
+                                indiceExtremite1->coin.x += 18;
 
                             if (direction == DROITE)
                             {
@@ -454,7 +450,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                             }
                             else
                             {
-                                direction = DROITE; 
+                                direction = DROITE;
                                 indiceExtremite1->colonne++;
                             }
                         }
@@ -476,11 +472,11 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                 if (indiceExtremite2->colonne <= TAILLE_TAB_DOMINOS - 1) // j'ai modifié le =! en <
                 {
                     if (indiceExtremite2->coin.x >= 1225) // pour haut /bas : if ((coin.y >= 750) || (coin.y <= 180))
-                    { // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
-                        
+                    {                                     // si les coordonnées du domino choisi se trouvent à l'extérieur du plateau (trop à gauche ou à droite)
+
                         dominoAPlacer->orientation = VERTICALE;
 
-                        if (indiceExtremite2->coin.y+71 <= 770)
+                        if (indiceExtremite2->coin.y + 71 <= 770)
                         {
                             dominoAPlacer->orientation = VERTICALE;
                             if (plateau[indiceExtremite2->ligne][indiceExtremite2->colonne].valeur1 == dominoAPlacer->valeur2)
@@ -496,10 +492,9 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
                         }
                         else
                         {
-                           direction = GAUCHE; 
-                           indiceExtremite2->colonne--;
+                            direction = GAUCHE;
+                            indiceExtremite2->colonne--;
                         }
-
                     }
                     else
                     {
@@ -537,7 +532,7 @@ BOOL place_domino(DOMINO *dominoAPlacer, COORDONNEES *indiceExtremite1, COORDONN
             return FALSE;
         }
     }
-    //on affiche le domino que l'on veut placer
+    // on affiche le domino que l'on veut placer
     affiche_domino(*dominoAPlacer, coin, direction);
     actualise_affichage();
 
@@ -561,8 +556,8 @@ BOOL est_vide_pioche()
     }
     return TRUE;
 }
-//Cette fonction est utilise pour pouvoir afficher le domino que l'on veut placer a des coordonnees precise.
-// prend en parametre les indices des coordonneé et le numero du tour actuel
+// Cette fonction est utilise pour pouvoir afficher le domino que l'on veut placer a des coordonnees precise.
+//  prend en parametre les indices des coordonneé et le numero du tour actuel
 POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE direction, int tourJeu)
 {
     POINT coin;
@@ -603,19 +598,18 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     {
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne]))
         {
-          (*indiceExtremite)->coin.x -= 18; 
-          (*indiceExtremite)->coin.y += 36; 
+            (*indiceExtremite)->coin.x -= 18;
+            (*indiceExtremite)->coin.y += 36;
         }
         else
         {
-            if (est_double(plateau[(*indiceExtremite)->ligne+1][(*indiceExtremite)->colonne]))
+            if (est_double(plateau[(*indiceExtremite)->ligne + 1][(*indiceExtremite)->colonne]))
             {
-               (*indiceExtremite)->coin.x += 18; 
+                (*indiceExtremite)->coin.x += 18;
             }
             (*indiceExtremite)->coin.y += 71;
         }
 
-        
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
     }
@@ -623,19 +617,18 @@ POINT transforme_coord_point(COORDONNEES **indiceExtremite, EXTREMITE_COMPATIBLE
     {
         if (est_double(plateau[(*indiceExtremite)->ligne][(*indiceExtremite)->colonne]))
         {
-          (*indiceExtremite)->coin.x -= 18; 
-          (*indiceExtremite)->coin.y += 36; 
+            (*indiceExtremite)->coin.x -= 18;
+            (*indiceExtremite)->coin.y += 36;
         }
         else
         {
-            if (est_double(plateau[(*indiceExtremite)->ligne+1][(*indiceExtremite)->colonne]))
+            if (est_double(plateau[(*indiceExtremite)->ligne + 1][(*indiceExtremite)->colonne]))
             {
-               (*indiceExtremite)->coin.x += 18; 
+                (*indiceExtremite)->coin.x += 18;
             }
             (*indiceExtremite)->coin.y += 71;
         }
 
-        
         coin.x = (*indiceExtremite)->coin.x;
         coin.y = (*indiceExtremite)->coin.y;
     }
@@ -694,7 +687,7 @@ BOOL joue_IA(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, COORDONNEES *i
                         DOMINO temp = pioche_un_domino(infos_joueur);
                         DOMINO *dominoChoisi = &temp;
                         dominoPlace = place_domino(dominoChoisi, indiceExtremite1, indiceExtremite2, tourJeu, mainActive);
-                        
+
                         if (dominoPlace == TRUE)
                         {
                             calcule_score(&infos_joueur->score, *dominoChoisi);
@@ -734,7 +727,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
         {
             temp = recupere_choix_domino_main(mainActive, *indiceExtremite1, *indiceExtremite2);
             dominoChoisi = &temp;
-        } while (dominoChoisi->valeur1 == -1);// on boucle tant que l'utilisateur n'a pas fait un choix
+        } while (dominoChoisi->valeur1 == -1); // on boucle tant que l'utilisateur n'a pas fait un choix
     }
 
     if (dominoChoisi->valeur1 == -2) // si le joueur a appuyé sur le bouton piocher/passer son tour
@@ -774,7 +767,7 @@ CHOIX_JOUEUR joue_joueur(JOUEUR *infos_joueur, COORDONNEES *indiceExtremite1, CO
     return TOUR_NON_FINI;
 }
 
-//Cette fonction compte le nombre de domino qu'il y a dans la pioche et renvoie son nombre
+// Cette fonction compte le nombre de domino qu'il y a dans la pioche et renvoie son nombre
 int compte_dominos_pioche()
 {
     int nb_dominos;
@@ -890,10 +883,9 @@ int verifie_gagnant(JOUEUR infos_joueurs[], COORDONNEES indiceExtremite1, COORDO
         return -1;
 }
 
-
-//Cette fonction gere le clic de l'utilisateur pour qu'il puisse effectuer des actions (comme choisir son domino) s'il clique a des coordonnes precises
-// elle prend en parametre la main du joueur
-// et renvoie la position du domino choisi dans la main
+// Cette fonction gere le clic de l'utilisateur pour qu'il puisse effectuer des actions (comme choisir son domino) s'il clique a des coordonnes precises
+//  elle prend en parametre la main du joueur
+//  et renvoie la position du domino choisi dans la main
 int gere_clics(DOMINO main[])
 {
 

@@ -7,7 +7,6 @@
 #include "modele.h"
 #include "vue.h"
 
-
 void initialise_ordis(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs)
 {
   for (int i = 0; i < nb_joueurs.nbJoueurIA; i++)
@@ -65,7 +64,7 @@ PIOCHE_TRIOMINOS initialise_pioche()
 }
 
 int joueur_qui_commence(NB_JOUEURS nb_joueurs,
-  JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS pioche_initiale)
+                        JOUEUR_TRIOMINOS *joueurs, PIOCHE_TRIOMINOS pioche_initiale)
 {
   int sommeValTrioJou[(nb_joueurs.nbJoueurHumain + nb_joueurs.nbJoueurIA)];
   int max_indice;
@@ -87,11 +86,11 @@ int joueur_qui_commence(NB_JOUEURS nb_joueurs,
 }
 
 void distribution(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
-  PIOCHE_TRIOMINOS *pioche_initiale)
+                  PIOCHE_TRIOMINOS *pioche_initiale)
 {
   int nb_de_triomino_distribue;
 
-  if ((nb_joueurs.nbJoueurHumain+nb_joueurs.nbJoueurIA) == 2)
+  if ((nb_joueurs.nbJoueurHumain + nb_joueurs.nbJoueurIA) == 2)
     nb_de_triomino_distribue = 9;
   else
     nb_de_triomino_distribue = 7;
@@ -106,7 +105,7 @@ void distribution(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
 }
 
 BOOL test_fin(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
- PIOCHE_TRIOMINOS pioche, EMPLACEMENT **tabEmplacement)
+              PIOCHE_TRIOMINOS pioche, EMPLACEMENT **tabEmplacement)
 {
   if (pioche.taille > 0) // pioche n'est pas vide
     return false;
@@ -117,7 +116,7 @@ BOOL test_fin(NB_JOUEURS nb_joueurs, JOUEUR_TRIOMINOS *joueurs,
     int taille_coups_possible;
     for (int i = 0; i < (nb_joueurs.nbJoueurHumain + nb_joueurs.nbJoueurIA); i++)
     {
-      taille_coups_possible = trouve_coups_legaux(joueurs[i], tabEmplacement,&coups);
+      taille_coups_possible = trouve_coups_legaux(joueurs[i], tabEmplacement, &coups);
       if (taille_coups_possible != 0)
       {
         partieFinie = false;
@@ -179,7 +178,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS *ordi, EMPLACEMENT **tabEmplacement)
     srand(time(NULL));
     int random_number = rand() % ordi->mainJoueur.taille;
     TRIOMINO trio_joue = ordi->mainJoueur.tab[random_number];
-    tabEmplacement[HAUTEUR_PLATEAU_MAX/2-1][LARGEUR_PLATEAU_MAX/2-1].trio = trio_joue;
+    tabEmplacement[HAUTEUR_PLATEAU_MAX / 2 - 1][LARGEUR_PLATEAU_MAX / 2 - 1].trio = trio_joue;
     rearrange_main_joueur(&ordi->mainJoueur, random_number);
     return (trio_joue.min + trio_joue.sec + trio_joue.der);
   }
@@ -196,7 +195,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS *ordi, EMPLACEMENT **tabEmplacement)
       COUP coup_joue = coups[random_number];
       TRIOMINO trio_joue = ordi->mainJoueur.tab[coup_joue.indice_trio_dans_main];
       placer_trio(trio_joue, tabEmplacement, coup_joue.indice_ligne,
-        coup_joue.indice_colonne);
+                  coup_joue.indice_colonne);
       rearrange_main_joueur(&ordi->mainJoueur, coup_joue.indice_trio_dans_main);
       return (trio_joue.min + trio_joue.sec + trio_joue.der);
     }
@@ -206,7 +205,7 @@ int jeu_ordinateur(JOUEUR_TRIOMINOS *ordi, EMPLACEMENT **tabEmplacement)
 }
 
 int trouve_coups_legaux(JOUEUR_TRIOMINOS joueur, EMPLACEMENT **tabEmplacement,
-  COUP *coups_legaux[N_COUPS_MAXIMAL])
+                        COUP *coups_legaux[N_COUPS_MAXIMAL])
 {
   int i, j, k;
   int haut, droite, gauche, bas;
@@ -407,14 +406,13 @@ int trouve_coups_legaux(JOUEUR_TRIOMINOS joueur, EMPLACEMENT **tabEmplacement,
   return taille_coup_possible;
 }
 
-
-int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
+int placer_trio(TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
 {
   int valeurTrio = (TrioAPlacer.min + TrioAPlacer.sec + TrioAPlacer.der);
   if (est_plateau_vide(tabEmpl))
   {
-    tabEmpl[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].trio = TrioAPlacer;
-    tabEmpl[HAUTEUR_PLATEAU_MAX/2][LARGEUR_PLATEAU_MAX/2].pointe = 'm';
+    tabEmpl[HAUTEUR_PLATEAU_MAX / 2][LARGEUR_PLATEAU_MAX / 2].trio = TrioAPlacer;
+    tabEmpl[HAUTEUR_PLATEAU_MAX / 2][LARGEUR_PLATEAU_MAX / 2].pointe = 'm';
     return valeurTrio;
   }
   int valeur1, valeur2;
@@ -423,27 +421,28 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
 
   int valeurHexagone = est_hexagone(TrioAPlacer, tabEmpl, l, c);
   int valeurPont;
-  if (est_pont(TrioAPlacer, tabEmpl, l, c)) valeurPont = 40;
-  else valeurPont = 0;
+  if (est_pont(TrioAPlacer, tabEmpl, l, c))
+    valeurPont = 40;
+  else
+    valeurPont = 0;
 
-
-  if(tabEmpl[l][c].trio.min!=-1)
+  if (tabEmpl[l][c].trio.min != -1)
   {
     printf("case pleine! coup impossible");
-    return 0 ;
+    return 0;
   }
   // NORD
   if (tabEmpl[l][c].direction == 'n')
   {
-    if (tabEmpl[l][c-1].trio.min==-1 && tabEmpl[l][c+1].trio.min==-1 &&
-        tabEmpl[l+1][c].trio.min==-1)
+    if (tabEmpl[l][c - 1].trio.min == -1 && tabEmpl[l][c + 1].trio.min == -1 &&
+        tabEmpl[l + 1][c].trio.min == -1)
     {
       printf("case non rattachée! coup impossible");
       return 0;
     }
 
     // NORD GAUCHE
-    actuel = tabEmpl[l][c-1];
+    actuel = tabEmpl[l][c - 1];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')
@@ -471,7 +470,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
     }
 
     // NORD DROITE
-    actuel = tabEmpl[l][c+1];
+    actuel = tabEmpl[l][c + 1];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')
@@ -499,7 +498,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
     }
 
     // NORD BAS
-    actuel = tabEmpl[l+1][c];
+    actuel = tabEmpl[l + 1][c];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')
@@ -527,14 +526,14 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
   }
   else // if (tabEmpl[l][c].direction == 's')
   {
-    if (tabEmpl[l][c-1].trio.min==-1 && tabEmpl[l][c+1].trio.min==-1 &&
-        tabEmpl[l-1][c].trio.min==-1)
+    if (tabEmpl[l][c - 1].trio.min == -1 && tabEmpl[l][c + 1].trio.min == -1 &&
+        tabEmpl[l - 1][c].trio.min == -1)
     {
       printf("case non rattachée! coup impossible");
       return 0;
     }
     // SUD GAUCHE
-    actuel = tabEmpl[l][c-1];
+    actuel = tabEmpl[l][c - 1];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')
@@ -562,7 +561,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
     }
 
     // SUD DROITE
-    actuel = tabEmpl[l][c+1];
+    actuel = tabEmpl[l][c + 1];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')
@@ -590,7 +589,7 @@ int placer_trio (TRIOMINO TrioAPlacer, EMPLACEMENT **tabEmpl, int l, int c)
     }
 
     // SUD HAUT
-    actuel = tabEmpl[l-1][c];
+    actuel = tabEmpl[l - 1][c];
     if (actuel.trio.min != -1)
     {
       if (actuel.pointe == 'm')

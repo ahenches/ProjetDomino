@@ -115,7 +115,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 						{
 							if (variante == AVEC_SCORE)
 								fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo,
-									joueurs[i].score);
+										joueurs[i].score);
 							else
 							{
 								fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 0);
@@ -170,7 +170,7 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 					caseDuClic = transforme_point_en_case_triominos(clic);
 					printf("LIG : %d COL : %d\n", caseDuClic.l, caseDuClic.c);
 					gainEnScore = placer_trio(trioSelectionne, plateau,
-							caseDuClic.l, caseDuClic.c);
+											  caseDuClic.l, caseDuClic.c);
 					printf("SCORE %d\n", gainEnScore);
 					if (gainEnScore > 0)
 					{
@@ -186,8 +186,6 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 				actualise_affichage();
 			} while (!actionSignificative);
 		}
-
-
 
 		if (variante == AVEC_SCORE)
 			actualise_score_triominos(nJoueurs, joueurs);
@@ -206,22 +204,22 @@ int main_triominos(PSEUDO_JOUEUR *pseudoJoueurs, NB_JOUEURS nbJoueurs,
 	if (fichier != NULL)
 	{
 
-			int i;
-			for (i = 0; i < nJoueurs; i++)
-			{
-				if (variante == AVEC_SCORE)
-					fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo,
+		int i;
+		for (i = 0; i < nJoueurs; i++)
+		{
+			if (variante == AVEC_SCORE)
+				fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo,
 						joueurs[i].score);
+			else
+			{
+				if (quiJoue == i)
+					fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 1);
 				else
-				{
-					if(quiJoue == i)
-						fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 1);
-					else
-						fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 0);
-				}
+					fprintf(fichier, "score de %s: %d\n", joueurs[i].pseudo, 0);
 			}
+		}
 
-			fclose(fichier);
+		fclose(fichier);
 	}
 	return 0;
 }

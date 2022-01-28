@@ -79,10 +79,8 @@ void affiche_interface(VARIANTE variante)
 
     if (variante == AVEC_PIOCHE)
     {
-        // affiche le mot "Pioche"
-        p1.y = HAUTEUR_MAIN + 5;
-
         // affiche le nombre de dominos dans la pioche
+        p1.y = HAUTEUR_MAIN + 5;
         p1.x = 1265;
         p1.y = 75;
         char nombre_dominos_pioche[4];
