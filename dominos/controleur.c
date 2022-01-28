@@ -97,6 +97,12 @@ int main_dominos(JOUEUR infos_joueurs[], NB_JOUEURS joueurs, VARIANTE variante)
             p1.x = 1;
             p1.y = 133;
             affiche_image("./dominos/img_dominos/cache_main.bmp", p1);
+            POINT p1_rectangle, p2_rectangle; // on efface le message "l'IA choisit son meilleur coup"
+            p1_rectangle.x = 20;
+            p1_rectangle.y = 850;
+            p2_rectangle.x = p1_rectangle.x + 850;
+            p2_rectangle.y = 850 - 26;
+            dessine_rectangle_plein(p1_rectangle, p2_rectangle, blanc); // on dessine un rectangle pour effacer le nom du joueur précédent
             actualise_affichage();
             SDL_Delay(3000);
             p1.x = 1;

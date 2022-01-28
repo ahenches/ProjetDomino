@@ -1,2 +1,2 @@
-score de Rayane: 8
-score de ordi0: -13
+score de Rayane: 22
+score de IA0: 27
